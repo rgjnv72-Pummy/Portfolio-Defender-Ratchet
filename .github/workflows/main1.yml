@@ -18,8 +18,11 @@ jobs:
           
       - name: Install dependencies
         run: |
-          chmod +x setup.sh
-          ./setup.sh
+          python -m pip install --upgrade pip
+          pip install yfinance pandas==1.5.3 numpy==1.26.4 tqdm
+          # We define the link as a variable so the YAML parser can't break it
+          LINK="https://github.com"
+          pip install "$LINK"
 
       - name: Execute Script
         env:
