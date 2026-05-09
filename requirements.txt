@@ -1,0 +1,5 @@
+yfinance
+pandas
+numpy
+tqdm
+git+https://github.com
