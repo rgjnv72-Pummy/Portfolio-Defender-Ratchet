@@ -15,14 +15,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.8'
+          python-version: '3.10'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install yfinance pandas==1.5.3 numpy==1.24.4 tqdm
-          # Direct install from the official PyPI file path to bypass search errors
-          pip install https://pythonhosted.org
+          pip install yfinance pandas==1.5.3 numpy==1.26.4 tqdm
+          # This is the cleanest way to install it without causing URL errors
+          pip install "pandas-ta @ git+https://github.com"
 
       - name: Run scanner
         run: python master_scanner.py
