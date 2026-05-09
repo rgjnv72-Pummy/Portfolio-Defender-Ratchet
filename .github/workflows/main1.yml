@@ -21,7 +21,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install yfinance pandas==1.5.3 numpy==1.26.4 tqdm
-          pip install git+https://github.com
+          # We define the URL here to prevent the YAML parser from breaking it
+          export PANDAS_TA_URL="git+https://github.com"
+          pip install $PANDAS_TA_URL
 
       - name: Run scanner
         run: python master_scanner.py
