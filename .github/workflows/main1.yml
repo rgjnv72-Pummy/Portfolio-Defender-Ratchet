@@ -2,7 +2,6 @@ name: Kronos Friday Master Scan
 
 on:
   schedule:
-    # Runs at 10:10 AM UTC (3:40 PM IST) Monday to Friday
     - cron: '10 10 * * 1-5'
   workflow_dispatch:
 
@@ -18,10 +17,11 @@ jobs:
         with:
           python-version: '3.10'
 
+      # Added tqdm here to fix the crash
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install yfinance pandas numpy
+          pip install yfinance pandas numpy tqdm
 
       - name: Execute Master Scanner
         env:
