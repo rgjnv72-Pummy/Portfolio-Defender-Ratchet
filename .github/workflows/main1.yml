@@ -20,8 +20,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install yfinance pandas==1.5.3 numpy==1.26.4 tqdm
-          # Direct file from Python's official servers - bypasses all GitHub bugs
-          pip install https://pythonhosted.org
+          # We encode the link so GitHub cannot cut it at the first dot
+          ENCODED_URL="aHR0cHM6Ly9maWxlcy5weXRob25ob3N0ZWQub3JnL3BhY2thZ2VzL2E5LzIyL2EzMDg5ZGEyN2RhODUyOTI3MjMzNzc3NzE3NDYyYTc5MjQ2ZjQxNDQzNjgzZjEyNDcwNzY2MzI0OTA1ZC9wYW5kYXNfdGEtMC4zLjE0YjAudGFyLmd6"
+          DECODED_URL=$(echo $ENCODED_URL | base64 --decode)
+          pip install "$DECODED_URL"
 
       - name: Execute Script
         env:
