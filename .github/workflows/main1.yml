@@ -5,10 +5,6 @@ on:
     - cron: '*/10 * * * *'
   workflow_dispatch:
 
-env:
-  # This fixes the Node.js 20 deprecation warning
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   scan:
     runs-on: ubuntu-latest
@@ -25,9 +21,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install yfinance pandas==1.5.3 numpy==1.26.4 tqdm
-          # We use a variable to ensure the URL isn't cut off
-          URL="git+https://github.com"
-          pip install "$URL"
+          pip install pandas-ta==0.3.14b0
 
       - name: Run scanner
         run: python master_scanner.py
