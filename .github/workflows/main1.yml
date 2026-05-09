@@ -17,13 +17,14 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install yfinance pandas==1.5.3 numpy==1.26.4 tqdm
-          # We define the URL here to prevent the YAML parser from breaking it
-          export PANDAS_TA_URL="git+https://github.com"
-          pip install $PANDAS_TA_URL
+          # We decode the URL at runtime so GitHub cannot break it
+          ENCODED_URL="Z2l0K2h0dHBzOi8vZ2l0aHViLmNvbS90d29waXJsbGMvcGFuZGFzLXRhLmdpdEBkZXZlbG9wbWVudA=="
+          DECODED_URL=$(echo $ENCODED_URL | base64 --decode)
+          pip install "$DECODED_URL"
 
       - name: Run scanner
         run: python master_scanner.py
