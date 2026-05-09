@@ -21,8 +21,8 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install yfinance pandas==1.5.3 numpy==1.26.4 tqdm
-          # Direct ZIP download bypasses the "Username" and "Git Clone" errors
-          pip install https://github.com
+          # Installing via standard PyPI to avoid URL errors
+          pip install pandas-ta==0.3.14b
 
       - name: Run scanner
         run: python master_scanner.py
