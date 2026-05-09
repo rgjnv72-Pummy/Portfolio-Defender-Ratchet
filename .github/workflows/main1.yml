@@ -2,9 +2,8 @@ name: Kronos Friday Master Scan
 
 on:
   schedule:
-    # This runs every 10 minutes for testing
     - cron: '*/10 * * * *'
-  workflow_dispatch: # Allows you to run it manually for testing
+  workflow_dispatch:
 
 jobs:
   scan:
