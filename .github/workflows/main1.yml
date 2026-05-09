@@ -20,10 +20,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install yfinance pandas==1.5.3 numpy==1.26.4 tqdm
-          # We encode the link so GitHub cannot cut it at the first dot
-          ENCODED_URL="aHR0cHM6Ly9maWxlcy5weXRob25ob3N0ZWQub3JnL3BhY2thZ2VzL2E5LzIyL2EzMDg5ZGEyN2RhODUyOTI3MjMzNzc3NzE3NDYyYTc5MjQ2ZjQxNDQzNjgzZjEyNDcwNzY2MzI0OTA1ZC9wYW5kYXNfdGEtMC4zLjE0YjAudGFyLmd6"
-          DECODED_URL=$(echo $ENCODED_URL | base64 --decode)
-          pip install "$DECODED_URL"
+          # We download the file separately so GitHub can't break the link
+          curl -L https://github.com -o pandas_ta.zip
+          pip install pandas_ta.zip
 
       - name: Execute Script
         env:
