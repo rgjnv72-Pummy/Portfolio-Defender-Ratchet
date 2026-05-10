@@ -3,11 +3,13 @@ import yfinance as yf
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 
-# --- AUTH ---
+# --- AUTH & CONFIG ---
 MY_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 MY_TOKEN = os.getenv('TELEGRAM_TOKEN')
+CSV_NAME = "ind_nifty500list.csv"
 
 def send_msg(text):
+    if not MY_TOKEN or not MY_CHAT_ID: return
     try:
         conn = http.client.HTTPSConnection("api.telegram.org")
         payload = json.dumps({"chat_id": MY_CHAT_ID, "text": text, "parse_mode": "Markdown"})
@@ -17,100 +19,99 @@ def send_msg(text):
         conn.close()
     except: pass
 
-# --- INDICATOR MATH ---
-def get_hma(series, length):
-    def wma(s, p):
-        weights = np.arange(1, p + 1)
-        return s.rolling(p).apply(lambda x: np.dot(x, weights) / weights.sum(), raw=True)
-    half_len, sqrt_len = int(length/2), int(np.sqrt(length))
-    raw_hma = 2 * wma(series, half_len) - wma(series, length)
-    return wma(raw_hma, sqrt_len)
+# --- INDICATORS ---
+def get_atr(df, n=14):
+    tr = pd.concat([df['High']-df['Low'], abs(df['High']-df['Close'].shift(1)), abs(df['Low']-df['Close'].shift(1))], axis=1).max(axis=1)
+    return tr.rolling(n).mean()
 
-def get_rsi(series, length=14):
-    delta = series.diff()
-    gain = (delta.where(delta > 0, 0)).rolling(window=length).mean()
-    loss = (-delta.where(delta < 0, 0)).rolling(window=length).mean()
-    rs = gain / (loss + 1e-9)
-    return 100 - (100 / (1 + rs))
+def get_rsi(s, n=14):
+    d = s.diff(); g = d.where(d > 0, 0).rolling(n).mean(); l = d.where(d < 0, 0).abs().rolling(n).mean()
+    return 100 - (100 / (1 + (g/(l + 1e-9))))
 
-def get_ema(series, length):
-    return series.ewm(span=length, adjust=False).mean()
-
-def get_atr(df, length=14):
-    h, l, c = df['High'], df['Low'], df['Close']
-    tr = pd.concat([h-l, abs(h-c.shift(1)), abs(l-c.shift(1))], axis=1).max(axis=1)
-    return tr.rolling(window=length).mean()
-
-def scan_master_confluence(symbol):
+# --- SCANNER CORE ---
+def scan_stock(symbol, sector):
     try:
-        clean_s = str(symbol).strip().replace(".NS", "")
-        df = yf.download(f"{clean_s}.NS", period="2y", progress=False, auto_adjust=True, threads=False)
-        if df is None or len(df) < 250: return None
+        t = f"{symbol.strip()}.NS"
+        df = yf.download(t, period="1y", progress=False, auto_adjust=True)
+        if len(df) < 100: return None
         if isinstance(df.columns, pd.MultiIndex): df.columns = df.columns.get_level_values(0)
-
-        c, h, l = df['Close'].astype(float), df['High'].astype(float), df['Low'].astype(float)
         
-        drift = (((c.iloc[-1]/c.iloc[-250])-1)/250 * 0.7) + (((c.iloc[-1]/c.iloc[-20])-1)/20 * 0.3)
-        upside = ((c.iloc[-1] * (1 + (drift * 30)) - c.iloc[-1]) / c.iloc[-1]) * 100
-        
-        # CORE FILTER (Set wide for testing)
-        if not (1.0 < upside < 40): return None
-
+        c = df['Close']
         score, signals = 0, []
+        
+        # 1. SQZ (Squeeze)
         sma20, std20 = c.rolling(20).mean(), c.rolling(20).std()
-        atr20 = get_atr(df, 20)
+        if (sma20 + (2*std20)).iloc[-1] < (sma20 + (1.5*get_atr(df, 20))).iloc[-1]:
+            score += 1; signals.append("SQZ")
+            
+        # 2. ULT (Ultimate Volatility/Relative Narrowness)
+        bw = (std20 * 4) / sma20
+        if bw.iloc[-1] <= bw.tail(20).min():
+            score += 1; signals.append("ULT")
 
-        if (sma20 + (2*std20)).iloc[-1] < (sma20 + (1.5*atr20)).iloc[-1]: score += 1; signals.append("SQZ")
-        if ((std20 * 4) / (sma20 + 1e-9) * 100).iloc[-1] <= ((std20 * 4) / (sma20 + 1e-9) * 100).tail(21).min(): score += 1; signals.append("ULT")
-        if get_hma(c, 55).iloc[-1] > get_hma(c, 55).iloc[-2]: score += 1; signals.append("HUL")
-        if get_rsi(c, 14).iloc[-1] > 55: score += 1; signals.append("RSI")
+        # 3. RSI (Strength)
+        if get_rsi(c).iloc[-1] > 55:
+            score += 1; signals.append("RSI")
 
-        st_p, lt_p = [3, 5, 8, 10, 12, 15], [30, 35, 40, 45, 50, 60]
-        if pd.concat([get_ema(c, p) for p in st_p], axis=1).min(axis=1).iloc[-1] > pd.concat([get_ema(c, p) for p in lt_p], axis=1).max(axis=1).iloc[-1]:
+        # 4. GUP (Guppy Breakout)
+        if c.ewm(span=8).mean().iloc[-1] > c.ewm(span=21).mean().iloc[-1]:
             score += 1; signals.append("GUP")
 
-        vam_votes, vam_lens, mults = 0, [10, 20, 30, 40, 50], [1.2, 1.5, 2.0, 2.5, 3.0]
-        for v_len, m in zip(vam_lens, mults):
-            if c.iloc[-1] > (c.rolling(v_len).mean().iloc[-1] + (get_atr(df, v_len).iloc[-1] * m)): vam_votes += 1
-        if vam_votes >= 3: score += 1; signals.append("VAM")
+        # 5. VAM (Volatility Adjusted Momentum)
+        if c.iloc[-1] > (sma20.iloc[-1] + (get_atr(df, 20).iloc[-1] * 2.0)):
+            score += 1; signals.append("VAM")
 
-        return {'Symbol': clean_s, 'Score': score, 'Upside%': round(upside, 2), 'Signals': "+".join(signals)}
+        # Upside Calculation
+        drift = (((c.iloc[-1]/c.iloc[0])-1)/250 * 0.7) + (((c.iloc[-1]/c.iloc[-20])-1)/20 * 0.3)
+        upside = round(((c.iloc[-1] * (1 + (drift * 30)) - c.iloc[-1]) / c.iloc[-1]) * 100, 2)
+
+        return {'s': symbol, 'sc': score, 'up': upside, 'sig': "+".join(signals), 'sec': sector}
     except: return None
 
-def run_master_scan():
-    # TEST CONNECTION
-    send_msg("🛰 *KRONOS:* Connection verified. Starting Nifty 500 Scan...")
-
-    CSV_NAME = "ind_nifty500list.csv"
+def run_master():
+    send_msg("🛰 *KRONOS:* Connection verified. Running Nifty 500 Confluence Scan...")
+    
     try:
-        # Standard NSE files sometimes need header=0
         df_csv = pd.read_csv(CSV_NAME)
-        # Find symbol column: Check for 'Symbol' or use 3rd column
-        col = next((c for c in df_csv.columns if 'symbol' in c.lower()), df_csv.columns[2])
-        tickers = df_csv[col].dropna().unique().tolist()
+        df_csv.columns = df_csv.columns.str.strip()
+        # Ensure your CSV has 'Symbol' and 'Industry' or 'Sector'
+        tickers = df_csv[['Symbol', 'Industry']].values.tolist()
     except:
-        send_msg("❌ *Error:* Could not read CSV column logic.")
+        send_msg("❌ CSV Error: Ensure 'Symbol' and 'Industry' columns exist.")
         return
 
     results = []
-    with ThreadPoolExecutor(max_workers=5) as executor:
-        for res in executor.map(scan_master_confluence, tickers):
-            if res: results.append(res)
+    with ThreadPoolExecutor(max_workers=20) as executor:
+        for res in executor.map(lambda x: scan_stock(x[0], x[1]), tickers):
+            if res and res['sc'] >= 3: results.append(res)
 
     if not results:
-        send_msg("📡 *KRONOS:* Scan complete. 0 stocks met confluence criteria.")
+        send_msg("📡 Scan complete. 0 stocks found.")
         return
+
+    # Build Report
+    final_df = pd.DataFrame(results).sort_values(['sc', 'up'], ascending=False)
     
-    final_df = pd.DataFrame(results).sort_values(by=['Score', 'Upside%'], ascending=False).head(25)
+    report = f"🏆 *KRONOS CONFLUENCE MASTER: {datetime.now().strftime('%d %b')}*\n"
+    report += "━━━━━━━━━━━━━━━━━━━━\n\n"
     
-    msg = f"🏆 *KRONOS MASTER:* `{CSV_NAME}`\n━━━━━━━━━━━━━━━━━━━━\n\n"
+    # Sector Flow (Top 3)
+    report += "🔥 *SECTOR FLOW*\n"
+    sec_counts = final_df['sec'].value_counts(normalize=True).head(3) * 100
+    for sec, val in sec_counts.items():
+        report += f"• {sec}: {val:.1f}%\n"
+    report += "\n"
+
+    # Stock List
     for _, r in final_df.head(20).iterrows():
-        icon = "💎" if r['Score'] >= 4 else "🔥"
-        msg += f"{icon} `{r['Symbol']}`: *Score {r['Score']}* | {r['Upside%']}% Up\n"
+        icon = "💎" if r['sc'] >= 4 else "🔥"
+        report += f"{icon} `{r['s']}`: Score {r['sc']} | {r['up']}% Up | {r['sig']}\n"
+
+    # TV List
+    tv_list = ",".join([f"NSE:{s}" for s in final_df['s'].head(25)])
+    report += f"\n📺 *TV LIST*\n`{tv_list}`"
     
-    tv_list = ",".join([f"NSE:{s}" for s in final_df['Symbol']])
-    msg += f"\n📺 *TV LIST*\n`{tv_list}`"
-    send_msg(msg)
+    send_msg(report)
 
 if __name__ == "__main__":
-    run_master_scan()
+    run_master()
