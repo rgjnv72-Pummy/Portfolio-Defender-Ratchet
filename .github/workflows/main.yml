@@ -1,7 +1,8 @@
 name: Daily Guardian
 on:
   schedule:
-    - cron: '10 10 * * 1-5'
+    # Runs at 14:47 UTC (8:17 PM IST) Monday to Friday
+    - cron: '47 14 * * 1-5'
   workflow_dispatch:
 
 jobs:
