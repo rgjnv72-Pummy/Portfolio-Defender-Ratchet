@@ -10,28 +10,28 @@ MY_TOKEN = os.getenv('TELEGRAM_TOKEN')
 
 # --- HOLDINGS ---
 MY_HOLDINGS = {
-    "ADANIPOWER.NS": [1000, 163.36, "2026-04-07", "Energy"],
     "PREMIERENE.NS": [150, 943.30, "2026-04-07", "Infrastructure"],
     "NATCOPHARM.NS": [150, 1066.00, "2026-04-07", "Pharma"],
     "ORIENTELEC.NS": [700, 184.00, "2026-04-21", "Consumer Durables"],
-    "SKYGOLD.NS": [218, 417.00, "2026-04-22", "Consumer Durables"],
-    "AARTIIND.NS": [218, 459.54, "2026-04-22", "Chemicals"],
-    "ABB.NS": [15, 7432.00, "2026-04-28", "Infrastructure"],
     "POWERINDIA.NS": [4, 32905.00, "2026-04-29", "Infrastructure"],
     "KIRLOSENG.NS": [60, 1694.80, "2026-04-30", "Capital Goods"],
     "BHEL.NS": [300, 349.00, "2026-04-30", "Infrastructure"],
-    "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication"],
     "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure"],
     "TENNIND.NS": [145, 635.00, "2026-05-04", "Auto Components"],
-    "LALPATHLAB.NS": [65, 1570.50, "2026-05-06", "Healthcare"],
+    "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication"],
     "NETWEB.NS": [25, 4344.00, "2026-05-06", "IT - Hardware"],
+    "LALPATHLAB.NS": [65, 1570.50, "2026-05-06", "Healthcare"],
+    "HAL.NS": [21, 4700.90, "2026-05-07", "Defense"],
+    "GET&D.NS": [25, 4700.00, "2026-05-07", "Infrastructure"],
     "LAURUSLABS.NS": [68, 1211.20, "2026-05-07", "Pharma"],
     "HINDZINC.NS": [160, 641.70, "2026-05-07", "Metals"],
-    "GVT&D.NS": [25, 4700.00, "2026-05-07", "Infrastructure"],
-    "HAL.NS": [21, 4700.90, "2026-05-07", "Defense"],
-    "GALLANTT.NS": [200, 905.50, "2026-05-11", "Metals"],
-    "ATHER.NS": [200, 944.00, "2026-05-11", "Auto Components"]
+    "GALLANTT.NS": [100, 906.00, "2026-05-11", "Metals"],
+    "ATHERENERG.NS": [100, 943.00, "2026-05-11", "Auto Components"],
+    "APARINDS.NS": [9, 12905.00, "2026-05-12", "Capital Goods"],
+    "CARBORUNIV.NS": [100, 1026.00, "2026-05-12", "Capital Goods"],
+    "JISLJALEQS.NS": [200, 560.00, "2026-05-12", "Infrastructure"]
 }
+
 
 
 # --- MOMENTUM LOGIC ---
