@@ -28,8 +28,11 @@ MY_HOLDINGS = {
     "LAURUSLABS.NS": [68, 1211.20, "2026-05-07", "Pharma"],
     "HINDZINC.NS": [160, 641.70, "2026-05-07", "Metals"],
     "GVT&D.NS": [25, 4700.00, "2026-05-07", "Infrastructure"],
-    "HAL.NS": [21, 4700.90, "2026-05-07", "Defense"]
+    "HAL.NS": [21, 4700.90, "2026-05-07", "Defense"],
+    "GALLANTT.NS": [200, 905.50, "2026-05-11", "Metals"],
+    "ATHER.NS": [200, 944.00, "2026-05-11", "Auto Components"]
 }
+
 
 # --- MOMENTUM LOGIC ---
 def get_momentum_status(df):
