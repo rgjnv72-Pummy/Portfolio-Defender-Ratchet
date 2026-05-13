@@ -2,8 +2,7 @@ name: Kronos Friday Master Scan
 
 on:
   schedule:
-    # 10:30 UTC is 4:00 PM IST
-    # 5 is the code for Friday
+    # 10:30 UTC is 4:00 PM IST (Runs every Friday)
     - cron: '30 10 * * 5'
   workflow_dispatch: # Allows you to still run it manually whenever you want
 
@@ -14,15 +13,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Setup Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'
+          cache: 'pip' # Speeds up subsequent workflow runs
 
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install yfinance pandas numpy tqdm lxml requests
+          pip install yfinance pandas numpy tqdm lxml requests pandas-ta
           
       - name: Execute Master Scanner
         env:
