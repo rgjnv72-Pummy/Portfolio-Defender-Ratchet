@@ -1,7 +1,15 @@
-import os, json, http.client, numpy as np, pandas as pd
+import os
+import json
+import http.client
+import numpy as np
+import pandas as pd
 import yfinance as yf
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
+
+# --- SYSTEM FIX ---
+# Prevents yfinance from flooding requests and erroring on timezone lookups
+yf.set_tz_cache_location("cache")
 
 # --- AUTH ---
 MY_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
@@ -9,7 +17,8 @@ MY_TOKEN = os.getenv('TELEGRAM_TOKEN')
 CSV_NAME = "ind_nifty500list.csv"
 
 def send_msg(text):
-    if not MY_TOKEN or not MY_CHAT_ID: return
+    if not MY_TOKEN or not MY_CHAT_ID: 
+        return
     try:
         conn = http.client.HTTPSConnection("api.telegram.org", timeout=15)
         payload = json.dumps({
@@ -22,62 +31,84 @@ def send_msg(text):
         conn.request("POST", f"/bot{MY_TOKEN.strip()}/sendMessage", payload, headers)
         conn.getresponse()
         conn.close()
-    except: pass
+    except: 
+        pass
 
 # --- INDICATORS ---
 def get_atr(df, n=14):
-    tr = pd.concat([df['High']-df['Low'], abs(df['High']-df['Close'].shift(1)), abs(df['Low']-df['Close'].shift(1))], axis=1).max(axis=1)
+    tr = pd.concat([
+        df['High'] - df['Low'], 
+        abs(df['High'] - df['Close'].shift(1)), 
+        abs(df['Low'] - df['Close'].shift(1))
+    ], axis=1).max(axis=1)
     return tr.rolling(n).mean()
 
 def get_rsi(s, n=14):
-    d = s.diff(); g = d.where(d > 0, 0).rolling(n).mean(); l = d.where(d < 0, 0).abs().rolling(n).mean()
-    return 100 - (100 / (1 + (g/(l + 1e-9))))
+    d = s.diff()
+    g = d.where(d > 0, 0).rolling(n).mean()
+    l = d.where(d < 0, 0).abs().rolling(n).mean()
+    return 100 - (100 / (1 + (g / (l + 1e-9))))
 
 # --- SCANNER CORE ---
 def scan_confluence(row):
     try:
-        symbol, sector = row[0], row[1]
-        ticker = f"{str(symbol).strip()}.NS"
+        symbol, sector = str(row[0]).strip(), str(row[1]).strip()
+        ticker = f"{symbol}.NS"
         
-        # Extended period to 2y for better indicator history
-        df = yf.download(ticker, period="2y", progress=False, auto_adjust=True)
-        if df is None or len(df) < 250: return None
-        if isinstance(df.columns, pd.MultiIndex): df.columns = df.columns.get_level_values(0)
+        # Added a 15-second timeout to handle slow API responses gracefully
+        df = yf.download(ticker, period="2y", progress=False, auto_adjust=True, timeout=15)
+        if df is None or len(df) < 250: 
+            return None
+            
+        # FIX: Flatten multi-index headers if present in newer yfinance versions
+        if isinstance(df.columns, pd.MultiIndex): 
+            df.columns = df.columns.get_level_values(0)
+            
+        # FIX: Squeeze multi-dimensional series down to a safe 1D array
+        c = df['Close'].squeeze()
+        if isinstance(c, pd.DataFrame):
+            c = c.iloc[:, 0]
+        c = c.astype(float)
         
-        c = df['Close'].astype(float)
         score, signals = 0, []
         sma20, std20 = c.rolling(20).mean(), c.rolling(20).std()
         atr20 = get_atr(df, 20)
 
         # 1. SQZ (Squeeze)
-        if (sma20 + (2*std20)).iloc[-1] < (sma20 + (1.5*atr20)).iloc[-1]:
-            score += 1; signals.append("SQZ")
+        if (sma20 + (2 * std20)).iloc[-1] < (sma20 + (1.5 * atr20)).iloc[-1]:
+            score += 1
+            signals.append("SQZ")
             
         # 2. ULT (Ultimate Volatility - Bandwidth Minimum)
         bw = (std20 * 4) / (sma20 + 1e-9)
         if bw.iloc[-1] <= bw.tail(21).min():
-            score += 1; signals.append("ULT")
+            score += 1
+            signals.append("ULT")
 
         # 3. RSI (Strength)
         if get_rsi(c).iloc[-1] > 55:
-            score += 1; signals.append("RSI")
+            score += 1
+            signals.append("RSI")
 
         # 4. GUP (Guppy Breakout)
         if c.ewm(span=8).mean().iloc[-1] > c.ewm(span=21).mean().iloc[-1]:
-            score += 1; signals.append("GUP")
+            score += 1
+            signals.append("GUP")
 
         # 5. VAM (Volatility Adjusted Momentum)
         if c.iloc[-1] > (sma20.iloc[-1] + (atr20.iloc[-1] * 1.5)):
-            score += 1; signals.append("VAM")
+            score += 1
+            signals.append("VAM")
 
         # Upside Calculation
-        drift = (((c.iloc[-1]/c.iloc[-250])-1)/250 * 0.7) + (((c.iloc[-1]/c.iloc[-20])-1)/20 * 0.3)
+        drift = (((c.iloc[-1] / c.iloc[-250]) - 1) / 250 * 0.7) + (((c.iloc[-1] / c.iloc[-20]) - 1) / 20 * 0.3)
         upside = round(((c.iloc[-1] * (1 + (drift * 30)) - c.iloc[-1]) / c.iloc[-1]) * 100, 2)
 
         # FILTER: Only keep positive upside and decent score
         if upside > 0 and score >= 2:
             return {'s': symbol, 'sc': score, 'up': upside, 'sig': "+".join(signals), 'sec': sector}
-    except: return None
+    except: 
+        return None
 
 def run_master():
     send_msg(f"🛰 *KRONOS:* Friday Master Scan started (2Y History Filter)...")
@@ -88,12 +119,16 @@ def run_master():
         s_col = 'Symbol' if 'Symbol' in df_csv.columns else df_csv.columns[0]
         i_col = 'Industry' if 'Industry' in df_csv.columns else df_csv.columns[-1]
         tickers = df_csv[[s_col, i_col]].values.tolist()
-    except: return
+    except Exception as e:
+        send_msg(f"⚠️ *KRONOS ERROR:* Could not read CSV file `{CSV_NAME}`. Exiting scan.")
+        return
 
     results = []
+    # Using 12 workers balances thread limits with yfinance data access speeds
     with ThreadPoolExecutor(max_workers=12) as executor:
         for res in executor.map(scan_confluence, tickers):
-            if res: results.append(res)
+            if res: 
+                results.append(res)
 
     if not results:
         send_msg("📡 *KRONOS:* Scan complete. No positive-upside setups found.")
