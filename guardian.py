@@ -4,11 +4,14 @@ import numpy as np
 import http.client, json, os
 from datetime import datetime
 
+# --- SYSTEM FIX ---
+yf.set_tz_cache_location("cache")
+
 # --- AUTH ---
 MY_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 MY_TOKEN = os.getenv('TELEGRAM_TOKEN')
 
-# --- HOLDINGS ---
+# --- CURRENT ACTIVE HOLDINGS ---
 MY_HOLDINGS = {
     "ADANIPOWER.NS": [1000, 163.36, "2026-04-07", "Energy"],
     "PREMIERENE.NS": [150, 943.30, "2026-04-07", "Infrastructure"],
@@ -31,13 +34,11 @@ MY_HOLDINGS = {
     "HAL.NS": [21, 4700.90, "2026-05-07", "Defense"]
 }
 
-
-
 def send_msg(text):
     token = MY_TOKEN.strip() if MY_TOKEN else None
     chat_id = MY_CHAT_ID.strip() if MY_CHAT_ID else None
     if not token or not chat_id:
-        print("❌ Secrets Missing!")
+        print(text)
         return
     try:
         conn = http.client.HTTPSConnection("api.telegram.org")
@@ -52,7 +53,8 @@ def send_msg(text):
 
 def run_advanced_guardian():
     tickers = list(MY_HOLDINGS.keys()) + ["^NSEI"]
-    data = yf.download(tickers, period="1y", interval="1d", progress=False, auto_adjust=True)
+    # Download with actions enabled to catch corporate events
+    data = yf.download(tickers, period="1y", interval="1d", progress=False, auto_adjust=True, actions=True)
     
     if data.empty:
         return
@@ -60,8 +62,9 @@ def run_advanced_guardian():
     try:
         nifty_close = data['Close']['^NSEI'].dropna()
         nifty_chg = ((nifty_close.iloc[-1] - nifty_close.iloc[-2]) / nifty_close.iloc[-2]) * 100
+        nifty_20d_ret = ((nifty_close.iloc[-1] - nifty_close.iloc[-20]) / nifty_close.iloc[-20]) * 100
     except:
-        nifty_chg = 0.0
+        nifty_chg, nifty_20d_ret = 0.0, 0.0
 
     results = []
     total_val, daily_gain_sum = 0, 0
@@ -73,37 +76,56 @@ def run_advanced_guardian():
             df.columns = df.columns.get_level_values(0)
             df = df.dropna()
             
-            if len(df) < 1: continue
+            if len(df) < 20: continue
             
-            close_p, prev_p = df['Close'].iloc[-1], df['Close'].iloc[-2]
+            close_p, prev_p = float(df['Close'].iloc[-1]), float(df['Close'].iloc[-2])
             pnl_pct = ((close_p - buy_p) / buy_p) * 100
             
-            std = df['Close'].pct_change().std()
-            mult = 1.0 if pnl_pct > 30 else 1.5 if pnl_pct > 15 else (2.5 if std > 0.025 else 2.0)
+            # True Volatility Adjusted Multiplier Configuration
+            std_20d = df['Close'].pct_change().tail(20).std()
+            base_mult = 2.5 if std_20d > 0.025 else 2.0
+            mult = max(1.5, base_mult - (0.5 if pnl_pct > 30 else 0.25 if pnl_pct > 15 else 0.0))
+            
             tr = pd.concat([df['High']-df['Low'], (df['High']-df['Close'].shift(1)).abs(), (df['Low']-df['Close'].shift(1)).abs()], axis=1).max(axis=1)
             atr = tr.rolling(14).mean()
             
             valid_df = df[df.index >= buy_date].copy()
-            if valid_df.empty: valid_df = df.iloc[-5:]
-            ratchet = (valid_df['High'] - (mult * atr.reindex(valid_df.index))).cummax().iloc[-1]
+            if valid_df.empty: 
+                valid_df = df.iloc[-5:]
+            
+            # Cross-Sectional Alpha Calculation (Relative outperformance vs index)
+            stock_20d_ret = ((close_p - df['Close'].iloc[-20]) / df['Close'].iloc[-20]) * 100
+            pure_alpha_metric = stock_20d_ret - nifty_20d_ret
+
+            # CORPORATE ACTION MITIGATION LAYER
+            # Compensate stop-loss calculations if a recent dividend payout occurred
+            dividend_adjustment = 0.0
+            if 'Dividends' in valid_df.columns:
+                recent_dividends = valid_df['Dividends'].tail(5).sum()
+                if recent_dividends > 0:
+                    dividend_adjustment = recent_dividends
+
+            # Calculate adaptive ratchet trailing stops against peak high values
+            valid_atr = atr.reindex(valid_df.index)
+            ratchet_series = valid_df['High'] - (mult * valid_atr) - dividend_adjustment
+            ratchet = ratchet_series.cummax().iloc[-1]
             
             dist_to_stop = ((close_p - ratchet) / close_p) * 100
             total_val += (close_p * qty)
             daily_gain_sum += (close_p - prev_p) * qty
             sector_values[sector] = sector_values.get(sector, 0) + (close_p * qty)
 
-            # Date Formatting for Message
             dt_obj = datetime.strptime(buy_date, '%Y-%m-%d')
             pretty_date = dt_obj.strftime('%d-%b-%y')
             
-            status_icon = "🚨 *EXIT*" if close_p < ratchet else "✅"
+            is_triggered = close_p < ratchet
+            status_icon = "🚨 *EXIT*" if is_triggered else "🔥" if pure_alpha_metric > 5.0 else "✅"
             
-            # Formatting as requested: CHENNPETRO(12-Mar-26) +22.3
             ticker_name = ticker.replace('.NS','')
             line_text = f"*{ticker_name}({pretty_date}) {pnl_pct:+.1f}%* | {status_icon}\n"
-            line_text += f"_Stop: ₹{ratchet:.1f} ({dist_to_stop:.1f}% cushion)_\n\n"
+            line_text += f"_Stop: ₹{ratchet:.1f} ({dist_to_stop:.1f}% cushion) | Alpha: {pure_alpha_metric:+.1f}%_\n\n"
             
-            results.append({'text': line_text, 'is_cut': close_p < ratchet})
+            results.append({'text': line_text, 'is_cut': is_triggered, 'alpha_val': pure_alpha_metric})
         except:
             continue
 
@@ -111,12 +133,16 @@ def run_advanced_guardian():
     report += f"Nifty 50: {nifty_chg:+.2f}% 🏛️\n"
     report += "━━━━━━━━━━━━━━━━━━━━\n\n"
     
-    sorted_results = sorted(results, key=lambda x: x['is_cut'], reverse=True)
-    for res in sorted_results: report += res['text']
+    sorted_results = sorted(results, key=lambda x: (x['is_cut'], x['alpha_val']), reverse=True)
+    for res in sorted_results: 
+        report += res['text']
 
-    report += "🏗️ *SECTOR EXPOSURE*\n"
+    # CRITICAL SECTOR OVER-CONCENTRATION SYSTEM WARNINGS
+    report += "🏗️ *SECTOR EXPOSURE RISK EVALUATION*\n"
     for sec, val in sorted(sector_values.items(), key=lambda item: item[1], reverse=True):
-        report += f"• {sec}: {(val/total_val)*100:.1f}%\n"
+        allocation_pct = (val / total_val) * 100
+        risk_flag = " ⚠️ *HIGH EXPOSURE*" if allocation_pct > 25.0 else ""
+        report += f"• {sec}: {allocation_pct:.1f}%{risk_flag}\n"
 
     port_daily_pct = (daily_gain_sum / (total_val - daily_gain_sum)) * 100 if total_val > daily_gain_sum else 0
     alpha = port_daily_pct - nifty_chg
