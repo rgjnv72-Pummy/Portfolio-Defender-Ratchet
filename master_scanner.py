@@ -5,10 +5,10 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime
+from datetime import datetime, timedelta
+from nselib import capital_market
 
 # --- SYSTEM FIX ---
-# Prevents yfinance from flooding requests and erroring on timezone lookups
 yf.set_tz_cache_location("cache")
 
 # --- AUTH ---
@@ -49,22 +49,49 @@ def get_rsi(s, n=14):
     l = d.where(d < 0, 0).abs().rolling(n).mean()
     return 100 - (100 / (1 + (g / (l + 1e-9))))
 
+def fetch_delivery_percentage(symbol, days=5):
+    """Fetches historical deliverable data directly from the NSE website."""
+    try:
+        end_dt = datetime.now()
+        # 14 calendar days buffer ensures we find 5 active trading sessions
+        start_dt = end_dt - timedelta(days=14) 
+        
+        from_str = start_dt.strftime('%d-%m-%Y')
+        to_str = end_dt.strftime('%d-%m-%Y')
+        
+        raw_df = capital_market.price_volume_and_deliverable_position_data(
+            symbol=symbol, from_date=from_str, to_date=to_str
+        )
+        if raw_df is None or raw_df.empty:
+            return 0.0
+            
+        raw_df.columns = raw_df.columns.str.strip()
+        del_col = [c for c in raw_df.columns if 'Dly' in c or 'Deliverable' in c]
+        if not del_col:
+            return 0.0
+            
+        raw_df[del_col] = pd.to_numeric(raw_df[del_col], errors='coerce')
+        recent_delivery = raw_df[del_col].dropna().tail(days)
+        
+        return round(recent_delivery.mean(), 1) if not recent_delivery.empty else 0.0
+    except:
+        return 0.0
+
 # --- SCANNER CORE ---
 def scan_confluence(row):
     try:
-        symbol, sector = str(row[0]).strip(), str(row[1]).strip()
+        # FIXED: Proper indexing to unpack the ticker list correctly
+        symbol = str(row[0]).strip()
+        sector = str(row[1]).strip()
         ticker = f"{symbol}.NS"
         
-        # Added a 15-second timeout to handle slow API responses gracefully
         df = yf.download(ticker, period="2y", progress=False, auto_adjust=True, timeout=15)
         if df is None or len(df) < 250: 
             return None
             
-        # FIX: Flatten multi-index headers if present in newer yfinance versions
         if isinstance(df.columns, pd.MultiIndex): 
             df.columns = df.columns.get_level_values(0)
             
-        # FIX: Squeeze multi-dimensional series down to a safe 1D array
         c = df['Close'].squeeze()
         if isinstance(c, pd.DataFrame):
             c = c.iloc[:, 0]
@@ -79,7 +106,7 @@ def scan_confluence(row):
             score += 1
             signals.append("SQZ")
             
-        # 2. ULT (Ultimate Volatility - Bandwidth Minimum)
+        # 2. ULT (Volatility Compression)
         bw = (std20 * 4) / (sma20 + 1e-9)
         if bw.iloc[-1] <= bw.tail(21).min():
             score += 1
@@ -100,18 +127,17 @@ def scan_confluence(row):
             score += 1
             signals.append("VAM")
 
-        # Upside Calculation
         drift = (((c.iloc[-1] / c.iloc[-250]) - 1) / 250 * 0.7) + (((c.iloc[-1] / c.iloc[-20]) - 1) / 20 * 0.3)
         upside = round(((c.iloc[-1] * (1 + (drift * 30)) - c.iloc[-1]) / c.iloc[-1]) * 100, 2)
 
-        # FILTER: Only keep positive upside and decent score
         if upside > 0 and score >= 2:
-            return {'s': symbol, 'sc': score, 'up': upside, 'sig': "+".join(signals), 'sec': sector}
+            del_pct = fetch_delivery_percentage(symbol, days=5)
+            return {'s': symbol, 'sc': score, 'up': upside, 'sig': "+".join(signals), 'sec': sector, 'del': del_pct}
     except: 
         return None
 
 def run_master():
-    send_msg(f"🛰 *KRONOS:* Friday Master Scan started (2Y History Filter)...")
+    send_msg(f"🛰 *KRONOS:* Friday Master Scan started (2Y History + 5D Delivery Highlighting)...")
     
     try:
         df_csv = pd.read_csv(CSV_NAME)
@@ -124,7 +150,6 @@ def run_master():
         return
 
     results = []
-    # Using 12 workers balances thread limits with yfinance data access speeds
     with ThreadPoolExecutor(max_workers=12) as executor:
         for res in executor.map(scan_confluence, tickers):
             if res: 
@@ -146,8 +171,18 @@ def run_master():
     report += "\n"
 
     for _, r in final_df.head(20).iterrows():
+        # Choose baseline icon based on confluence score
         icon = "💎" if r['sc'] >= 4 else "🔥"
-        report += f"{icon} `{r['s']}`: *Score {r['sc']}* | {r['up']}% Est | {r['sig']}\n"
+        
+        # ADDED FEATURE: Highlight strong accumulation targets with over 50% 5D Delivery
+        if r['del'] >= 50.0:
+            del_alert = f" | 🚀 *5D Del: {r['del']}%*"
+        elif r['del'] > 0:
+            del_alert = f" | 📦 *5D Del: {r['del']}%*"
+        else:
+            del_alert = ""
+            
+        report += f"{icon} `{r['s']}`: *Score {r['sc']}* | {r['up']}% Est | {r['sig']}{del_alert}\n"
 
     tv_list = ",".join([f"NSE:{s}" for s in final_df['s'].head(25)])
     report += f"\n📺 *WATCHLIST*\n`{tv_list}`"
