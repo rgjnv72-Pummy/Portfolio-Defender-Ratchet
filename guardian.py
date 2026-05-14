@@ -10,7 +10,7 @@ yf.set_tz_cache_location("cache")
 MY_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 MY_TOKEN = os.getenv('TELEGRAM_TOKEN')
 
-# --- CURRENT OPEN HOLDINGS (Fixed Ticker Symbols for NSE Stream) ---
+# --- CURRENT OPEN HOLDINGS (Ticker Strings Standardized to Yahoo Finance Master) ---
 # Format: "YFinance_Ticker": [Total_Qty, Weighted_Avg_Buy_Price, Base_Date, "Sector", Manual_Current_Price_Fallback]
 CURRENT_HOLDINGS = {
     "PREMIERENE.NS": [150, 943.30, "2026-04-07", "Infrastructure", 970.70],
@@ -27,10 +27,12 @@ CURRENT_HOLDINGS = {
     "LAURUSLABS.NS": [68, 1211.20, "2026-05-07", "Pharma", 1299.70],
     "HINDZINC.NS": [160, 641.70, "2026-05-07", "Metals", 670.30],
     "GALLANTT.NS": [100, 906.00, "2026-05-11", "Metals", 763.50],
-    "APARINDS.NS": [9, 12905.00, "2026-05-12", "Capital Goods", 12461.00],      # Fixed Ticker String
+    "ATHERENERG.NS": [100, 943.00, "2026-05-11", "Auto Components", 943.30],   # Fixed Exchange Identifier
+    "APARINDS.NS": [9, 12905.00, "2026-05-12", "Capital Goods", 12461.00],
     "CARBORUNIV.NS": [111, 1024.71, "2026-05-12", "Capital Goods", 1040.00],
+    "JRRESOURCES.NS": [200, 560.00, "2026-05-12", "Mining / Resources", 566.85], # Fixed Exchange Identifier
     "HINDCOPPER.NS": [198, 598.64, "2026-05-13", "Metals", 609.00],
-    "APTUS.NS": [300, 270.25, "2026-05-13", "Financial Services", 269.25]        # Fixed Ticker String
+    "APTUS.NS": [300, 270.25, "2026-05-13", "Financial Services", 269.25]
 }
 
 def send_msg(text):
@@ -66,10 +68,9 @@ def run_simplified_watchdog():
     total_val, daily_gain_sum, total_cost = 0.0, 0.0, 0.0
     skipped_tickers = []
 
-    # --- FIRST PASS: ABSOLUTE ACCOUNT VALUATION SYNC ---
+    # --- FIRST PASS: GLOBAL VALUATION ---
     for ticker, (qty, buy_p, buy_date, sector, fallback_p) in CURRENT_HOLDINGS.items():
         try:
-            # Multiindex column existence parsing verification step
             if (not data.empty) and ('Close' in data.columns) and (ticker in data['Close'].columns):
                 df_ticker = data.xs(ticker, axis=1, level=1).dropna()
                 if len(df_ticker) >= 2:
@@ -82,13 +83,12 @@ def run_simplified_watchdog():
                     continue
             raise ValueError()
         except Exception:
-            # Fallback tracking loop executes if dynamic data extraction drops out
             total_val += (fallback_p * qty)
             total_cost += (buy_p * qty)
             daily_gain_sum += 0.0 
             skipped_tickers.append(ticker.replace('.NS', ''))
 
-    # --- SECOND PASS: DYNAMIC RISK TRAILS ---
+    # --- SECOND PASS: EXTREME RISK ANALYSIS ---
     for ticker, (qty, buy_p, buy_date, sector, fallback_p) in CURRENT_HOLDINGS.items():
         try:
             if (data.empty) or ('Close' not in data.columns) or (ticker not in data['Close'].columns):
@@ -127,15 +127,15 @@ def run_simplified_watchdog():
             is_triggered = close_p <= (ratchet + 0.05)
             status_icon = "🚨 *BREAK*" if is_triggered else "⚠️ *RISK*"
             
-            ticker_name = ticker.replace('.NS','')
-            line_text = f"*{ticker_name}* | Price: ₹{close_p:.1f} ({pnl_pct:+.1f}%) | {status_icon}\n"
+            clean_name = ticker.replace('.NS','').replace('ENERG','')
+            line_text = f"*{clean_name}* | Price: ₹{close_p:.1f} ({pnl_pct:+.1f}%) | {status_icon}\n"
             line_text += f"_Stop Floor: ₹{ratchet:.1f} ({dist_to_stop:.1f}% cushion)_\n\n"
             
             results.append({'text': line_text, 'cushion': dist_to_stop})
         except Exception:
             continue
 
-    # --- STRING COMPOSER ASSEMBLY ---
+    # --- REPORT COMPOSITION ---
     report = f"📋 *LIVE RISK WATCHDOG (<6% Cushion): {datetime.now().strftime('%d %b')}*\n"
     report += f"Nifty 50 Index: {nifty_chg:+.2f}%\n"
     report += "━━━━━━━━━━━━━━━━━━━━\n\n"
