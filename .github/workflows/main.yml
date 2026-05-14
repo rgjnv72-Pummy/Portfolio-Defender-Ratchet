@@ -1,26 +1,30 @@
 name: Daily Guardian
 on:
   schedule:
-    # 10:10 PM IST is 16:40 UTC
-    - cron: '40 16 * * 1-5'
+    # 4:15 PM IST (After Market Close) maps directly to 10:45 UTC
+    - cron: '45 10 * * 1-5'
   workflow_dispatch: # Keeps the manual 'Run' button available
 
 jobs:
   run-script:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
       
-      - name: Setup Python
+      - name: Initialize Runtime Python Environment
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           
-      - name: Install dependencies
-        # Added pandas-ta which is required for your code's logic to execute
-        run: pip install yfinance pandas numpy pandas-ta 
+      - name: Build Safe Local Cache Folder
+        # Eliminates temporary write protection errors on GitHub runners
+        run: mkdir -p cache
+          
+      - name: Install Active Dependencies
+        run: pip install yfinance pandas numpy
         
-      - name: Execute Script
+      - name: Execute Live Portfolio Watchdog
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
