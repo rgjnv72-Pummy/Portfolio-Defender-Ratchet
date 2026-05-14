@@ -10,27 +10,26 @@ yf.set_tz_cache_location("cache")
 MY_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 MY_TOKEN = os.getenv('TELEGRAM_TOKEN')
 
-# --- CURRENT ACTIVE HOLDINGS ---
-MY_HOLDINGS = {
-    "ADANIPOWER.NS": [1000, 163.36, "2026-04-07", "Energy"],
+# --- CURRENT OPEN HOLDINGS ---
+CURRENT_HOLDINGS = {
     "PREMIERENE.NS": [150, 943.30, "2026-04-07", "Infrastructure"],
     "NATCOPHARM.NS": [150, 1066.00, "2026-04-07", "Pharma"],
     "ORIENTELEC.NS": [700, 184.00, "2026-04-21", "Consumer Durables"],
-    "SKYGOLD.NS": [218, 417.00, "2026-04-22", "Consumer Durables"],
-    "AARTIIND.NS": [218, 459.54, "2026-04-22", "Chemicals"],
-    "ABB.NS": [15, 7432.00, "2026-04-28", "Infrastructure"],
-    "POWERINDIA.NS": [4, 32905.00, "2026-04-29", "Infrastructure"],
-    "KIRLOSENG.NS": [60, 1694.80, "2026-04-30", "Capital Goods"],
+    "POWERINDIA.NS": [4, 32905.00, "2026-04-29", "Infrastructure"],  # Hitachi Energy
     "BHEL.NS": [300, 349.00, "2026-04-30", "Infrastructure"],
-    "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication"],
     "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure"],
     "TENNIND.NS": [145, 635.00, "2026-05-04", "Auto Components"],
-    "LALPATHLAB.NS": [65, 1570.50, "2026-05-06", "Healthcare"],
+    "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication"],
     "NETWEB.NS": [25, 4344.00, "2026-05-06", "IT - Hardware"],
+    "LALPATHLAB.NS": [65, 1570.50, "2026-05-06", "Healthcare"],
+    "HAL.NS": [21, 4700.90, "2026-05-07", "Defense"],
     "LAURUSLABS.NS": [68, 1211.20, "2026-05-07", "Pharma"],
     "HINDZINC.NS": [160, 641.70, "2026-05-07", "Metals"],
-    "GVT&D.NS": [25, 4700.00, "2026-05-07", "Infrastructure"],
-    "HAL.NS": [21, 4700.90, "2026-05-07", "Defense"]
+    "GALLANTT.NS": [100, 906.00, "2026-05-11", "Metals"],
+    "APARINDS.NS": [9, 12905.00, "2026-05-12", "Capital Goods"],
+    "CARBORUNIV.NS": [111, 1024.71, "2026-05-12", "Capital Goods"],
+    "HINDCOPPER.NS": [198, 598.64, "2026-05-13", "Metals"],          # Combined Tranches
+    "APTUS.NS": [300, 270.25, "2026-05-13", "Financial Services"]
 }
 
 def send_msg(text):
@@ -47,44 +46,39 @@ def send_msg(text):
         conn.getresponse()
         conn.close()
     except Exception as e:
-        print(f"❌ Telegram Failed: {e}")
+        print(f"❌ Telegram Error: {e}")
 
-def run_advanced_guardian():
-    tickers = list(MY_HOLDINGS.keys()) + ["^NSEI"]
-    data = yf.download(tickers, period="1y", interval="1d", progress=False, auto_adjust=True)
-    
-    if data.empty:
-        print("❌ No data returned from yfinance.")
+def run_simplified_watchdog():
+    try:
+        tickers = list(CURRENT_HOLDINGS.keys()) + ["^NSEI"]
+        data = yf.download(tickers, period="1y", interval="1d", progress=False, auto_adjust=True)
+        
+        if data.empty:
+            send_msg("⚠️ *Watchdog Warning*: Yahoo Finance data feed returned empty. Check server network connectivity.")
+            return
+    except Exception as api_err:
+        send_msg(f"⚠️ *Watchdog API Error*: Failed to fetch data stream from yfinance. Code execution halted.\nError details: `{api_err}`")
         return
 
     try:
         nifty_close = data['Close']['^NSEI'].dropna()
         nifty_chg = ((nifty_close.iloc[-1] - nifty_close.iloc[-2]) / nifty_close.iloc[-2]) * 100
-        nifty_20d_ret = ((nifty_close.iloc[-1] - nifty_close.iloc[-20]) / nifty_close.iloc[-20]) * 100
     except Exception:
-        nifty_chg, nifty_20d_ret = 0.0, 0.0
+        nifty_chg = 0.0
 
     results = []
     total_val, daily_gain_sum, total_cost = 0.0, 0.0, 0.0
-    sector_values = {}
 
-    for ticker, (qty, buy_p, buy_date, sector) in MY_HOLDINGS.items():
+    for ticker, (qty, buy_p, buy_date, sector) in CURRENT_HOLDINGS.items():
         try:
-            # Safely cross-section MultiIndex DataFrame
             df = data.xs(ticker, axis=1, level=1).dropna().copy()
-            if len(df) < 20: 
+            if len(df) < 15: 
                 continue
             
             close_p = float(df['Close'].iloc[-1])
             prev_p = float(df['Close'].iloc[-2])
             pnl_pct = ((close_p - buy_p) / buy_p) * 100
             
-            # Volatility Multiplier
-            std_20d = df['Close'].pct_change().tail(20).std()
-            base_mult = 2.5 if std_20d > 0.025 else 2.0
-            mult = max(1.5, base_mult - (0.5 if pnl_pct > 30 else 0.25 if pnl_pct > 15 else 0.0))
-            
-            # True Range and ATR (14-period)
             tr = pd.concat([
                 df['High'] - df['Low'], 
                 (df['High'] - df['Close'].shift(1)).abs(), 
@@ -95,66 +89,63 @@ def run_advanced_guardian():
             valid_df = df[df.index >= buy_date].copy()
             if valid_df.empty: 
                 valid_df = df.iloc[-5:]
-            
-            # Alpha vs Benchmark
-            stock_20d_ret = ((close_p - df['Close'].iloc[-20]) / df['Close'].iloc[-20]) * 100
-            pure_alpha_metric = stock_20d_ret - nifty_20d_ret
-
-            # Dynamic Trailing Stop (Based on Close prices to limit extreme single-day spikes)
+                
             valid_atr = atr.reindex(valid_df.index)
-            ratchet_series = valid_df['Close'] - (mult * valid_atr)
-            ratchet = ratchet_series.cummax().iloc[-1]
+            
+            ratchet_series = valid_df['Close'] - (2.0 * valid_atr)
+            ratchet = ratchet_series.rolling(20, min_periods=1).max().iloc[-1]
+            
+            ratchet = min(ratchet, close_p * 0.97)
+            ratchet = max(ratchet, buy_p * 0.88)
             
             dist_to_stop = ((close_p - ratchet) / close_p) * 100
             
-            # Metrics aggregation
             total_val += (close_p * qty)
             total_cost += (buy_p * qty)
             daily_gain_sum += (close_p - prev_p) * qty
-            sector_values[sector] = sector_values.get(sector, 0.0) + (close_p * qty)
 
-            dt_obj = datetime.strptime(buy_date, '%Y-%m-%d')
-            pretty_date = dt_obj.strftime('%d-%b-%y')
-            
-            is_triggered = close_p < ratchet
-            status_icon = "🚨 *TRIGGER*" if is_triggered else "🔥" if pure_alpha_metric > 5.0 else "✅"
+            # CRITICAL FILTER: Omit stocks with a healthy cushion over 6%
+            if dist_to_stop > 6.0:
+                continue
+
+            is_triggered = close_p <= (ratchet + 0.05)
+            status_icon = "🚨 *BREAK*" if is_triggered else "⚠️ *RISK*"
             
             ticker_name = ticker.replace('.NS','')
-            line_text = f"*{ticker_name} ({pretty_date}) {pnl_pct:+.1f}%* | {status_icon}\n"
-            line_text += f"_Stop: ₹{ratchet:.1f} ({dist_to_stop:.1f}% gap) | Alpha: {pure_alpha_metric:+.1f}%_\n\n"
+            line_text = f"*{ticker_name}* | Price: ₹{close_p:.1f} ({pnl_pct:+.1f}%) | {status_icon}\n"
+            line_text += f"_Stop Floor: ₹{ratchet:.1f} ({dist_to_stop:.1f}% cushion)_\n\n"
             
-            results.append({'text': line_text, 'is_cut': is_triggered, 'alpha_val': pure_alpha_metric})
+            results.append({'text': line_text, 'cushion': dist_to_stop})
         except Exception:
             continue
 
-    if not results:
-        return
-
-    # Build Telegram Output
-    report = f"🚀 *PORTFOLIO WATCHDOG: {datetime.now().strftime('%d %b')}*\n"
-    report += f"Nifty 50: {nifty_chg:+.2f}% 🏛️\n"
+    # Output String Generation
+    report = f"📋 *LIVE RISK WATCHDOG (<6% Cushion): {datetime.now().strftime('%d %b')}*\n"
+    report += f"Nifty 50 Index: {nifty_chg:+.2f}%\n"
     report += "━━━━━━━━━━━━━━━━━━━━\n\n"
     
-    # Sort triggered items directly to the top of the alert message
-    sorted_results = sorted(results, key=lambda x: (x['is_cut'], x['alpha_val']), reverse=True)
-    for res in sorted_results: 
-        report += res['text']
-
-    report += "🏗️ *SECTOR EXPOSURE*\n"
-    for sec, val in sorted(sector_values.items(), key=lambda item: item[1], reverse=True):
-        allocation_pct = (val / total_val) * 100 if total_val > 0 else 0
-        risk_flag = " ⚠️ *HIGH*" if allocation_pct > 25.0 else ""
-        report += f"• {sec}: {allocation_pct:.1f}%{risk_flag}\n"
+    if results:
+        # Sort in ascending order of cushion (closest to breaking goes strictly to the top)
+        sorted_results = sorted(results, key=lambda x: x['cushion'])
+        for res in sorted_results: 
+            report += res['text']
+    else:
+        report += "✅ All open positions currently have a healthy cushion (>6%).\n\n"
 
     port_daily_pct = (daily_gain_sum / (total_val - daily_gain_sum)) * 100 if (total_val - daily_gain_sum) > 0 else 0
-    alpha = port_daily_pct - nifty_chg
     total_pnl_pct = ((total_val - total_cost) / total_cost) * 100 if total_cost > 0 else 0
     
-    report += f"\n📊 *SUMMARY*\nValue: ₹{total_val:,.0f} (Total Return: {total_pnl_pct:+.2f}%)\n"
-    report += f"Daily: ₹{daily_gain_sum:,.0f} ({port_daily_pct:+.2f}%)\n"
-    report += f"Alpha: {alpha:+.2f}% {'🔥' if alpha > 0 else '❄️'}"
+    # Currency standard transformation into Lakhs
+    val_lakhs = total_val / 100000
+    gain_lakhs = daily_gain_sum / 100000
+    
+    report += "━━━━━━━━━━━━━━━━━━━━\n"
+    report += f"📊 *SUMMARY*\n"
+    report += f"Live Account Value: ₹{val_lakhs:.2f}L\n"
+    report += f"Open Book Profit: {total_pnl_pct:+.2f}%\n"
+    report += f"Session Change: ₹{gain_lakhs:+.2f}L ({port_daily_pct:+.2f}%)"
     
     send_msg(report)
 
 if __name__ == "__main__":
-    run_advanced_guardian()
+    run_simplified_watchdog()
