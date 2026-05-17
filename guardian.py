@@ -45,7 +45,7 @@ def send_msg(text):
         payload = json.dumps({"chat_id": chat_id, "text": text, "parse_mode": "Markdown"})
         headers = {"Content-Type": "application/json"}
         conn.request("POST", f"/bot{token}/sendMessage", payload, headers)
-        conn.getcall = conn.getresponse()
+        conn.getcall = conn.getcall = conn.getcall = conn.getresponse()
         conn.close()
     except Exception as e:
         print(f"❌ Telegram Error: {e}")
@@ -113,12 +113,22 @@ def run_simplified_watchdog():
             ], axis=1).max(axis=1)
             atr = tr.rolling(14).mean()
             
+            # --- SQUEEZE BREAKOUT MITIGATION LAYER ---
+            # Capture peak volatility prior to entry to avoid the tight 'Squeeze compression trap'
+            atr_pre_entry = atr[(atr.index <= buy_date)].tail(60)
+            if not atr_pre_entry.empty:
+                entry_atr = float(atr_pre_entry.max())  # Reference maximum historical structural volatility
+            else:
+                entry_atr = float(atr.iloc[-1])
+            
+            initial_atr_floor = buy_p - (1.5 * entry_atr)
+            
             valid_df = df[df.index >= buy_date].copy()
             if valid_df.empty: 
                 valid_df = df.iloc[-5:]
                 
             # --- ENGINE A: DYNAMIC TRAILING MULTIPLIER CONFIGURATION ---
-            if pnl_pct > 20.0:  # Scaled down to 20% to give winners breathing room much earlier
+            if pnl_pct > 20.0:  
                 mult = 2.5     
             elif pnl_pct < 0.0:
                 mult = 1.5     
@@ -132,7 +142,7 @@ def run_simplified_watchdog():
             hist_vol = df['Close'].pct_change().tail(60).std()
             
             if hist_vol >= 0.030:
-                lookback_days = 15   
+                lookback_days = 15   # Post-burst momentum profile: Lock tight!
             elif hist_vol >= 0.018:
                 lookback_days = 25   
             else:
@@ -140,9 +150,9 @@ def run_simplified_watchdog():
             
             ratchet = ratchet_series.rolling(lookback_days, min_periods=1).max().iloc[-1]
             
-            # Defensive Structural Guardrails
+            # Defensive Dynamic Guardrails
             ratchet = min(ratchet, close_p * 0.97)
-            ratchet = max(ratchet, buy_p * 0.88)
+            ratchet = max(ratchet, initial_atr_floor)
             
             dist_to_stop = ((close_p - ratchet) / close_p) * 100
             
@@ -174,7 +184,7 @@ def run_simplified_watchdog():
         report += "✅ All open positions currently have a healthy cushion (>6%).\n\n"
 
     report += "🏗️ *SECTOR EXPOSURE SUMMARY*\n"
-    for sec, val in sorted(sector_values.items(), key=lambda item: item, reverse=True):
+    for sec, val in sorted(sector_values.items(), key=lambda item: item, reverse=True): 
         allocation_pct = (val / total_val) * 100 if total_val > 0 else 0
         report += f"• {sec}: {allocation_pct:.1f}%\n"
     report += "\n"
