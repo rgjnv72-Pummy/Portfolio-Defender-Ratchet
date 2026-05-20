@@ -17,7 +17,7 @@ CURRENT_HOLDINGS = {
     "ORIENTELEC.NS": [700, 184.00, "2026-04-21", "Consumer Durables", 188.40],
     "POWERINDIA.NS": [4, 32905.00, "2026-04-29", "Infrastructure", 31905.00],  
     "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure", 1767.20],
-    "TENNIND.NS": [145, 635.00, "2026-05-04", "Auto Components", 604.55],
+    "MCX.NS": [24, 3428.00, "2026-05-19", "Financial Data & Stock Exchanges", 3414.70]
     "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication", 142.44],
     "LALPATHLAB.NS": [65, 1570.50, "2026-05-06", "Healthcare", 1582.00],
     "LAURUSLABS.NS": [68, 1211.20, "2026-05-07", "Pharma", 1299.70],
