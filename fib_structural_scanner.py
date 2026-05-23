@@ -210,21 +210,17 @@ def run_scan():
         msg += "📺 <b>TRADINGVIEW WATCHLIST (TAP TO COPY)</b>\n"
         msg += f"<code>{','.join(ticker_list)}</code>\n"
         
+        # --- HARD LOCK MULTI-FIRE EXCLUSION ---
         send_telegram_html(msg)
         print("✅ Telemetry payload successfully broadcast via HTML gateway.")
+        
+        # Forces the local runner context to immediately terminate and clear memory channels
+        import sys
+        sys.exit(0)
 
 if __name__ == "__main__":
     run_scan()
 
-    
-        
-
-        
-
-   
-   
-  
-  
        
        
     run_scan()
