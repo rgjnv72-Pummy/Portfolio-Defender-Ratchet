@@ -1,0 +1,35 @@
+name: Fibonacci Structural Friday Evening Scanner
+
+on:
+  schedule:
+    # 01:30 PM UTC translates exactly to 07:00 PM IST on Fridays
+    - cron: '30 13 * * 5'
+  
+  # Keeps the manual "Run workflow" button active in your Actions tab
+  workflow_dispatch:
+
+jobs:
+  run-fib-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository Source Code
+      uses: actions/checkout@v4
+
+    - name: Initialize Python Runtime Environment
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+
+    - name: Install Project Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # Fires up the script and securely injects your hidden Telegram API credentials
+    - name: Execute Fibonacci Shape Curve Identifier
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: python fib_structural_scanner.py
