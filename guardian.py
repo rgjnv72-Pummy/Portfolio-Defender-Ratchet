@@ -157,7 +157,7 @@ def run_simplified_watchdog():
             
             dist_to_stop = ((close_p - ratchet) / close_p) * 100
             
-            if dist_to_stop > 6.0:
+            if dist_to_stop > 3.0:
                 continue
 
             is_triggered = close_p <= (ratchet + 0.05)
@@ -172,7 +172,7 @@ def run_simplified_watchdog():
             continue
 
     # --- REPORT COMPOSITION ---
-    report = f"📋 *LIVE RISK WATCHDOG (<6% Cushion): {datetime.now().strftime('%d %b')}*\n"
+    report = f"📋 *LIVE RISK WATCHDOG (<3% Cushion): {datetime.now().strftime('%d %b')}*\n"
     report += f"Nifty 50 Index: {nifty_chg:+.2f}%\n"
     report += f"Total Active Scrips: {total_scrips}\n"
     report += "━━━━━━━━━━━━━━━━━━━━\n\n"
