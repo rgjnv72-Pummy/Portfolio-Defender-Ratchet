@@ -13,26 +13,27 @@ MY_TOKEN = os.getenv('TELEGRAM_TOKEN')
 # --- CURRENT OPEN HOLDINGS ---
 CURRENT_HOLDINGS = {
     "PREMIERENE.NS": [150, 943.30, "2026-04-07", "Infrastructure", 970.70],
-    "NATCOPHARM.NS": [150, 1066.00, "2026-04-07", "Pharma", 1175.60],
     "ORIENTELEC.NS": [700, 184.00, "2026-04-21", "Consumer Durables", 188.40],
-    "POWERINDIA.NS": [4, 32905.00, "2026-04-29", "Infrastructure", 31905.00],  
+    "POWERINDIA.NS": [4, 32905.00, "2026-04-29", "Infrastructure", 31905.00],
     "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure", 1767.20],
-    "MCX.NS": [24, 3428.00, "2026-05-19", "Financial Data & Stock Exchanges", 3414.70],
     "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication", 142.44],
-    "LALPATHLAB.NS": [65, 1570.50, "2026-05-06", "Healthcare", 1582.00],
     "LAURUSLABS.NS": [68, 1211.20, "2026-05-07", "Pharma", 1299.70],
     "HINDZINC.NS": [160, 641.70, "2026-05-07", "Metals", 670.30],
-    "BHARATFORG.NS": [39, 1959.00, "2026-05-15", "Industrial Manufacturing", 1934.00], 
-    "ATHERENERG.NS": [100, 943.00, "2026-05-11", "Auto Components", 943.30],   
+    "BHARATFORG.NS": [39, 1959.00, "2026-05-15", "Industrial Manufacturing", 1934.00],
+    "ATHERENERG.NS": [100, 943.00, "2026-05-11", "Auto Components", 943.30],
     "APARINDS.NS": [9, 12905.00, "2026-05-12", "Capital Goods", 12461.00],
     "CARBORUNIV.NS": [111, 1024.71, "2026-05-12", "Capital Goods", 1040.00],
-    "HINDCOPPER.NS": [198, 598.64, "2026-05-13", "Metals", 609.00],
     "APTUS.NS": [300, 270.25, "2026-05-13", "Financial Services", 269.25],
     "RAINBOW.NS": [80, 1341.00, "2026-05-18", "Healthcare", 1341.00],
     "INDUSTOWER.NS": [250, 430.00, "2026-05-18", "Telecommunication", 430.00],
     "SAIL.NS": [382, 198.00, "2026-05-19", "Metals", 198.00],
-    "NLCINDIA.NS": [300, 355.00, "2026-05-19", "Power & Energy", 355.00]
+    "NLCINDIA.NS": [300, 355.00, "2026-05-19", "Power & Energy", 355.00],
+    
+    # --- New Additions ---
+    "BHEL.NS": [250, 420.00, "2026-05-29", "Capital Goods", 425.00],
+    "NATIONALUM.NS": [300, 435.00, "2026-05-29", "Metals", 440.00]
 }
+    
 
 
 def send_msg(text):
