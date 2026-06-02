@@ -17,7 +17,6 @@ CURRENT_HOLDINGS = {
     "POWERINDIA.NS": [4, 32905.00, "2026-04-29", "Infrastructure", 31905.00],
     "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure", 1767.20],
     "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication", 142.44],
-    "LAURUSLABS.NS": [68, 1211.20, "2026-05-07", "Pharma", 1299.70],
     "HINDZINC.NS": [160, 641.70, "2026-05-07", "Metals", 670.30],
     "BHARATFORG.NS": [39, 1959.00, "2026-05-15", "Industrial Manufacturing", 1934.00],
     "ATHERENERG.NS": [100, 943.00, "2026-05-11", "Auto Components", 943.30],
@@ -28,11 +27,14 @@ CURRENT_HOLDINGS = {
     "INDUSTOWER.NS": [250, 430.00, "2026-05-18", "Telecommunication", 430.00],
     "SAIL.NS": [382, 198.00, "2026-05-19", "Metals", 198.00],
     "NLCINDIA.NS": [300, 355.00, "2026-05-19", "Power & Energy", 355.00],
-    
-    # --- New Additions ---
     "BHEL.NS": [250, 420.00, "2026-05-29", "Capital Goods", 425.00],
-    "NATIONALUM.NS": [300, 435.00, "2026-05-29", "Metals", 440.00]
+    "NATIONALUM.NS": [300, 435.00, "2026-05-29", "Metals", 440.00],
+    
+    # --- Latest Additions ---
+    "LAURUSLABS.NS": [118, 1278.50, "2026-05-30", "Pharma", 1299.70],   # 68@1211.20 + 50@1370 (blended avg)
+    "GVT&D.NS": [31, 4770.00, "2026-05-31", "UNKNOWN", 4800.00]         # New addition
 }
+   
     
 
 
