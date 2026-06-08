@@ -11,10 +11,10 @@ from sklearn.linear_model import LinearRegression
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
-# --- CONFIG (Aligned to Your Standard Secret Environment Patterns) ---
+# --- CONFIG (Aligned to Your Root Repository Layout) ---
 TKN = os.getenv("TELEGRAM_TOKEN", "").strip()
 UID = os.getenv("TELEGRAM_CHAT_ID", "").strip()
-DATA_FOLDER = "./Nifty_CSVs"  
+DATA_FOLDER = "."  # Target the root repository folder directly
 MIN_AVG_VOLUME = 100000
 
 try:
@@ -116,7 +116,6 @@ def run_pipeline_for_file(selected_file):
         alpha_signals_df = process_twelve_point_pipeline(price_data_matrix)
 
         if not alpha_signals_df.empty:
-            # Prints to GitHub action runner interface logs for debug analysis
             print(alpha_signals_df.head(10).to_string())
 
             # --- CONSTRUCT SAFE HTML REPORT MESSAGE ---
@@ -165,14 +164,10 @@ def run_pipeline_for_file(selected_file):
         print("❌ Data processing aborted: Matrix returned 0 matching stock indices.")
 
 def main():
-    if not os.path.exists(DATA_FOLDER):
-        print(f"❌ Missing Directory Error: Creating tracking workspace container: {DATA_FOLDER}")
-        os.makedirs(DATA_FOLDER)
-        return
-
-    csv_files = sorted([f for f in os.listdir(DATA_FOLDER) if f.endswith('.csv')])
+    # Automatically scan for files ending with nifty500list.csv in the root folder
+    csv_files = sorted([f for f in os.listdir(DATA_FOLDER) if f.endswith('nifty500list.csv')])
     if not csv_files:
-        print(f"⚠️ Empty Workspace Directory: Drop your CSV portfolio files into: {DATA_FOLDER}")
+        print(f"⚠️ Target portfolio data file not found in root path.")
         return
 
     print(f"📋 Found {len(csv_files)} portfolio documents to evaluate sequentially.")
