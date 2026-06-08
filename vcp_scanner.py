@@ -1,5 +1,9 @@
 import http.client, json, os, pandas as pd, numpy as np, yfinance as yf
+import warnings
 from datetime import datetime, timedelta
+
+# --- WARNING FILTERS (Cleans log clutter in environment) ---
+warnings.filterwarnings("ignore", category=FutureWarning, module="yfinance")
 
 # --- CONFIG (Matches Whale Environment Pattern) ---
 TOKEN = os.getenv('TELEGRAM_TOKEN', '').strip()
