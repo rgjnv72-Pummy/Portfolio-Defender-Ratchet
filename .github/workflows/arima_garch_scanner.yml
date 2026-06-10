@@ -1,0 +1,36 @@
+name: Quant Friday Evening ARIMA-GARCH Scanner
+
+on:
+  schedule:
+    # 01:30 PM UTC translates to exactly 07:00 PM IST (Indian Standard Time)
+    # The '5' declaration restricts this script to run ONLY on Fridays
+    - cron: '30 13 * * 5'
+  
+  # Adds a manual "Run workflow" button in GitHub so you can test it anytime
+  workflow_dispatch:
+
+jobs:
+  run-friday-arima-garch:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository Source Code
+      uses: actions/checkout@v4
+
+    - name: Initialize Python Runtime Environment
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+
+    - name: Install Advanced Time-Series Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install yfinance numpy pandas statsmodels arch urllib3
+
+    # Triggers your ARIMA-GARCH script and injects secure Telegram credentials
+    - name: Execute ARIMA-GARCH Swing Pipeline
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: python arima_garch_scanner.py

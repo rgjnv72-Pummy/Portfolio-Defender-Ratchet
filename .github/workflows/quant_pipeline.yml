@@ -1,0 +1,36 @@
+name: Quant Friday Evening Engine
+
+on:
+  schedule:
+    # 01:15 PM UTC translates to exactly 06:45 PM IST (Indian Standard Time)
+    # Staggered 15 minutes after your VCP scanner to prevent Yahoo Finance API rate limits
+    - cron: '15 13 * * 5'
+  
+  # Adds a manual "Run workflow" button in GitHub so you can test it anytime
+  workflow_dispatch:
+
+jobs:
+  run-friday-quant:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository Source Code
+      uses: actions/checkout@v4
+
+    - name: Initialize Python Runtime Environment
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+
+    - name: Install Project Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install yfinance numpy pandas scikit-learn urllib3
+
+    # Triggers your 12-Point Quant script and injects your secure credentials
+    - name: Execute 12-Point Mathematical Model
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: python quant_pipeline.py
