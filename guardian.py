@@ -10,33 +10,56 @@ yf.set_tz_cache_location("cache")
 MY_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 MY_TOKEN = os.getenv('TELEGRAM_TOKEN')
 
-# --- CURRENT OPEN HOLDINGS ---
-CURRENT_HOLDINGS = {
-    "PREMIERENE.NS": [150, 943.30, "2026-04-07", "Infrastructure", 970.70],
-    "ORIENTELEC.NS": [700, 184.00, "2026-04-21", "Consumer Durables", 188.40],
-    "POWERINDIA.NS": [4, 32905.00, "2026-04-29", "Infrastructure", 31905.00],
-    "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure", 1767.20],
-    "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication", 142.44],
-    "HINDZINC.NS": [160, 641.70, "2026-05-07", "Metals", 670.30],
-    "BHARATFORG.NS": [39, 1959.00, "2026-05-15", "Industrial Manufacturing", 1934.00],
-    "ATHERENERG.NS": [100, 943.00, "2026-05-11", "Auto Components", 943.30],
-    "APARINDS.NS": [9, 12905.00, "2026-05-12", "Capital Goods", 12461.00],
-    "CARBORUNIV.NS": [111, 1024.71, "2026-05-12", "Capital Goods", 1040.00],
-    "APTUS.NS": [300, 270.25, "2026-05-13", "Financial Services", 269.25],
-    "RAINBOW.NS": [80, 1341.00, "2026-05-18", "Healthcare", 1341.00],
-    "INDUSTOWER.NS": [250, 430.00, "2026-05-18", "Telecommunication", 430.00],
-    "SAIL.NS": [382, 198.00, "2026-05-19", "Metals", 198.00],
-    "NLCINDIA.NS": [300, 355.00, "2026-05-19", "Power & Energy", 355.00],
-    "BHEL.NS": [250, 420.00, "2026-05-29", "Capital Goods", 425.00],
-    "NATIONALUM.NS": [300, 435.00, "2026-05-29", "Metals", 440.00],
+# --- DYNAMIC ASSET REGISTRY SYNC LAYER ---
+def load_live_portfolio():
+    """Dynamically reads your live position matrix from your common JSON database file."""
+    # Robust path detection: check script dir, then parent, then specific Ratchet-System folder
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    paths_to_check = [
+        os.path.join(script_dir, "portfolio.json"),
+        os.path.join(os.path.dirname(script_dir), "Ratchet-System", "portfolio.json"),
+        "portfolio.json"
+    ]
     
-    # --- Latest Additions ---
-    "LAURUSLABS.NS": [118, 1278.50, "2026-05-30", "Pharma", 1299.70],   # 68@1211.20 + 50@1370 (blended avg)
-    "GVT&D.NS": [31, 4770.00, "2026-05-31", "UNKNOWN", 4800.00]         # New addition
-}
-   
+    portfolio_path = None
+    for p in paths_to_check:
+        if os.path.exists(p):
+            portfolio_path = p
+            break
     
-
+    # Ultimate Fallback Core if file isn't written yet
+    fallback_holdings = {
+        "PREMIERENE.NS": [150, 943.30, "2026-04-07", "Infrastructure", 970.70],
+        "ORIENTELEC.NS": [700, 184.00, "2026-04-21", "Consumer Durables", 188.40],
+        "POWERINDIA.NS": [4, 32905.00, "2026-04-29", "Infrastructure", 31905.00],
+        "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure", 1767.20],
+        "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication", 142.44],
+        "LAURUSLABS.NS": [118, 1278.50, "2026-05-30", "Pharma", 1299.70]
+    }
+    
+    if not portfolio_path:
+        return fallback_holdings
+        
+    try:
+        with open(portfolio_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        
+        holdings = data.get("holdings", {})
+        if not holdings: return fallback_holdings
+        
+        # Format custom configuration vectors to integrate seamlessly with your watchdog loops
+        formatted_holdings = {}
+        for ticker, info in holdings.items():
+            formatted_holdings[ticker] = [
+                info.get("quantity", 1),
+                info.get("avg_cost", 1.0),
+                info.get("buy_date", "2026-05-01"),
+                info.get("sector", "General"),
+                info.get("current_price", info.get("avg_cost", 1.0))
+            ]
+        return formatted_holdings
+    except:
+        return fallback_holdings
 
 def send_msg(text):
     token = MY_TOKEN.strip() if MY_TOKEN else None
@@ -55,6 +78,7 @@ def send_msg(text):
         print(f"❌ Telegram Error: {e}")
 
 def run_simplified_watchdog():
+    CURRENT_HOLDINGS = load_live_portfolio()
     try:
         tickers = list(CURRENT_HOLDINGS.keys()) + ["^NSEI"]
         data = yf.download(tickers, period="1y", interval="1d", progress=False, auto_adjust=True)

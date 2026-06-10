@@ -1,0 +1,2276 @@
+[
+  {
+    "ticker": "RS.BO",
+    "company_name": "RS Software",
+    "exit_date": "2016-01-25",
+    "exit_price": 85.42
+  },
+  {
+    "ticker": "KITEX.BO",
+    "company_name": "Kitex Garments",
+    "exit_date": "2016-01-28",
+    "exit_price": 395.0
+  },
+  {
+    "ticker": "VETO.NS",
+    "company_name": "Veto Switch",
+    "exit_date": "2016-04-01",
+    "exit_price": 85.7
+  },
+  {
+    "ticker": "SINTEX.NS",
+    "company_name": "Sintex Ind",
+    "exit_date": "2016-05-26",
+    "exit_price": 75.8
+  },
+  {
+    "ticker": "LEEL.NS",
+    "company_name": "LEEL Elect",
+    "exit_date": "2017-03-10",
+    "exit_price": 267.0
+  },
+  {
+    "ticker": "VISHNU.NS",
+    "company_name": "Vishnu Chemical",
+    "exit_date": "2017-05-30",
+    "exit_price": 230.0
+  },
+  {
+    "ticker": "SUVEN.BO",
+    "company_name": "Suven Life Sci",
+    "exit_date": "2017-07-03",
+    "exit_price": 170.0
+  },
+  {
+    "ticker": "TATA.NS",
+    "company_name": "Tata Elxsi",
+    "exit_date": "2017-07-03",
+    "exit_price": 1600.0
+  },
+  {
+    "ticker": "JHS.NS",
+    "company_name": "JHS Svendgaard",
+    "exit_date": "2018-08-16",
+    "exit_price": 32.85
+  },
+  {
+    "ticker": "DEWAN.BO",
+    "company_name": "Dewan Housing",
+    "exit_date": "2019-03-25",
+    "exit_price": 130.5
+  },
+  {
+    "ticker": "INDIA.NS",
+    "company_name": "India Glycols",
+    "exit_date": "2020-08-21",
+    "exit_price": 293.0
+  },
+  {
+    "ticker": "ALLCARGO.NS",
+    "company_name": "Allcargo",
+    "exit_date": "2020-09-08",
+    "exit_price": 114.0
+  },
+  {
+    "ticker": "MONTE.NS",
+    "company_name": "Monte Carlo",
+    "exit_date": "2020-09-16",
+    "exit_price": 181.0
+  },
+  {
+    "ticker": "ATUL.BO",
+    "company_name": "Atul Auto",
+    "exit_date": "2020-09-17",
+    "exit_price": 181.0
+  },
+  {
+    "ticker": "BODAL.NS",
+    "company_name": "Bodal Chemicals",
+    "exit_date": "2020-09-17",
+    "exit_price": 71.0
+  },
+  {
+    "ticker": "NBCC.NS",
+    "company_name": "NBCC (India)",
+    "exit_date": "2020-09-17",
+    "exit_price": 26.3
+  },
+  {
+    "ticker": "LT.NS",
+    "company_name": "LT Foods",
+    "exit_date": "2021-02-01",
+    "exit_price": 53.6
+  },
+  {
+    "ticker": "NCL.NS",
+    "company_name": "NCL Industries",
+    "exit_date": "2021-02-01",
+    "exit_price": 149.0
+  },
+  {
+    "ticker": "TRIVENI.NS",
+    "company_name": "Triveni Turbine",
+    "exit_date": "2021-02-01",
+    "exit_price": 85.0
+  },
+  {
+    "ticker": "ADVANCED.NS",
+    "company_name": "Advanced Enzyme",
+    "exit_date": "2021-03-08",
+    "exit_price": 353.0
+  },
+  {
+    "ticker": "IGL.NS",
+    "company_name": "IGL",
+    "exit_date": "2021-03-08",
+    "exit_price": 526.0
+  },
+  {
+    "ticker": "DHANUKA.NS",
+    "company_name": "Dhanuka Agritec",
+    "exit_date": "2021-04-20",
+    "exit_price": 712.0
+  },
+  {
+    "ticker": "MAS.NS",
+    "company_name": "MAS Financial S",
+    "exit_date": "2021-04-20",
+    "exit_price": 780.0
+  },
+  {
+    "ticker": "GRANULES.BO",
+    "company_name": "Granules India",
+    "exit_date": "2021-05-19",
+    "exit_price": 324.65
+  },
+  {
+    "ticker": "EVEREST.NS",
+    "company_name": "Everest Kanto",
+    "exit_date": "2021-05-21",
+    "exit_price": 104.5
+  },
+  {
+    "ticker": "IEX.NS",
+    "company_name": "IEX",
+    "exit_date": "2021-05-31",
+    "exit_price": 354.0
+  },
+  {
+    "ticker": "MAITHAN.NS",
+    "company_name": "Maithan Alloys",
+    "exit_date": "2021-05-31",
+    "exit_price": 757.0
+  },
+  {
+    "ticker": "INDIA.NS",
+    "company_name": "India Glycols",
+    "exit_date": "2021-05-31",
+    "exit_price": 467.0
+  },
+  {
+    "ticker": "CYIENT.NS",
+    "company_name": "Cyient",
+    "exit_date": "2021-06-03",
+    "exit_price": 805.0
+  },
+  {
+    "ticker": "LAURUS.NS",
+    "company_name": "Laurus Labs",
+    "exit_date": "2021-06-03",
+    "exit_price": 537.0
+  },
+  {
+    "ticker": "AFFLE.NS",
+    "company_name": "AFFLE 3I",
+    "exit_date": "2021-06-18",
+    "exit_price": 4810.0
+  },
+  {
+    "ticker": "SWELECT.NS",
+    "company_name": "Swelect Energy",
+    "exit_date": "2021-06-18",
+    "exit_price": 220.0
+  },
+  {
+    "ticker": "FINE.NS",
+    "company_name": "Fine Organics",
+    "exit_date": "2021-06-21",
+    "exit_price": 2809.0
+  },
+  {
+    "ticker": "IEX.NS",
+    "company_name": "IEX",
+    "exit_date": "2021-06-21",
+    "exit_price": 373.2
+  },
+  {
+    "ticker": "GARWARE.NS",
+    "company_name": "Garware Technic",
+    "exit_date": "2021-06-21",
+    "exit_price": 3027.0
+  },
+  {
+    "ticker": "TATA.NS",
+    "company_name": "Tata Steel BSL",
+    "exit_date": "2021-06-21",
+    "exit_price": 90.0
+  },
+  {
+    "ticker": "BIRLA.NS",
+    "company_name": "Birla Cable",
+    "exit_date": "2021-06-30",
+    "exit_price": 118.0
+  },
+  {
+    "ticker": "ELECON.NS",
+    "company_name": "Elecon Eng",
+    "exit_date": "2021-06-30",
+    "exit_price": 138.0
+  },
+  {
+    "ticker": "INTELLECT.NS",
+    "company_name": "Intellect Desig",
+    "exit_date": "2021-06-30",
+    "exit_price": 720.0
+  },
+  {
+    "ticker": "SOMANY.NS",
+    "company_name": "Somany Ceramics",
+    "exit_date": "2021-06-30",
+    "exit_price": 605.0
+  },
+  {
+    "ticker": "ELECON.NS",
+    "company_name": "Elecon Eng",
+    "exit_date": "2021-07-13",
+    "exit_price": 124.66
+  },
+  {
+    "ticker": "ITI.NS",
+    "company_name": "ITI",
+    "exit_date": "2021-07-13",
+    "exit_price": 127.62
+  },
+  {
+    "ticker": "INDIAN.NS",
+    "company_name": "Indian Bank",
+    "exit_date": "2021-07-13",
+    "exit_price": 136.0
+  },
+  {
+    "ticker": "LAURUS.NS",
+    "company_name": "Laurus Labs",
+    "exit_date": "2021-07-13",
+    "exit_price": 671.0
+  },
+  {
+    "ticker": "LAURUS.NS",
+    "company_name": "Laurus Labs",
+    "exit_date": "2021-07-26",
+    "exit_price": 643.0
+  },
+  {
+    "ticker": "BIRLA.NS",
+    "company_name": "Birla Cable",
+    "exit_date": "2021-07-28",
+    "exit_price": 105.0
+  },
+  {
+    "ticker": "SOMANY.NS",
+    "company_name": "Somany Ceramics",
+    "exit_date": "2021-08-09",
+    "exit_price": 674.0
+  },
+  {
+    "ticker": "GOODYEAR.NS",
+    "company_name": "Goodyear",
+    "exit_date": "2021-08-09",
+    "exit_price": 1097.0
+  },
+  {
+    "ticker": "DECCAN.NS",
+    "company_name": "Deccan Cements",
+    "exit_date": "2021-08-10",
+    "exit_price": 708.0
+  },
+  {
+    "ticker": "DEEPAK.NS",
+    "company_name": "Deepak Fert",
+    "exit_date": "2021-08-10",
+    "exit_price": 444.0
+  },
+  {
+    "ticker": "MAITHAN.NS",
+    "company_name": "Maithan Alloys",
+    "exit_date": "2021-08-10",
+    "exit_price": 1068.0
+  },
+  {
+    "ticker": "RELIANCE.NS",
+    "company_name": "Reliance Chemo",
+    "exit_date": "2021-08-10",
+    "exit_price": 145.0
+  },
+  {
+    "ticker": "CAMS.NS",
+    "company_name": "CAMS",
+    "exit_date": "2021-08-10",
+    "exit_price": 3080.0
+  },
+  {
+    "ticker": "CDSL.NS",
+    "company_name": "CDSL",
+    "exit_date": "2021-08-10",
+    "exit_price": 1260.0
+  },
+  {
+    "ticker": "CYIENT.NS",
+    "company_name": "Cyient",
+    "exit_date": "2021-08-10",
+    "exit_price": 947.0
+  },
+  {
+    "ticker": "DOLLAR.NS",
+    "company_name": "Dollar Ind",
+    "exit_date": "2021-08-10",
+    "exit_price": 349.0
+  },
+  {
+    "ticker": "IEX.NS",
+    "company_name": "IEX",
+    "exit_date": "2021-08-10",
+    "exit_price": 397.0
+  },
+  {
+    "ticker": "LAURUS.NS",
+    "company_name": "Laurus Labs",
+    "exit_date": "2021-08-10",
+    "exit_price": 697.0
+  },
+  {
+    "ticker": "LAXMI.NS",
+    "company_name": "Laxmi Organic",
+    "exit_date": "2021-08-11",
+    "exit_price": 277.0
+  },
+  {
+    "ticker": "NAZARA.NS",
+    "company_name": "Nazara",
+    "exit_date": "2021-08-11",
+    "exit_price": 1642.0
+  },
+  {
+    "ticker": "ROUTE.NS",
+    "company_name": "Route",
+    "exit_date": "2021-08-11",
+    "exit_price": 1893.0
+  },
+  {
+    "ticker": "TIPS.NS",
+    "company_name": "Tips Music",
+    "exit_date": "2021-08-11",
+    "exit_price": 1107.0
+  },
+  {
+    "ticker": "RELIANCE.NS",
+    "company_name": "Reliance Chemo",
+    "exit_date": "2021-08-21",
+    "exit_price": 132.0
+  },
+  {
+    "ticker": "KIOCL.NS",
+    "company_name": "KIOCL",
+    "exit_date": "2021-10-04",
+    "exit_price": 254.0
+  },
+  {
+    "ticker": "RELIANCE.NS",
+    "company_name": "Reliance Chemo",
+    "exit_date": "2021-10-04",
+    "exit_price": 159.0
+  },
+  {
+    "ticker": "XCHANGING.NS",
+    "company_name": "Xchanging Sol",
+    "exit_date": "2021-10-04",
+    "exit_price": 109.5
+  },
+  {
+    "ticker": "SWARAJ.NS",
+    "company_name": "Swaraj Engines",
+    "exit_date": "2021-10-19",
+    "exit_price": 1740.0
+  },
+  {
+    "ticker": "UTI.NS",
+    "company_name": "UTI AMC",
+    "exit_date": "2021-10-19",
+    "exit_price": 1095.0
+  },
+  {
+    "ticker": "DECCAN.NS",
+    "company_name": "Deccan Cements",
+    "exit_date": "2021-11-01",
+    "exit_price": 713.0
+  },
+  {
+    "ticker": "LAURUS.NS",
+    "company_name": "Laurus Labs",
+    "exit_date": "2021-11-01",
+    "exit_price": 493.0
+  },
+  {
+    "ticker": "NAZARA.NS",
+    "company_name": "Nazara",
+    "exit_date": "2021-11-03",
+    "exit_price": 2303.0
+  },
+  {
+    "ticker": "LAXMI.NS",
+    "company_name": "Laxmi Organic",
+    "exit_date": "2021-11-04",
+    "exit_price": 417.0
+  },
+  {
+    "ticker": "BOROSIL.NS",
+    "company_name": "Borosil Renew",
+    "exit_date": "2021-11-29",
+    "exit_price": 562.0
+  },
+  {
+    "ticker": "CDSL.NS",
+    "company_name": "CDSL",
+    "exit_date": "2021-11-29",
+    "exit_price": 1360.0
+  },
+  {
+    "ticker": "CONFIDENCEPETRO.NS",
+    "company_name": "ConfidencePetro",
+    "exit_date": "2021-11-29",
+    "exit_price": 72.5
+  },
+  {
+    "ticker": "IEX.NS",
+    "company_name": "IEX",
+    "exit_date": "2021-11-29",
+    "exit_price": 738.0
+  },
+  {
+    "ticker": "SONA.NS",
+    "company_name": "Sona BLW",
+    "exit_date": "2021-11-29",
+    "exit_price": 715.0
+  },
+  {
+    "ticker": "CAMS.NS",
+    "company_name": "CAMS",
+    "exit_date": "2021-12-17",
+    "exit_price": 2650.0
+  },
+  {
+    "ticker": "NITIN.NS",
+    "company_name": "Nitin Spinners",
+    "exit_date": "2021-12-20",
+    "exit_price": 227.0
+  },
+  {
+    "ticker": "TIPS.NS",
+    "company_name": "Tips Music",
+    "exit_date": "2021-12-20",
+    "exit_price": 1509.0
+  },
+  {
+    "ticker": "DEEPAK.NS",
+    "company_name": "Deepak Fert",
+    "exit_date": "2021-12-20",
+    "exit_price": 360.0
+  },
+  {
+    "ticker": "DOLLAR.NS",
+    "company_name": "Dollar Ind",
+    "exit_date": "2021-12-20",
+    "exit_price": 423.0
+  },
+  {
+    "ticker": "HFCL.NS",
+    "company_name": "HFCL",
+    "exit_date": "2021-12-20",
+    "exit_price": 76.0
+  },
+  {
+    "ticker": "IEX.NS",
+    "company_name": "IEX",
+    "exit_date": "2021-12-20",
+    "exit_price": 240.0
+  },
+  {
+    "ticker": "JUBILANT.NS",
+    "company_name": "Jubilant Ing.",
+    "exit_date": "2021-12-20",
+    "exit_price": 540.0
+  },
+  {
+    "ticker": "LAURUS.NS",
+    "company_name": "Laurus Labs",
+    "exit_date": "2021-12-20",
+    "exit_price": 480.0
+  },
+  {
+    "ticker": "MAITHAN.NS",
+    "company_name": "Maithan Alloys",
+    "exit_date": "2021-12-20",
+    "exit_price": 937.0
+  },
+  {
+    "ticker": "PRAJ.NS",
+    "company_name": "Praj Industries",
+    "exit_date": "2021-12-20",
+    "exit_price": 313.0
+  },
+  {
+    "ticker": "ROUTE.NS",
+    "company_name": "Route",
+    "exit_date": "2021-12-20",
+    "exit_price": 1740.0
+  },
+  {
+    "ticker": "SANGHVI.NS",
+    "company_name": "Sanghvi Movers",
+    "exit_date": "2021-12-20",
+    "exit_price": 199.0
+  },
+  {
+    "ticker": "SONA.NS",
+    "company_name": "Sona BLW",
+    "exit_date": "2021-12-20",
+    "exit_price": 705.0
+  },
+  {
+    "ticker": "BOROSIL.NS",
+    "company_name": "Borosil Renew",
+    "exit_date": "2021-12-21",
+    "exit_price": 650.0
+  },
+  {
+    "ticker": "EMAMI.NS",
+    "company_name": "Emami Realty",
+    "exit_date": "2022-01-05",
+    "exit_price": 89.0
+  },
+  {
+    "ticker": "LAURUS.NS",
+    "company_name": "Laurus Labs",
+    "exit_date": "2022-01-11",
+    "exit_price": 513.0
+  },
+  {
+    "ticker": "KITEX.NS",
+    "company_name": "Kitex Garments",
+    "exit_date": "2022-01-12",
+    "exit_price": 256.8
+  },
+  {
+    "ticker": "MARAL.NS",
+    "company_name": "Maral Overseas",
+    "exit_date": "2022-01-12",
+    "exit_price": 126.26
+  },
+  {
+    "ticker": "LATENT.NS",
+    "company_name": "Latent View",
+    "exit_date": "2022-01-24",
+    "exit_price": 507.45
+  },
+  {
+    "ticker": "MAITHAN.NS",
+    "company_name": "Maithan Alloys",
+    "exit_date": "2022-01-24",
+    "exit_price": 955.0
+  },
+  {
+    "ticker": "KITEX.NS",
+    "company_name": "Kitex Garments",
+    "exit_date": "2022-01-24",
+    "exit_price": 229.25
+  },
+  {
+    "ticker": "INTL.NS",
+    "company_name": "Intl Conveyor",
+    "exit_date": "2022-01-24",
+    "exit_price": 78.2
+  },
+  {
+    "ticker": "IEX.NS",
+    "company_name": "IEX",
+    "exit_date": "2022-01-24",
+    "exit_price": 241.0
+  },
+  {
+    "ticker": "PRAJ.NS",
+    "company_name": "Praj Industries",
+    "exit_date": "2022-01-24",
+    "exit_price": 402.4
+  },
+  {
+    "ticker": "SARDA.NS",
+    "company_name": "Sarda Energy",
+    "exit_date": "2022-01-24",
+    "exit_price": 782.64
+  },
+  {
+    "ticker": "SHYAM.NS",
+    "company_name": "Shyam Metalics",
+    "exit_date": "2022-01-24",
+    "exit_price": 325.31
+  },
+  {
+    "ticker": "JUBILANT.NS",
+    "company_name": "Jubilant Ing.",
+    "exit_date": "2022-01-24",
+    "exit_price": 535.0
+  },
+  {
+    "ticker": "CDSL.NS",
+    "company_name": "CDSL",
+    "exit_date": "2022-01-24",
+    "exit_price": 1502.0
+  },
+  {
+    "ticker": "FINEOTEX.NS",
+    "company_name": "Fineotex Chem",
+    "exit_date": "2022-01-24",
+    "exit_price": 144.3
+  },
+  {
+    "ticker": "MARAL.NS",
+    "company_name": "Maral Overseas",
+    "exit_date": "2022-01-24",
+    "exit_price": 125.4
+  },
+  {
+    "ticker": "APOLLO.NS",
+    "company_name": "Apollo Micro Sy",
+    "exit_date": "2022-02-17",
+    "exit_price": 127.4
+  },
+  {
+    "ticker": "LAMBODHARA.NS",
+    "company_name": "Lambodhara Text",
+    "exit_date": "2022-03-28",
+    "exit_price": 91.0
+  },
+  {
+    "ticker": "LG.NS",
+    "company_name": "LG Balakrishnan",
+    "exit_date": "2022-03-28",
+    "exit_price": 536.49
+  },
+  {
+    "ticker": "LAXMI.NS",
+    "company_name": "Laxmi Organic",
+    "exit_date": "2022-03-28",
+    "exit_price": 401.8
+  },
+  {
+    "ticker": "PRAJ.NS",
+    "company_name": "Praj Industries",
+    "exit_date": "2022-03-28",
+    "exit_price": 359.0
+  },
+  {
+    "ticker": "LA.NS",
+    "company_name": "La Opala RG",
+    "exit_date": "2022-03-30",
+    "exit_price": 354.0
+  },
+  {
+    "ticker": "KITEX.NS",
+    "company_name": "Kitex Garments",
+    "exit_date": "2022-04-07",
+    "exit_price": 254.0
+  },
+  {
+    "ticker": "ZEE.NS",
+    "company_name": "Zee Media",
+    "exit_date": "2022-04-13",
+    "exit_price": 20.1
+  },
+  {
+    "ticker": "CDSL.NS",
+    "company_name": "CDSL",
+    "exit_date": "2022-04-19",
+    "exit_price": 1438.0
+  },
+  {
+    "ticker": "LATENT.NS",
+    "company_name": "Latent View",
+    "exit_date": "2022-04-19",
+    "exit_price": 482.0
+  },
+  {
+    "ticker": "JTL.NS",
+    "company_name": "JTL Ind.",
+    "exit_date": "2022-04-25",
+    "exit_price": 255.0
+  },
+  {
+    "ticker": "AWL.NS",
+    "company_name": "AWL Agri",
+    "exit_date": "2022-04-28",
+    "exit_price": 805.0
+  },
+  {
+    "ticker": "GNFC.NS",
+    "company_name": "GNFC",
+    "exit_date": "2022-04-29",
+    "exit_price": 826.0
+  },
+  {
+    "ticker": "LAURUS.NS",
+    "company_name": "Laurus Labs",
+    "exit_date": "2022-05-02",
+    "exit_price": 582.0
+  },
+  {
+    "ticker": "BOROSIL.NS",
+    "company_name": "Borosil Renew",
+    "exit_date": "2022-05-06",
+    "exit_price": 614.0
+  },
+  {
+    "ticker": "RUPA.NS",
+    "company_name": "Rupa and Comp",
+    "exit_date": "2022-05-24",
+    "exit_price": 428.0
+  },
+  {
+    "ticker": "KELLTON.NS",
+    "company_name": "Kellton Tech",
+    "exit_date": "2022-05-24",
+    "exit_price": 70.8
+  },
+  {
+    "ticker": "ANGEL.NS",
+    "company_name": "Angel One",
+    "exit_date": "2022-05-25",
+    "exit_price": 1349.0
+  },
+  {
+    "ticker": "LSNNS)(U(.NS",
+    "company_name": "LSNNS)(U(",
+    "exit_date": "2022-05-25",
+    "exit_price": 285.0
+  },
+  {
+    "ticker": "DEEPAK.NS",
+    "company_name": "Deepak Fert",
+    "exit_date": "2022-05-25",
+    "exit_price": 540.0
+  },
+  {
+    "ticker": "GOKALDAS.NS",
+    "company_name": "Gokaldas Export",
+    "exit_date": "2022-05-25",
+    "exit_price": 425.0
+  },
+  {
+    "ticker": "KITEX.NS",
+    "company_name": "Kitex Garments",
+    "exit_date": "2022-05-25",
+    "exit_price": 235.0
+  },
+  {
+    "ticker": "LG.NS",
+    "company_name": "LG Balakrishnan",
+    "exit_date": "2022-05-25",
+    "exit_price": 549.0
+  },
+  {
+    "ticker": "MAH.NS",
+    "company_name": "Mah Seamless",
+    "exit_date": "2022-05-25",
+    "exit_price": 541.0
+  },
+  {
+    "ticker": "PPL.NS",
+    "company_name": "PPL",
+    "exit_date": "2022-05-25",
+    "exit_price": 166.0
+  },
+  {
+    "ticker": "PARAS.NS",
+    "company_name": "Paras Defence",
+    "exit_date": "2022-05-25",
+    "exit_price": 587.0
+  },
+  {
+    "ticker": "ROTO.NS",
+    "company_name": "Roto Pumps",
+    "exit_date": "2022-05-25",
+    "exit_price": 459.0
+  },
+  {
+    "ticker": "STEEL.NS",
+    "company_name": "Steel Str Wheel",
+    "exit_date": "2022-05-25",
+    "exit_price": 746.0
+  },
+  {
+    "ticker": "KRISHANA.NS",
+    "company_name": "Krishana Phosch",
+    "exit_date": "2022-07-15",
+    "exit_price": 239.0
+  },
+  {
+    "ticker": "SHARDA.NS",
+    "company_name": "Sharda Crop",
+    "exit_date": "2022-07-26",
+    "exit_price": 563.0
+  },
+  {
+    "ticker": "LSNNS)(U(.NS",
+    "company_name": "LSNNS)(U(",
+    "exit_date": "2022-09-19",
+    "exit_price": 336.0
+  },
+  {
+    "ticker": "PPL.NS",
+    "company_name": "PPL",
+    "exit_date": "2022-09-23",
+    "exit_price": 179.0
+  },
+  {
+    "ticker": "ROTO.NS",
+    "company_name": "Roto Pumps",
+    "exit_date": "2022-09-23",
+    "exit_price": 452.0
+  },
+  {
+    "ticker": "STEEL.NS",
+    "company_name": "Steel Str Wheel",
+    "exit_date": "2022-09-23",
+    "exit_price": 819.0
+  },
+  {
+    "ticker": "PARAS.NS",
+    "company_name": "Paras Defence",
+    "exit_date": "2022-09-26",
+    "exit_price": 692.0
+  },
+  {
+    "ticker": "PSP.NS",
+    "company_name": "PSP Projects",
+    "exit_date": "2022-09-26",
+    "exit_price": 603.0
+  },
+  {
+    "ticker": "TIME.NS",
+    "company_name": "Time Techno",
+    "exit_date": "2022-09-26",
+    "exit_price": 102.5
+  },
+  {
+    "ticker": "AWL.NS",
+    "company_name": "AWL Agri",
+    "exit_date": "2022-10-17",
+    "exit_price": 648.0
+  },
+  {
+    "ticker": "PSP.NS",
+    "company_name": "PSP Projects",
+    "exit_date": "2022-10-18",
+    "exit_price": 567.0
+  },
+  {
+    "ticker": "CERA.NS",
+    "company_name": "Cera Sanitary",
+    "exit_date": "2022-11-10",
+    "exit_price": 5178.0
+  },
+  {
+    "ticker": "NAZARA.NS",
+    "company_name": "Nazara",
+    "exit_date": "2022-11-10",
+    "exit_price": 600.0
+  },
+  {
+    "ticker": "PATANJALI.NS",
+    "company_name": "Patanjali Foods",
+    "exit_date": "2022-11-15",
+    "exit_price": 1265.0
+  },
+  {
+    "ticker": "GODFREY.NS",
+    "company_name": "Godfrey Phillip",
+    "exit_date": "2022-11-25",
+    "exit_price": 1759.0
+  },
+  {
+    "ticker": "PRAJ.NS",
+    "company_name": "Praj Industries",
+    "exit_date": "2022-12-09",
+    "exit_price": 384.0
+  },
+  {
+    "ticker": "GRANULES.NS",
+    "company_name": "Granules India",
+    "exit_date": "2022-12-09",
+    "exit_price": 332.0
+  },
+  {
+    "ticker": "RITES.NS",
+    "company_name": "RITES",
+    "exit_date": "2023-02-03",
+    "exit_price": 326.5
+  },
+  {
+    "ticker": "CMS.NS",
+    "company_name": "CMS Info System",
+    "exit_date": "2023-02-03",
+    "exit_price": 303.0
+  },
+  {
+    "ticker": "ANAND.NS",
+    "company_name": "Anand Rathi",
+    "exit_date": "2023-02-20",
+    "exit_price": 772.0
+  },
+  {
+    "ticker": "CIEINDIA.NS",
+    "company_name": "CIEINDIA",
+    "exit_date": "2023-02-27",
+    "exit_price": 420.0
+  },
+  {
+    "ticker": "BIKAJI.NS",
+    "company_name": "Bikaji Foods",
+    "exit_date": "2023-03-31",
+    "exit_price": 360.0
+  },
+  {
+    "ticker": "TECH.NS",
+    "company_name": "Tech Mahindra",
+    "exit_date": "2023-04-17",
+    "exit_price": 1015.0
+  },
+  {
+    "ticker": "COFORGE.NS",
+    "company_name": "COFORGE",
+    "exit_date": "2023-04-17",
+    "exit_price": 3775.0
+  },
+  {
+    "ticker": "SAKSOFT.NS",
+    "company_name": "Saksoft",
+    "exit_date": "2023-04-27",
+    "exit_price": 213.0
+  },
+  {
+    "ticker": "ICE.NS",
+    "company_name": "ICE Make Refrig",
+    "exit_date": "2023-04-27",
+    "exit_price": 331.0
+  },
+  {
+    "ticker": "LAURUS.NS",
+    "company_name": "Laurus Labs",
+    "exit_date": "2023-04-27",
+    "exit_price": 289.0
+  },
+  {
+    "ticker": "HONDA.NS",
+    "company_name": "Honda India PP",
+    "exit_date": "2023-05-15",
+    "exit_price": 2220.0
+  },
+  {
+    "ticker": "GNA.NS",
+    "company_name": "GNA Axles",
+    "exit_date": "2023-06-01",
+    "exit_price": 736.0
+  },
+  {
+    "ticker": "ANDHRA.NS",
+    "company_name": "Andhra Paper",
+    "exit_date": "2023-06-01",
+    "exit_price": 447.0
+  },
+  {
+    "ticker": "JUPITER.NS",
+    "company_name": "Jupiter Wagons",
+    "exit_date": "2023-06-14",
+    "exit_price": 142.0
+  },
+  {
+    "ticker": "SWARAJ.NS",
+    "company_name": "Swaraj Engines",
+    "exit_date": "2023-06-14",
+    "exit_price": 2107.0
+  },
+  {
+    "ticker": "NAVA.NS",
+    "company_name": "NAVA",
+    "exit_date": "2023-06-14",
+    "exit_price": 315.0
+  },
+  {
+    "ticker": "UNION.NS",
+    "company_name": "Union Bank",
+    "exit_date": "2023-06-19",
+    "exit_price": 71.3
+  },
+  {
+    "ticker": "JUPITER.NS",
+    "company_name": "Jupiter Wagons",
+    "exit_date": "2023-06-23",
+    "exit_price": 149.4
+  },
+  {
+    "ticker": "SWARAJ.NS",
+    "company_name": "Swaraj Engines",
+    "exit_date": "2023-07-10",
+    "exit_price": 2065.0
+  },
+  {
+    "ticker": "ANGEL.NS",
+    "company_name": "Angel One",
+    "exit_date": "2023-07-17",
+    "exit_price": 1622.0
+  },
+  {
+    "ticker": "ROUTE.NS",
+    "company_name": "Route",
+    "exit_date": "2023-07-17",
+    "exit_price": 1558.0
+  },
+  {
+    "ticker": "AWL.NS",
+    "company_name": "AWL Agri",
+    "exit_date": "2023-08-04",
+    "exit_price": 399.0
+  },
+  {
+    "ticker": "ICE.NS",
+    "company_name": "ICE Make Refrig",
+    "exit_date": "2023-08-08",
+    "exit_price": 495.0
+  },
+  {
+    "ticker": "MTAR.NS",
+    "company_name": "MTAR Tech",
+    "exit_date": "2023-08-11",
+    "exit_price": 2194.0
+  },
+  {
+    "ticker": "NAVA.NS",
+    "company_name": "NAVA",
+    "exit_date": "2023-08-11",
+    "exit_price": 407.0
+  },
+  {
+    "ticker": "UJJIVAN.NS",
+    "company_name": "Ujjivan Small",
+    "exit_date": "2023-08-11",
+    "exit_price": 49.0
+  },
+  {
+    "ticker": "JUPITER.NS",
+    "company_name": "Jupiter Wagons",
+    "exit_date": "2023-08-11",
+    "exit_price": 243.0
+  },
+  {
+    "ticker": "ACTION.NS",
+    "company_name": "Action Const",
+    "exit_date": "2023-08-11",
+    "exit_price": 775.0
+  },
+  {
+    "ticker": "NAVA.NS",
+    "company_name": "NAVA",
+    "exit_date": "2023-08-17",
+    "exit_price": 385.5
+  },
+  {
+    "ticker": "ACTION.NS",
+    "company_name": "Action Const",
+    "exit_date": "2023-09-05",
+    "exit_price": 702.0
+  },
+  {
+    "ticker": "NATCO.NS",
+    "company_name": "Natco Pharma",
+    "exit_date": "2023-09-11",
+    "exit_price": 842.0
+  },
+  {
+    "ticker": "JUPITER.NS",
+    "company_name": "Jupiter Wagons",
+    "exit_date": "2023-09-11",
+    "exit_price": 373.0
+  },
+  {
+    "ticker": "FIRSTSOURCE.NS",
+    "company_name": "Firstsource Sol",
+    "exit_date": "2023-09-13",
+    "exit_price": 159.0
+  },
+  {
+    "ticker": "GABRIEL.NS",
+    "company_name": "Gabriel India",
+    "exit_date": "2023-09-13",
+    "exit_price": 292.0
+  },
+  {
+    "ticker": "ACCELYA.NS",
+    "company_name": "Accelya",
+    "exit_date": "2023-10-19",
+    "exit_price": 1519.0
+  },
+  {
+    "ticker": "NDTV.NS",
+    "company_name": "NDTV",
+    "exit_date": "2023-10-25",
+    "exit_price": 192.0
+  },
+  {
+    "ticker": "JUPITER.NS",
+    "company_name": "Jupiter Wagons",
+    "exit_date": "2023-10-25",
+    "exit_price": 288.0
+  },
+  {
+    "ticker": "SONA.NS",
+    "company_name": "Sona BLW",
+    "exit_date": "2023-10-25",
+    "exit_price": 506.0
+  },
+  {
+    "ticker": "GANDHI.NS",
+    "company_name": "Gandhi Spl Tube",
+    "exit_date": "2023-11-02",
+    "exit_price": 692.0
+  },
+  {
+    "ticker": "ICE.NS",
+    "company_name": "ICE Make Refrig",
+    "exit_date": "2023-11-15",
+    "exit_price": 589.0
+  },
+  {
+    "ticker": "EVEREST.NS",
+    "company_name": "Everest Kanto",
+    "exit_date": "2023-12-26",
+    "exit_price": 128.0
+  },
+  {
+    "ticker": "PRIMA.NS",
+    "company_name": "Prima Plastics",
+    "exit_date": "2024-01-11",
+    "exit_price": 166.0
+  },
+  {
+    "ticker": "KNR.NS",
+    "company_name": "KNR Construct",
+    "exit_date": "2024-01-11",
+    "exit_price": 260.0
+  },
+  {
+    "ticker": "SG.NS",
+    "company_name": "SG FINSERVE",
+    "exit_date": "2024-01-20",
+    "exit_price": 526.0
+  },
+  {
+    "ticker": "WPIL.NS",
+    "company_name": "WPIL",
+    "exit_date": "2024-02-15",
+    "exit_price": 3205.0
+  },
+  {
+    "ticker": "CONFIDENCEPETRO.NS",
+    "company_name": "ConfidencePetro",
+    "exit_date": "2024-02-15",
+    "exit_price": 90.5
+  },
+  {
+    "ticker": "GLAND.NS",
+    "company_name": "Gland",
+    "exit_date": "2024-02-15",
+    "exit_price": 1938.0
+  },
+  {
+    "ticker": "PIRAMAL.NS",
+    "company_name": "Piramal Pharma",
+    "exit_date": "2024-02-20",
+    "exit_price": 132.0
+  },
+  {
+    "ticker": "SHRIRAM.NS",
+    "company_name": "Shriram Pistons",
+    "exit_date": "2024-02-20",
+    "exit_price": 1730.0
+  },
+  {
+    "ticker": "GEOJIT.NS",
+    "company_name": "Geojit Fin",
+    "exit_date": "2024-03-11",
+    "exit_price": 70.4
+  },
+  {
+    "ticker": "MANAPPURAM.NS",
+    "company_name": "Manappuram Fin",
+    "exit_date": "2024-03-11",
+    "exit_price": 170.0
+  },
+  {
+    "ticker": "GSFC.NS",
+    "company_name": "GSFC",
+    "exit_date": "2024-03-20",
+    "exit_price": 196.0
+  },
+  {
+    "ticker": "CONFIDENCEPETRO.NS",
+    "company_name": "ConfidencePetro",
+    "exit_date": "2024-03-27",
+    "exit_price": 85.0
+  },
+  {
+    "ticker": "KNR.NS",
+    "company_name": "KNR Construct",
+    "exit_date": "2024-04-02",
+    "exit_price": 262.0
+  },
+  {
+    "ticker": "BLISS.NS",
+    "company_name": "Bliss GVS",
+    "exit_date": "2024-04-10",
+    "exit_price": 115.5
+  },
+  {
+    "ticker": "ADANI.NS",
+    "company_name": "Adani Energy",
+    "exit_date": "2024-04-18",
+    "exit_price": 1056.0
+  },
+  {
+    "ticker": "OLECTRA.NS",
+    "company_name": "Olectra Greente",
+    "exit_date": "2024-04-26",
+    "exit_price": 1700.0
+  },
+  {
+    "ticker": "CEAT.NS",
+    "company_name": "Ceat",
+    "exit_date": "2024-05-03",
+    "exit_price": 2526.0
+  },
+  {
+    "ticker": "FIRSTSOURCE.NS",
+    "company_name": "Firstsource Sol",
+    "exit_date": "2024-05-06",
+    "exit_price": 200.0
+  },
+  {
+    "ticker": "MANAPPURAM.NS",
+    "company_name": "Manappuram Fin",
+    "exit_date": "2024-05-09",
+    "exit_price": 168.5
+  },
+  {
+    "ticker": "BIOCON.NS",
+    "company_name": "Biocon",
+    "exit_date": "2024-05-17",
+    "exit_price": 305.0
+  },
+  {
+    "ticker": "SONA.NS",
+    "company_name": "Sona BLW",
+    "exit_date": "2024-05-18",
+    "exit_price": 612.0
+  },
+  {
+    "ticker": "MANGALAM.BO",
+    "company_name": "Mangalam Seeds",
+    "exit_date": "2024-05-30",
+    "exit_price": 258.0
+  },
+  {
+    "ticker": "THOMAS.NS",
+    "company_name": "Thomas Cook",
+    "exit_date": "2024-06-21",
+    "exit_price": 241.0
+  },
+  {
+    "ticker": "CEMINDIA.NS",
+    "company_name": "Cemindia Proj",
+    "exit_date": "2024-07-04",
+    "exit_price": 486.0
+  },
+  {
+    "ticker": "SATIN.NS",
+    "company_name": "Satin Credit",
+    "exit_date": "2024-07-11",
+    "exit_price": 212.0
+  },
+  {
+    "ticker": "JUPITER.NS",
+    "company_name": "Jupiter Wagons",
+    "exit_date": "2024-07-26",
+    "exit_price": 620.0
+  },
+  {
+    "ticker": "THOMAS.NS",
+    "company_name": "Thomas Cook",
+    "exit_date": "2024-08-07",
+    "exit_price": 205.0
+  },
+  {
+    "ticker": "ZENSAR.NS",
+    "company_name": "Zensar Tech",
+    "exit_date": "2024-08-07",
+    "exit_price": 735.0
+  },
+  {
+    "ticker": "MANGALAM.NS",
+    "company_name": "Mangalam Cement",
+    "exit_date": "2024-08-08",
+    "exit_price": 872.0
+  },
+  {
+    "ticker": "WINDLAS.NS",
+    "company_name": "Windlas Biotech",
+    "exit_date": "2024-08-19",
+    "exit_price": 806.0
+  },
+  {
+    "ticker": "CG.NS",
+    "company_name": "CG Power",
+    "exit_date": "2024-08-19",
+    "exit_price": 709.0
+  },
+  {
+    "ticker": "SHISH.NS",
+    "company_name": "Shish Industrie",
+    "exit_date": "2024-08-29",
+    "exit_price": 114.0
+  },
+  {
+    "ticker": "AVG.NS",
+    "company_name": "AVG Logistics",
+    "exit_date": "2024-09-05",
+    "exit_price": 455.0
+  },
+  {
+    "ticker": "EXICOM.NS",
+    "company_name": "Exicom Tele",
+    "exit_date": "2024-09-09",
+    "exit_price": 342.0
+  },
+  {
+    "ticker": "RATEGAIN.NS",
+    "company_name": "Rategain Travel",
+    "exit_date": "2024-09-10",
+    "exit_price": 717.0
+  },
+  {
+    "ticker": "AMARA.NS",
+    "company_name": "Amara Raja",
+    "exit_date": "2024-09-11",
+    "exit_price": 1427.0
+  },
+  {
+    "ticker": "PRICOL.NS",
+    "company_name": "Pricol",
+    "exit_date": "2024-09-11",
+    "exit_price": 480.0
+  },
+  {
+    "ticker": "JITF.NS",
+    "company_name": "JITF Infralogis",
+    "exit_date": "2024-09-12",
+    "exit_price": 940.0
+  },
+  {
+    "ticker": "KELTECH.NS",
+    "company_name": "KELTECH Energ",
+    "exit_date": "2024-09-17",
+    "exit_price": 3713.0
+  },
+  {
+    "ticker": "NAVA.NS",
+    "company_name": "NAVA",
+    "exit_date": "2024-09-24",
+    "exit_price": 1193.0
+  },
+  {
+    "ticker": "EIMCO.NS",
+    "company_name": "Eimco Elecon",
+    "exit_date": "2024-09-24",
+    "exit_price": 2720.0
+  },
+  {
+    "ticker": "SERVOTECH.NS",
+    "company_name": "Servotech Renew",
+    "exit_date": "2024-09-26",
+    "exit_price": 191.5
+  },
+  {
+    "ticker": "RAILTEL.NS",
+    "company_name": "Railtel",
+    "exit_date": "2024-10-08",
+    "exit_price": 387.0
+  },
+  {
+    "ticker": "EIMCO.NS",
+    "company_name": "Eimco Elecon",
+    "exit_date": "2024-10-08",
+    "exit_price": 2765.0
+  },
+  {
+    "ticker": "GABRIEL.NS",
+    "company_name": "Gabriel India",
+    "exit_date": "2024-10-08",
+    "exit_price": 455.0
+  },
+  {
+    "ticker": "AVANTI.NS",
+    "company_name": "Avanti Feeds",
+    "exit_date": "2024-10-08",
+    "exit_price": 579.0
+  },
+  {
+    "ticker": "PARAMOUNT.NS",
+    "company_name": "Paramount Comm",
+    "exit_date": "2024-10-25",
+    "exit_price": 68.0
+  },
+  {
+    "ticker": "ELECTRONICS.NS",
+    "company_name": "Electronics Mar",
+    "exit_date": "2024-10-25",
+    "exit_price": 185.0
+  },
+  {
+    "ticker": "HPL.NS",
+    "company_name": "HPL Electric &",
+    "exit_date": "2024-10-28",
+    "exit_price": 443.0
+  },
+  {
+    "ticker": "AVG.NS",
+    "company_name": "AVG Logistics",
+    "exit_date": "2024-11-01",
+    "exit_price": 500.0
+  },
+  {
+    "ticker": "KELTECH.NS",
+    "company_name": "KELTECH Energ",
+    "exit_date": "2024-11-22",
+    "exit_price": 3441.0
+  },
+  {
+    "ticker": "HERITAGE.NS",
+    "company_name": "Heritage Foods",
+    "exit_date": "2024-11-22",
+    "exit_price": 458.0
+  },
+  {
+    "ticker": "FINEOTEX.NS",
+    "company_name": "Fineotex Chem",
+    "exit_date": "2024-11-22",
+    "exit_price": 324.0
+  },
+  {
+    "ticker": "QUESS.NS",
+    "company_name": "Quess Corp",
+    "exit_date": "2024-11-22",
+    "exit_price": 630.0
+  },
+  {
+    "ticker": "CEMINDIA.NS",
+    "company_name": "Cemindia Proj",
+    "exit_date": "2024-11-22",
+    "exit_price": 486.0
+  },
+  {
+    "ticker": "AVG.NS",
+    "company_name": "AVG Logistics",
+    "exit_date": "2024-11-22",
+    "exit_price": 395.0
+  },
+  {
+    "ticker": "BIKAJI.NS",
+    "company_name": "Bikaji Foods",
+    "exit_date": "2024-12-02",
+    "exit_price": 765.0
+  },
+  {
+    "ticker": "HOME.NS",
+    "company_name": "Home First",
+    "exit_date": "2024-12-02",
+    "exit_price": 980.0
+  },
+  {
+    "ticker": "ZAGGLE.NS",
+    "company_name": "Zaggle Prepaid",
+    "exit_date": "2024-12-13",
+    "exit_price": 536.0
+  },
+  {
+    "ticker": "LAXMI.NS",
+    "company_name": "Laxmi Organic",
+    "exit_date": "2025-01-07",
+    "exit_price": 226.0
+  },
+  {
+    "ticker": "EIMCO.NS",
+    "company_name": "Eimco Elecon",
+    "exit_date": "2025-01-07",
+    "exit_price": 1993.0
+  },
+  {
+    "ticker": "YATHARTH.NS",
+    "company_name": "Yatharth HOSP",
+    "exit_date": "2025-01-07",
+    "exit_price": 554.0
+  },
+  {
+    "ticker": "ANGEL.NS",
+    "company_name": "Angel One",
+    "exit_date": "2025-01-28",
+    "exit_price": 2182.0
+  },
+  {
+    "ticker": "ASHOKA.NS",
+    "company_name": "Ashoka Buildcon",
+    "exit_date": "2025-01-28",
+    "exit_price": 241.0
+  },
+  {
+    "ticker": "ASK.NS",
+    "company_name": "ASK Auto",
+    "exit_date": "2025-01-28",
+    "exit_price": 417.0
+  },
+  {
+    "ticker": "AZAD.NS",
+    "company_name": "Azad Eng",
+    "exit_date": "2025-01-28",
+    "exit_price": 1309.0
+  },
+  {
+    "ticker": "BELLA.NS",
+    "company_name": "Bella Casa",
+    "exit_date": "2025-01-28",
+    "exit_price": 447.0
+  },
+  {
+    "ticker": "CAMS.NS",
+    "company_name": "CAMS",
+    "exit_date": "2025-01-28",
+    "exit_price": 3730.0
+  },
+  {
+    "ticker": "DOMS.NS",
+    "company_name": "DOMS Industries",
+    "exit_date": "2025-01-28",
+    "exit_price": 2205.0
+  },
+  {
+    "ticker": "FIRSTSOURCE.NS",
+    "company_name": "Firstsource Sol",
+    "exit_date": "2025-01-28",
+    "exit_price": 326.0
+  },
+  {
+    "ticker": "GEOJIT.NS",
+    "company_name": "Geojit Fin",
+    "exit_date": "2025-01-28",
+    "exit_price": 89.0
+  },
+  {
+    "ticker": "IRFC.NS",
+    "company_name": "IRFC",
+    "exit_date": "2025-01-28",
+    "exit_price": 137.0
+  },
+  {
+    "ticker": "INDRAPRASTHA.NS",
+    "company_name": "Indraprastha",
+    "exit_date": "2025-01-28",
+    "exit_price": 409.0
+  },
+  {
+    "ticker": "KFIN.NS",
+    "company_name": "KFin Tech",
+    "exit_date": "2025-01-28",
+    "exit_price": 1073.0
+  },
+  {
+    "ticker": "3B.NS",
+    "company_name": "3B BlackBio Dx",
+    "exit_date": "2025-01-28",
+    "exit_price": 1678.0
+  },
+  {
+    "ticker": "MAH.NS",
+    "company_name": "Mah Seamless",
+    "exit_date": "2025-01-28",
+    "exit_price": 587.0
+  },
+  {
+    "ticker": "NAVA.NS",
+    "company_name": "NAVA",
+    "exit_date": "2025-01-28",
+    "exit_price": 402.0
+  },
+  {
+    "ticker": "NETWEB.NS",
+    "company_name": "Netweb",
+    "exit_date": "2025-01-28",
+    "exit_price": 1467.0
+  },
+  {
+    "ticker": "NUVAMA.NS",
+    "company_name": "Nuvama Wealth",
+    "exit_date": "2025-01-28",
+    "exit_price": 5126.0
+  },
+  {
+    "ticker": "PIRAMAL.NS",
+    "company_name": "Piramal Pharma",
+    "exit_date": "2025-01-28",
+    "exit_price": 218.0
+  },
+  {
+    "ticker": "PRUDENT.NS",
+    "company_name": "Prudent Advisor",
+    "exit_date": "2025-01-28",
+    "exit_price": 1996.0
+  },
+  {
+    "ticker": "SERVOTECH.NS",
+    "company_name": "Servotech Renew",
+    "exit_date": "2025-01-28",
+    "exit_price": 166.0
+  },
+  {
+    "ticker": "SRIVARI.NS",
+    "company_name": "Srivari Spices",
+    "exit_date": "2025-01-28",
+    "exit_price": 166.0
+  },
+  {
+    "ticker": "SUPRIYA.NS",
+    "company_name": "Supriya Lifesci",
+    "exit_date": "2025-01-28",
+    "exit_price": 641.0
+  },
+  {
+    "ticker": "TEXMACO.NS",
+    "company_name": "Texmaco Rail",
+    "exit_date": "2025-01-28",
+    "exit_price": 172.0
+  },
+  {
+    "ticker": "TITAGARH.NS",
+    "company_name": "TITAGARH",
+    "exit_date": "2025-01-28",
+    "exit_price": 936.0
+  },
+  {
+    "ticker": "ZAGGLE.NS",
+    "company_name": "Zaggle Prepaid",
+    "exit_date": "2025-01-28",
+    "exit_price": 421.0
+  },
+  {
+    "ticker": "JUPITER.NS",
+    "company_name": "Jupiter Wagons",
+    "exit_date": "2025-01-28",
+    "exit_price": 396.0
+  },
+  {
+    "ticker": "ZAGGLE.NS",
+    "company_name": "Zaggle Prepaid",
+    "exit_date": "2025-02-12",
+    "exit_price": 362.0
+  },
+  {
+    "ticker": "NETWEB.NS",
+    "company_name": "Netweb",
+    "exit_date": "2025-02-18",
+    "exit_price": 1336.0
+  },
+  {
+    "ticker": "ASHOKA.NS",
+    "company_name": "Ashoka Buildcon",
+    "exit_date": "2025-03-17",
+    "exit_price": 169.0
+  },
+  {
+    "ticker": "AVANTI.NS",
+    "company_name": "Avanti Feeds",
+    "exit_date": "2025-04-03",
+    "exit_price": 793.0
+  },
+  {
+    "ticker": "CHOLA.NS",
+    "company_name": "Chola Invest.",
+    "exit_date": "2025-04-22",
+    "exit_price": 1586.0
+  },
+  {
+    "ticker": "BELLA.NS",
+    "company_name": "Bella Casa",
+    "exit_date": "2025-04-24",
+    "exit_price": 418.0
+  },
+  {
+    "ticker": "BLUE.NS",
+    "company_name": "Blue Star",
+    "exit_date": "2025-04-25",
+    "exit_price": 1850.0
+  },
+  {
+    "ticker": "KRN.NS",
+    "company_name": "KRN Heat Ex",
+    "exit_date": "2025-04-28",
+    "exit_price": 777.0
+  },
+  {
+    "ticker": "KOTAK.NS",
+    "company_name": "Kotak Mahindra",
+    "exit_date": "2025-05-05",
+    "exit_price": 2071.0
+  },
+  {
+    "ticker": "VIJAYA.NS",
+    "company_name": "Vijaya Diagnost",
+    "exit_date": "2025-05-14",
+    "exit_price": 939.0
+  },
+  {
+    "ticker": "THANGAMAYIL.NS",
+    "company_name": "Thangamayil",
+    "exit_date": "2025-05-15",
+    "exit_price": 1905.0
+  },
+  {
+    "ticker": "VEDANTA.NS",
+    "company_name": "Vedanta",
+    "exit_date": "2025-05-16",
+    "exit_price": 440.0
+  },
+  {
+    "ticker": "3B.NS",
+    "company_name": "3B BlackBio Dx",
+    "exit_date": "2025-05-29",
+    "exit_price": 1585.0
+  },
+  {
+    "ticker": "MAZAGON.NS",
+    "company_name": "Mazagon Dock",
+    "exit_date": "2025-06-02",
+    "exit_price": 3469.0
+  },
+  {
+    "ticker": "SWARAJ.NS",
+    "company_name": "Swaraj Engines",
+    "exit_date": "2025-06-02",
+    "exit_price": 3883.0
+  },
+  {
+    "ticker": "AVANTI.NS",
+    "company_name": "Avanti Feeds",
+    "exit_date": "2025-06-03",
+    "exit_price": 777.0
+  },
+  {
+    "ticker": "JYOTI.NS",
+    "company_name": "Jyoti CNC Auto",
+    "exit_date": "2025-07-01",
+    "exit_price": 1054.0
+  },
+  {
+    "ticker": "APOLLO.NS",
+    "company_name": "Apollo Micro Sy",
+    "exit_date": "2025-07-30",
+    "exit_price": 170.0
+  },
+  {
+    "ticker": "RAILTEL.NS",
+    "company_name": "Railtel",
+    "exit_date": "2025-08-01",
+    "exit_price": 367.0
+  },
+  {
+    "ticker": "LAURUS.NS",
+    "company_name": "Laurus Labs",
+    "exit_date": "2025-08-01",
+    "exit_price": 851.0
+  },
+  {
+    "ticker": "SHAKTI.NS",
+    "company_name": "Shakti Pumps",
+    "exit_date": "2025-08-04",
+    "exit_price": 827.0
+  },
+  {
+    "ticker": "SHARDA.NS",
+    "company_name": "Sharda Crop",
+    "exit_date": "2025-08-07",
+    "exit_price": 995.0
+  },
+  {
+    "ticker": "PG.NS",
+    "company_name": "PG Electroplast",
+    "exit_date": "2025-08-08",
+    "exit_price": 626.0
+  },
+  {
+    "ticker": "PRAKASH.NS",
+    "company_name": "Prakash Ind",
+    "exit_date": "2025-08-11",
+    "exit_price": 160.0
+  },
+  {
+    "ticker": "RHI.NS",
+    "company_name": "RHI Magnesita",
+    "exit_date": "2025-08-11",
+    "exit_price": 488.0
+  },
+  {
+    "ticker": "SOM.NS",
+    "company_name": "Som Distillerie",
+    "exit_date": "2025-08-12",
+    "exit_price": 142.0
+  },
+  {
+    "ticker": "SUPRIYA.NS",
+    "company_name": "Supriya Lifesci",
+    "exit_date": "2025-08-25",
+    "exit_price": 670.0
+  },
+  {
+    "ticker": "KARUR.NS",
+    "company_name": "Karur Vysya",
+    "exit_date": "2025-08-26",
+    "exit_price": 223.0
+  },
+  {
+    "ticker": "BLUE.NS",
+    "company_name": "Blue Jet",
+    "exit_date": "2025-08-26",
+    "exit_price": 716.0
+  },
+  {
+    "ticker": "NATCO.NS",
+    "company_name": "Natco Pharma",
+    "exit_date": "2025-09-08",
+    "exit_price": 853.0
+  },
+  {
+    "ticker": "INNOVA.NS",
+    "company_name": "Innova Captab",
+    "exit_date": "2025-09-08",
+    "exit_price": 876.0
+  },
+  {
+    "ticker": "NETWEB.NS",
+    "company_name": "Netweb",
+    "exit_date": "2025-09-09",
+    "exit_price": 3019.0
+  },
+  {
+    "ticker": "POCL.NS",
+    "company_name": "POCL Enterprise",
+    "exit_date": "2025-10-15",
+    "exit_price": 228.0
+  },
+  {
+    "ticker": "DEEPAK.NS",
+    "company_name": "Deepak Fert",
+    "exit_date": "2025-11-06",
+    "exit_price": 1433.0
+  },
+  {
+    "ticker": "ALKYL.NS",
+    "company_name": "Alkyl Amines",
+    "exit_date": "2025-11-07",
+    "exit_price": 1776.0
+  },
+  {
+    "ticker": "INDRAPRASTHA.NS",
+    "company_name": "Indraprastha",
+    "exit_date": "2025-11-10",
+    "exit_price": 555.0
+  },
+  {
+    "ticker": "TANLA.NS",
+    "company_name": "Tanla Platforms",
+    "exit_date": "2026-01-16",
+    "exit_price": 463.0
+  },
+  {
+    "ticker": "KELTECH.NS",
+    "company_name": "KELTECH Energ",
+    "exit_date": "2026-01-19",
+    "exit_price": 3165.0
+  },
+  {
+    "ticker": "HERITAGE.NS",
+    "company_name": "Heritage Foods",
+    "exit_date": "2026-01-29",
+    "exit_price": 363.0
+  },
+  {
+    "ticker": "HUDCO.NS",
+    "company_name": "HUDCO",
+    "exit_date": "2026-01-30",
+    "exit_price": 192.0
+  },
+  {
+    "ticker": "DR.NS",
+    "company_name": "Dr Lal PathLab",
+    "exit_date": "2026-02-02",
+    "exit_price": 1378.0
+  },
+  {
+    "ticker": "GLOBAL.NS",
+    "company_name": "Global Health",
+    "exit_date": "2026-02-05",
+    "exit_price": 1092.0
+  },
+  {
+    "ticker": "SARDA.NS",
+    "company_name": "Sarda Energy",
+    "exit_date": "2026-02-09",
+    "exit_price": 502.0
+  },
+  {
+    "ticker": "HLE.NS",
+    "company_name": "HLE Glascoat",
+    "exit_date": "2026-02-11",
+    "exit_price": 361.0
+  },
+  {
+    "ticker": "ZYDUS.NS",
+    "company_name": "Zydus Life",
+    "exit_date": "2026-02-12",
+    "exit_price": 914.0
+  },
+  {
+    "ticker": "INDIA.NS",
+    "company_name": "India Shelter",
+    "exit_date": "2026-02-12",
+    "exit_price": 759.0
+  },
+  {
+    "ticker": "JYOTI.NS",
+    "company_name": "Jyoti CNC Auto",
+    "exit_date": "2026-02-12",
+    "exit_price": 846.0
+  },
+  {
+    "ticker": "CAPRI.NS",
+    "company_name": "Capri Global",
+    "exit_date": "2026-02-25",
+    "exit_price": 168.0
+  },
+  {
+    "ticker": "KARUR.NS",
+    "company_name": "Karur Vysya",
+    "exit_date": "2026-03-02",
+    "exit_price": 315.0
+  },
+  {
+    "ticker": "SKY.NS",
+    "company_name": "Sky Gold",
+    "exit_date": "2026-03-02",
+    "exit_price": 342.0
+  },
+  {
+    "ticker": "ACUTAAS.NS",
+    "company_name": "Acutaas Chem",
+    "exit_date": "2026-03-04",
+    "exit_price": 2124.0
+  },
+  {
+    "ticker": "CHOLA.NS",
+    "company_name": "Chola Invest.",
+    "exit_date": "2026-03-04",
+    "exit_price": 1642.0
+  },
+  {
+    "ticker": "ANANT.NS",
+    "company_name": "Anant Raj",
+    "exit_date": "2026-03-05",
+    "exit_price": 492.0
+  },
+  {
+    "ticker": "CHENNAI.NS",
+    "company_name": "Chennai Petro",
+    "exit_date": "2026-03-11",
+    "exit_price": 938.0
+  },
+  {
+    "ticker": "VESUVIUS.NS",
+    "company_name": "Vesuvius India",
+    "exit_date": "2026-03-12",
+    "exit_price": 497.0
+  },
+  {
+    "ticker": "TD.NS",
+    "company_name": "TD Power System",
+    "exit_date": "2026-03-16",
+    "exit_price": 784.0
+  },
+  {
+    "ticker": "SAKAR.NS",
+    "company_name": "Sakar Healthcar",
+    "exit_date": "2026-03-16",
+    "exit_price": 505.0
+  },
+  {
+    "ticker": "GARDEN.NS",
+    "company_name": "Garden Reach Sh",
+    "exit_date": "2026-03-16",
+    "exit_price": 2314.0
+  },
+  {
+    "ticker": "ANAND.NS",
+    "company_name": "Anand Rathi",
+    "exit_date": "2026-03-18",
+    "exit_price": 3082.0
+  },
+  {
+    "ticker": "SOLAR.NS",
+    "company_name": "Solar Ind",
+    "exit_date": "2026-03-19",
+    "exit_price": 13320.0
+  },
+  {
+    "ticker": "COAL.NS",
+    "company_name": "Coal India",
+    "exit_date": "2026-03-24",
+    "exit_price": 441.0
+  },
+  {
+    "ticker": "BHARAT.NS",
+    "company_name": "Bharat Elec",
+    "exit_date": "2026-03-30",
+    "exit_price": 400.0
+  },
+  {
+    "ticker": "IPCA.NS",
+    "company_name": "Ipca Labs",
+    "exit_date": "2026-04-02",
+    "exit_price": 1442.0
+  },
+  {
+    "ticker": "AJANTA.NS",
+    "company_name": "Ajanta Pharma",
+    "exit_date": "2026-04-02",
+    "exit_price": 2773.0
+  },
+  {
+    "ticker": "TORRENT.NS",
+    "company_name": "Torrent Pharma",
+    "exit_date": "2026-04-02",
+    "exit_price": 3904.0
+  },
+  {
+    "ticker": "LUPIN.NS",
+    "company_name": "Lupin",
+    "exit_date": "2026-04-02",
+    "exit_price": 2183.0
+  },
+  {
+    "ticker": "CCL.NS",
+    "company_name": "CCL Products",
+    "exit_date": "2026-04-10",
+    "exit_price": 1069.0
+  },
+  {
+    "ticker": "COAL.NS",
+    "company_name": "Coal India",
+    "exit_date": "2026-04-14",
+    "exit_price": 435.0
+  },
+  {
+    "ticker": "AUROBINDO.NS",
+    "company_name": "Aurobindo Pharm",
+    "exit_date": "2026-04-20",
+    "exit_price": 1370.0
+  },
+  {
+    "ticker": "ONGC.NS",
+    "company_name": "ONGC",
+    "exit_date": "2026-04-20",
+    "exit_price": 283.0
+  },
+  {
+    "ticker": "ABB.NS",
+    "company_name": "ABB India",
+    "exit_date": "2026-04-27",
+    "exit_price": 7330.0
+  },
+  {
+    "ticker": "SAMMAAN.NS",
+    "company_name": "Sammaan Capital",
+    "exit_date": "2026-04-29",
+    "exit_price": 140.0
+  },
+  {
+    "ticker": "GODAWARI.NS",
+    "company_name": "Godawari Power",
+    "exit_date": "2026-04-30",
+    "exit_price": 296.0
+  },
+  {
+    "ticker": "TATA.NS",
+    "company_name": "Tata Power",
+    "exit_date": "2026-05-05",
+    "exit_price": 437.0
+  },
+  {
+    "ticker": "CHENNAI.NS",
+    "company_name": "Chennai Petro",
+    "exit_date": "2026-05-06",
+    "exit_price": 1063.0
+  },
+  {
+    "ticker": "LLOYDS.NS",
+    "company_name": "Lloyds Metals",
+    "exit_date": "2026-05-06",
+    "exit_price": 1748.0
+  },
+  {
+    "ticker": "ABB.NS",
+    "company_name": "ABB India",
+    "exit_date": "2026-05-11",
+    "exit_price": 6345.0
+  },
+  {
+    "ticker": "AARTI.NS",
+    "company_name": "Aarti Ind",
+    "exit_date": "2026-05-11",
+    "exit_price": 482.0
+  },
+  {
+    "ticker": "SKY.NS",
+    "company_name": "Sky Gold",
+    "exit_date": "2026-05-11",
+    "exit_price": 482.0
+  },
+  {
+    "ticker": "GE.NS",
+    "company_name": "GE Vernova T&D",
+    "exit_date": "2026-05-13",
+    "exit_price": 4257.0
+  },
+  {
+    "ticker": "KIRLOSKAR.NS",
+    "company_name": "Kirloskar Oil",
+    "exit_date": "2026-05-13",
+    "exit_price": 1564.0
+  },
+  {
+    "ticker": "GALLANTT.NS",
+    "company_name": "Gallantt Ispat",
+    "exit_date": "2026-05-14",
+    "exit_price": 768.0
+  },
+  {
+    "ticker": "NETWEB.NS",
+    "company_name": "Netweb",
+    "exit_date": "2026-05-18",
+    "exit_price": 3786.0
+  },
+  {
+    "ticker": "BHEL.NS",
+    "company_name": "BHEL",
+    "exit_date": "2026-05-18",
+    "exit_price": 391.0
+  },
+  {
+    "ticker": "HINDUSTAN.NS",
+    "company_name": "Hindustan Aeron",
+    "exit_date": "2026-05-18",
+    "exit_price": 4210.0
+  },
+  {
+    "ticker": "JAIN.NS",
+    "company_name": "Jain Resource",
+    "exit_date": "2026-05-18",
+    "exit_price": 490.0
+  },
+  {
+    "ticker": "TENNECO.NS",
+    "company_name": "Tenneco Clean",
+    "exit_date": "2026-05-19",
+    "exit_price": 584.0
+  },
+  {
+    "ticker": "HIND.NS",
+    "company_name": "Hind Copper",
+    "exit_date": "2026-05-29",
+    "exit_price": 557.0
+  },
+  {
+    "ticker": "DR.NS",
+    "company_name": "Dr Lal PathLab",
+    "exit_date": "2026-05-29",
+    "exit_price": 1603.0
+  },
+  {
+    "ticker": "MCX.NS",
+    "company_name": "MCX India",
+    "exit_date": "2026-05-29",
+    "exit_price": 3170.0
+  },
+  {
+    "ticker": "NATCO.NS",
+    "company_name": "Natco Pharma",
+    "exit_date": "2026-05-29",
+    "exit_price": 1077.0
+  },
+  {
+    "ticker": "BHEL.NS",
+    "company_name": "Bharat Heavy Electricals Ltd",
+    "exit_date": "2026-06-05",
+    "exit_price": 390.0
+  },
+  {
+    "ticker": "HINDZINC.NS",
+    "company_name": "Hindustan Zinc Ltd",
+    "exit_date": "2026-06-05",
+    "exit_price": 550.0
+  },
+  {
+    "ticker": "NATIONALUM.NS",
+    "company_name": "National Aluminium Co Ltd",
+    "exit_date": "2026-06-05",
+    "exit_price": 385.0
+  },
+  {
+    "ticker": "APTUS.NS",
+    "company_name": "Aptus Value Housing Finance India Ltd",
+    "exit_date": "2026-06-09",
+    "exit_price": 250.0
+  },
+  {
+    "ticker": "NLCINDIA.NS",
+    "company_name": "NLC India Ltd",
+    "exit_date": "2026-06-09",
+    "exit_price": 321.0
+  },
+  {
+    "ticker": "SAIL.NS",
+    "company_name": "Steel Authority of India Ltd",
+    "exit_date": "2026-06-09",
+    "exit_price": 185.0
+  }
+]
