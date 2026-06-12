@@ -34,7 +34,8 @@ def load_live_portfolio():
         "POWERINDIA.NS": [4, 32905.00, "2026-04-29", "Infrastructure", 31905.00],
         "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure", 1767.20],
         "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication", 142.44],
-        "LAURUSLABS.NS": [118, 1278.50, "2026-05-30", "Pharma", 1299.70]
+        "LAURUSLABS.NS": [118, 1278.50, "2026-05-30", "Pharma", 1299.70],
+        "FEDERALBNK.NS": [595, 305.57, "2026-06-10", "Financial Services", 315.00]
     }
     
     if not portfolio_path:
