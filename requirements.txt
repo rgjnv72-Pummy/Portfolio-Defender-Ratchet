@@ -5,3 +5,4 @@ tqdm
 pandas-ta==0.4.71b0
 scipy
 scikit-learn
+hmmlearn
