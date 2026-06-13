@@ -3,3 +3,5 @@ pandas==1.5.3
 numpy<2.0.0
 tqdm
 pandas-ta==0.4.71b0
+scipy
+scikit-learn
