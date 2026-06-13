@@ -129,6 +129,14 @@ def scan_confluence(item):
             score += 1
             signals.append("VAM")
 
+        # 6. VIB (Vibrancy - Log Spread skew)
+        ret = np.log(c / c.shift(1))
+        # Captures the bullish skew in volatility over a 3-month (63-day) lookback
+        v_spread = ret.clip(lower=0).tail(63).std() - ret.clip(upper=0).tail(63).std()
+        if v_spread > 0.01:
+            score += 1
+            signals.append("VIB")
+
         drift = (((c.iloc[-1] / c.iloc[-250]) - 1) / 250 * 0.7) + (((c.iloc[-1] / c.iloc[-20]) - 1) / 20 * 0.3)
         upside = round(((c.iloc[-1] * (1 + (drift * 30)) - c.iloc[-1]) / c.iloc[-1]) * 100, 2)
 
