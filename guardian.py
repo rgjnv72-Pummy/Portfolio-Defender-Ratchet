@@ -179,9 +179,24 @@ def run_simplified_watchdog():
             
             ratchet = ratchet_series.rolling(lookback_days, min_periods=1).max().iloc[-1]
             
-            # Dynamic Guardrails
+            # --- ENGINE C: +30% RUN SWING PROFIT LOCK-IN ---
+            peak_price = float(valid_df['Close'].max())
+            peak_pnl_pct = ((peak_price - buy_p) / buy_p) * 100
+            
+            hard_floor = initial_atr_floor
+            if peak_pnl_pct >= 30.0:
+                # 1. Lock in 15% minimum profit (protecting half of the 30% milestone)
+                profit_lock = buy_p * 1.15
+                # 2. Strict tight trailing stop: 1.5x ATR from running peak price
+                peak_stops = valid_df['Close'].cummax() - (1.5 * valid_atr)
+                tight_trailing = float(peak_stops.max())
+                # Dynamic floor is the highest of profit lock and tight trailing stop
+                hard_floor = max(profit_lock, tight_trailing)
+            
+            # Dynamic Guardrails: soft trailing stop retreats during pullbacks to avoid shakeouts,
+            # but is strictly bounded by the hard_floor (which escalates and locks in gains after 30% run).
             ratchet = min(ratchet, close_p * 0.97)
-            ratchet = max(ratchet, initial_atr_floor)
+            ratchet = max(ratchet, hard_floor)
             
             dist_to_stop = ((close_p - ratchet) / close_p) * 100
             
