@@ -29,13 +29,13 @@ def load_live_portfolio():
     
     # Ultimate Fallback Core if file isn't written yet
     fallback_holdings = {
-        "PREMIERENE.NS": [150, 943.30, "2026-04-07", "Infrastructure", 970.70],
-        "ORIENTELEC.NS": [700, 184.00, "2026-04-21", "Consumer Durables", 188.40],
-        "POWERINDIA.NS": [4, 32905.00, "2026-04-29", "Infrastructure", 31905.00],
-        "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure", 1767.20],
-        "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication", 142.44],
-        "LAURUSLABS.NS": [118, 1278.50, "2026-05-30", "Pharma", 1299.70],
-        "FEDERALBNK.NS": [595, 305.57, "2026-06-10", "Financial Services", 315.00]
+        "PREMIERENE.NS": [150, 943.30, "2026-04-07", "Infrastructure", 970.70, "swing"],
+        "ORIENTELEC.NS": [700, 184.00, "2026-04-21", "Consumer Durables", 188.40, "swing"],
+        "POWERINDIA.NS": [4, 32905.00, "2026-04-29", "Infrastructure", 31905.00, "swing"],
+        "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure", 1767.20, "swing"],
+        "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication", 142.44, "trend"],
+        "LAURUSLABS.NS": [118, 1278.50, "2026-05-30", "Pharma", 1299.70, "swing"],
+        "FEDERALBNK.NS": [595, 305.57, "2026-06-10", "Financial Services", 315.00, "swing"]
     }
     
     if not portfolio_path:
@@ -56,7 +56,8 @@ def load_live_portfolio():
                 info.get("avg_cost", 1.0),
                 info.get("buy_date", "2026-05-01"),
                 info.get("sector", "General"),
-                info.get("current_price", info.get("avg_cost", 1.0))
+                info.get("current_price", info.get("avg_cost", 1.0)),
+                info.get("strategy", "swing")
             ]
         return formatted_holdings
     except:
@@ -99,7 +100,7 @@ def run_simplified_watchdog():
     total_scrips = len(CURRENT_HOLDINGS)
 
     # --- FIRST PASS: GLOBAL VALUATION & SECTOR SUMMARY ---
-    for ticker, (qty, buy_p, buy_date, sector, fallback_p) in CURRENT_HOLDINGS.items():
+    for ticker, (qty, buy_p, buy_date, sector, fallback_p, strategy) in CURRENT_HOLDINGS.items():
         try:
             if (not data.empty) and ('Close' in data.columns) and (ticker in data['Close'].columns):
                 df_ticker = data.xs(ticker, axis=1, level=1).dropna()
@@ -123,7 +124,7 @@ def run_simplified_watchdog():
             skipped_tickers.append(ticker.replace('.NS', ''))
 
     # --- SECOND PASS: EXTREME DUAL-ENGINE RISK ANALYSIS ---
-    for ticker, (qty, buy_p, buy_date, sector, fallback_p) in CURRENT_HOLDINGS.items():
+    for ticker, (qty, buy_p, buy_date, sector, fallback_p, strategy) in CURRENT_HOLDINGS.items():
         try:
             if (data.empty) or ('Close' not in data.columns) or (ticker not in data['Close'].columns):
                 continue
@@ -180,18 +181,19 @@ def run_simplified_watchdog():
             ratchet = ratchet_series.rolling(lookback_days, min_periods=1).max().iloc[-1]
             
             # --- ENGINE C: +30% RUN SWING PROFIT LOCK-IN ---
-            peak_price = float(valid_df['Close'].max())
-            peak_pnl_pct = ((peak_price - buy_p) / buy_p) * 100
-            
             hard_floor = initial_atr_floor
-            if peak_pnl_pct >= 30.0:
-                # 1. Lock in 15% minimum profit (protecting half of the 30% milestone)
-                profit_lock = buy_p * 1.15
-                # 2. Strict tight trailing stop: 1.5x ATR from running peak price
-                peak_stops = valid_df['Close'].cummax() - (1.5 * valid_atr)
-                tight_trailing = float(peak_stops.max())
-                # Dynamic floor is the highest of profit lock and tight trailing stop
-                hard_floor = max(profit_lock, tight_trailing)
+            if strategy == "swing":
+                peak_price = float(valid_df['Close'].max())
+                peak_pnl_pct = ((peak_price - buy_p) / buy_p) * 100
+                
+                if peak_pnl_pct >= 30.0:
+                    # 1. Lock in 15% minimum profit (protecting half of the 30% milestone)
+                    profit_lock = buy_p * 1.15
+                    # 2. Strict tight trailing stop: 1.5x ATR from running peak price
+                    peak_stops = valid_df['Close'].cummax() - (1.5 * valid_atr)
+                    tight_trailing = float(peak_stops.max())
+                    # Dynamic floor is the highest of profit lock and tight trailing stop
+                    hard_floor = max(profit_lock, tight_trailing)
             
             # Dynamic Guardrails: soft trailing stop retreats during pullbacks to avoid shakeouts,
             # but is strictly bounded by the hard_floor (which escalates and locks in gains after 30% run).
@@ -208,7 +210,7 @@ def run_simplified_watchdog():
             
             clean_name = ticker.replace('.NS','').replace('ENERG','')
             line_text = f"*{clean_name}* | Price: ₹{close_p:.1f} ({pnl_pct:+.1f}%) | {status_icon}\n"
-            line_text += f"_Stop Floor: ₹{ratchet:.1f} ({dist_to_stop:.1f}% cushion) | Config: {lookback_days}D Lookback / {mult}x Mult_\n\n"
+            line_text += f"_Stop Floor: ₹{ratchet:.1f} ({dist_to_stop:.1f}% cushion) | Config: {strategy.capitalize()} | {lookback_days}D Lookback / {mult}x Mult_\n\n"
             
             results.append({'text': line_text, 'cushion': dist_to_stop})
         except Exception:

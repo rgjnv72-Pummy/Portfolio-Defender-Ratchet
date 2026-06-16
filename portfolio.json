@@ -6,7 +6,7 @@
     "ORIENTELEC.NS": {"quantity": 700, "avg_cost": 184.00, "buy_date": "2026-04-21", "sector": "Consumer Durables"},
     "POWERINDIA.NS": {"quantity": 4, "avg_cost": 32905.00, "buy_date": "2026-04-29", "sector": "Infrastructure"},
     "ADANIPORTS.NS": {"quantity": 70, "avg_cost": 1702.00, "buy_date": "2026-05-04", "sector": "Infrastructure"},
-    "HFCL.NS": {"quantity": 1000, "avg_cost": 122.50, "buy_date": "2026-05-04", "sector": "Telecommunication"},
+    "HFCL.NS": {"quantity": 1000, "avg_cost": 122.50, "buy_date": "2026-05-04", "sector": "Telecommunication", "strategy": "trend"},
     "LAURUSLABS.NS": {"quantity": 118, "avg_cost": 1278.50, "buy_date": "2026-05-30", "sector": "Pharma"},
     "BHARATFORG.NS": {"quantity": 39, "avg_cost": 1959.00, "buy_date": "2026-05-15", "sector": "Industrial Manufacturing"},
     "ATHERENERG.NS": {"quantity": 100, "avg_cost": 943.00, "buy_date": "2026-05-11", "sector": "Auto Components"},
