@@ -1,3 +1,4 @@
 cache/
 dir
 Execution_Logs/
+.env

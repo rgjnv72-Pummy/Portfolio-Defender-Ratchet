@@ -1,6 +1,7 @@
 import os
 import json
 import warnings
+import http.client
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
@@ -23,6 +24,57 @@ else:
     CSV_PATH = os.path.join(BASE_DIR, "ind_nifty500list.csv")
     CACHE_DIR = os.path.join(BASE_DIR, "backtest_cache")
     REPORT_PATH = os.path.join(BASE_DIR, "Master-Fresh-Trades-Scan.md")
+
+# --- ENVIRONMENT & TELEGRAM AUTH ---
+def load_env_file():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    env_paths = [
+        os.path.join(script_dir, ".env"),
+        os.path.join(os.path.dirname(script_dir), ".env")
+    ]
+    for path in env_paths:
+        if os.path.exists(path):
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    for line in f:
+                        line = line.strip()
+                        if not line or line.startswith("#"):
+                            continue
+                        if "=" in line:
+                            key, val = line.split("=", 1)
+                            val = val.strip().strip("'").strip('"')
+                            os.environ[key.strip()] = val
+                break
+            except Exception as e:
+                pass
+
+load_env_file()
+TOKEN = os.getenv('TELEGRAM_TOKEN', '').strip()
+CHAT_ID = os.getenv('TELEGRAM_CHAT_ID', '').strip()
+
+def send_telegram(text):
+    if not TOKEN or not CHAT_ID or "YOUR" in TOKEN:
+        try:
+            print(f"[CONSOLE LOG] {text}")
+        except UnicodeEncodeError:
+            try:
+                print(f"[CONSOLE LOG] {text.encode('ascii', errors='replace').decode('ascii')}")
+            except:
+                print("[CONSOLE LOG] (Message containing emojis could not be printed due to console encoding limits)")
+        return
+    conn = http.client.HTTPSConnection("api.telegram.org")
+    payload = json.dumps({"chat_id": CHAT_ID, "text": text, "parse_mode": "Markdown"})
+    headers = {"Content-Type": "application/json"}
+    try:
+        conn.request("POST", f"/bot{TOKEN}/sendMessage", payload, headers)
+        conn.getresponse()
+    except Exception as e:
+        try:
+            print(f"❌ Telegram Error: {e}")
+        except UnicodeEncodeError:
+            print("Telegram Error (Console print encoding failure)")
+    finally:
+        conn.close()
 
 MIN_AVG_VOLUME = 100000
 EMA_TREND_PERIOD = 200
@@ -213,6 +265,7 @@ def scan_fresh_opportunities():
     print("="*85)
     
     generate_obsidian_report(df_res)
+    send_telegram_report(df_res)
 
 def generate_obsidian_report(df_res):
     os.makedirs(os.path.dirname(REPORT_PATH), exist_ok=True)
@@ -266,6 +319,27 @@ Sorted by **Lowest Risk %** (Entry-to-Stop cushion). Prioritize setups with Risk
         f.write(report)
         
     print(f"[SUCCESS] Obsidian deployment report saved to: {REPORT_PATH}")
+
+def send_telegram_report(df_res):
+    # Take the top 20 candidates (since user requested top 20)
+    top_20 = df_res.head(20)
+    
+    target_date = datetime.now().strftime('%d-%m-%Y')
+    msg = f"📡 *KRONOS FRESH ALERTS REPORT ({target_date})*\n_Top 20 candidates sorted by lowest Risk%_\n\n"
+    
+    watchlist_tickers = []
+    for _, r in top_20.iterrows():
+        ticker_clean = str(r['Ticker']).replace('.NS', '').strip()
+        watchlist_tickers.append(f"NSE:{ticker_clean}")
+        msg += f"• `{ticker_clean}` ({r['Sector']}): *₹{r['Price']:.2f}* | `{r['Strategy']}`\n"
+        msg += f"  ↳ Trigger: *₹{r['Entry_Trigger']:.2f}* | SL: *₹{r['Stop_Loss']:.2f}* | Risk: *{r['Risk%']:.1f}%*\n\n"
+        
+    if watchlist_tickers:
+        tv_list = ",".join(watchlist_tickers)
+        msg += "━━━━━━━━━━━━━━━━━━━━\n"
+        msg += f"📺 *TRADINGVIEW WATCHLIST*\n`{tv_list}`"
+        send_telegram(msg)
+        print("Telegram notification sent successfully!")
 
 if __name__ == "__main__":
     scan_fresh_opportunities()

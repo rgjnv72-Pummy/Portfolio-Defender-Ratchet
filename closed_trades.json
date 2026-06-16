@@ -2272,5 +2272,11 @@
     "company_name": "Steel Authority of India Ltd",
     "exit_date": "2026-06-09",
     "exit_price": 185.0
+  },
+  {
+    "ticker": "ORIENTELEC.NS",
+    "company_name": "Orient Electric Ltd",
+    "exit_date": "2026-06-16",
+    "exit_price": 178.0
   }
 ]

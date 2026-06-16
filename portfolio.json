@@ -1,9 +1,8 @@
 {
-  "total_equity_value": 782744.50,
-  "last_updated": "2026-06-11",
+  "total_equity_value": 778544.50,
+  "last_updated": "2026-06-16",
   "holdings": {
     "PREMIERENE.NS": {"quantity": 150, "avg_cost": 943.30, "buy_date": "2026-04-07", "sector": "Infrastructure"},
-    "ORIENTELEC.NS": {"quantity": 700, "avg_cost": 184.00, "buy_date": "2026-04-21", "sector": "Consumer Durables"},
     "POWERINDIA.NS": {"quantity": 4, "avg_cost": 32905.00, "buy_date": "2026-04-29", "sector": "Infrastructure"},
     "ADANIPORTS.NS": {"quantity": 70, "avg_cost": 1702.00, "buy_date": "2026-05-04", "sector": "Infrastructure"},
     "HFCL.NS": {"quantity": 1000, "avg_cost": 122.50, "buy_date": "2026-05-04", "sector": "Telecommunication", "strategy": "trend"},
