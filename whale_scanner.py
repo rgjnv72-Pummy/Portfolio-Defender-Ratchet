@@ -43,18 +43,60 @@ def get_5day_delivery_avg(symbol):
     return round(sum(delivery_data)/len(delivery_data), 1) if delivery_data else "N/A"
 
 def run_kronos_forecast(ticker):
-    """Calculates 30-day Upside % and Confidence."""
+    """Calculates 30-day Upside %, Confidence, and Stop-Loss Hit Probability using decayed drift."""
     try:
         df = yf.download(ticker + ".NS", period="2y", progress=False, auto_adjust=True)
-        if df.empty: return "N/A", "N/A"
-        close = df['Close'].squeeze()
+        if df.empty or len(df) < 30: return "N/A", "N/A", "N/A"
+        close = df['Close'].squeeze().astype(float)
+        high = df['High'].squeeze().astype(float)
+        low = df['Low'].squeeze().astype(float)
         cp = float(close.iloc[-1])
-        vol, drift = close.pct_change().dropna().std(), (cp - close.iloc[-60]) / (close.iloc[-60] * 60)
-        paths = [cp * np.cumprod(1 + np.random.normal(drift, vol, 30)) for _ in range(100)]
-        conf = (sum(1 for p in paths if p[-1] > cp) / 100) * 100
-        upside = ((np.mean([p[-1] for p in paths]) - cp) / cp) * 100
-        return round(conf, 1), round(upside, 1)
-    except: return "N/A", "N/A"
+        
+        # 1. Compute ATR to establish stop floor
+        tr = pd.concat([
+            high - low,
+            abs(high - close.shift(1)),
+            abs(low - close.shift(1))
+        ], axis=1).max(axis=1)
+        atr = float(tr.rolling(14).mean().iloc[-1])
+        stop_loss = cp - (1.5 * atr)
+        
+        # 2. Compute drift and volatility
+        vol = close.pct_change().dropna().std()
+        drift = (cp - close.iloc[-60]) / (close.iloc[-60] * 60)
+        
+        # 3. Path simulation with exponential drift decay
+        paths = []
+        stopped_out_count = 0
+        num_paths = 100
+        days = 30
+        
+        for _ in range(num_paths):
+            path = np.zeros(days)
+            current_sim_price = cp
+            path_stopped = False
+            
+            for t in range(days):
+                decayed_drift = drift * np.exp(-t / 10.0)
+                shock = np.random.normal(decayed_drift, vol)
+                current_sim_price *= (1 + shock)
+                path[t] = current_sim_price
+                if current_sim_price <= stop_loss:
+                    path_stopped = True
+            
+            paths.append(path)
+            if path_stopped:
+                stopped_out_count += 1
+                
+        final_prices = [p[-1] for p in paths]
+        mean_final = np.mean(final_prices)
+        upside = ((mean_final - cp) / cp) * 100
+        confidence = (sum(1 for fp in final_prices if fp > cp) / num_paths) * 100
+        stop_hit_prob = (stopped_out_count / num_paths) * 100
+        
+        return round(confidence, 1), round(upside, 1), round(stop_hit_prob, 1)
+    except: 
+        return "N/A", "N/A", "N/A"
 
 def run_scan():
     print("🚀 Running Institutional Whale & Kronos Scan...")
@@ -88,18 +130,25 @@ def run_scan():
 
     # Build Report
     msg = f"🐋 *WHALE & KRONOS FORECAST ({target_date})*\n━━━━━━━━━━━━━━━━━━━━\n"
-    msg += "`Ticker      D-Avg  Upside  Conf%`\n"
+    msg += "`Ticker      D-Avg  Upside  Conf%  SHP%`\n"
 
     for _, row in top_10.iterrows():
         sym = row[sym_col]
         d_avg = get_5day_delivery_avg(sym)
-        conf, upside = run_kronos_forecast(sym)
+        conf, upside, shp = run_kronos_forecast(sym)
         
         # Indicator: High delivery avg + High confidence
-        indicator = "🔥" if (isinstance(d_avg, float) and d_avg > 45) and (conf != "N/A" and conf > 70) else "📈"
-        msg += f"`{sym:<11} {str(d_avg)+'%':>5}  {upside:>+5}%  {conf:>5}%` {indicator}\n"
+        indicator = "🔥" if (isinstance(d_avg, float) and d_avg > 45) and (isinstance(conf, (int, float)) and conf > 70) else "📈"
+        # High Risk Overlay: If Stop Hit Probability is over 35%, flag as risk warning
+        if isinstance(shp, (int, float)) and shp > 35.0:
+            indicator = "⚠️"
+        
+        if shp != "N/A":
+            msg += f"`{sym:<11} {str(d_avg)+'%':>5}  {upside:>+5}%  {conf:>4}%  {shp:>4}%` {indicator}\n"
+        else:
+            msg += f"`{sym:<11} {str(d_avg)+'%':>5}  {upside:>+5}%  {conf:>4}%` {indicator}\n"
 
-    msg += "━━━━━━━━━━━━━━━━━━━━\n🎯 *Focus:* High 5-Day Avg Del (>45%) + Conf."
+    msg += "━━━━━━━━━━━━━━━━━━━━\n🎯 *Focus:* High 5-Day Avg Del (>45%) + Conf. | ⚠️ SHP > 35%"
     send_telegram(msg)
     print("✅ Analysis Sent.")
 

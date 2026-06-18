@@ -21,18 +21,58 @@ def send_telegram(text):
     finally: conn.close()
 
 def run_kronos_upside(ticker_symbol):
-    """Calculates a 30-day projected Upside % using random path drifting."""
+    """Calculates a 30-day projected Upside % and Stop-Loss Hit Probability using decayed drift."""
     try:
         df = yf.download(ticker_symbol + ".NS", period="2y", progress=False, auto_adjust=True)
-        if df.empty: return 0.0
-        close = df['Close'].squeeze()
+        if df.empty or len(df) < 30: return 0.0, 0.0
+        close = df['Close'].squeeze().astype(float)
+        high = df['High'].squeeze().astype(float)
+        low = df['Low'].squeeze().astype(float)
         cp = float(close.iloc[-1])
-        vol, drift = close.pct_change().dropna().std(), (cp - close.iloc[-60]) / (close.iloc[-60] * 60)
-        paths = [cp * np.cumprod(1 + np.random.normal(drift, vol, 30)) for _ in range(100)]
-        upside = ((np.mean([p[-1] for p in paths]) - cp) / cp) * 100
-        return round(upside, 1)
+        
+        # 1. Compute ATR to establish stop floor
+        tr = pd.concat([
+            high - low,
+            abs(high - close.shift(1)),
+            abs(low - close.shift(1))
+        ], axis=1).max(axis=1)
+        atr = float(tr.rolling(14).mean().iloc[-1])
+        stop_loss = cp - (1.5 * atr)
+        
+        # 2. Compute drift and volatility
+        vol = close.pct_change().dropna().std()
+        drift = (cp - close.iloc[-60]) / (close.iloc[-60] * 60)
+        
+        # 3. Path simulation with exponential drift decay
+        paths = []
+        stopped_out_count = 0
+        num_paths = 100
+        days = 30
+        
+        for _ in range(num_paths):
+            path = np.zeros(days)
+            current_sim_price = cp
+            path_stopped = False
+            
+            for t in range(days):
+                decayed_drift = drift * np.exp(-t / 10.0)
+                shock = np.random.normal(decayed_drift, vol)
+                current_sim_price *= (1 + shock)
+                path[t] = current_sim_price
+                if current_sim_price <= stop_loss:
+                    path_stopped = True
+            
+            paths.append(path)
+            if path_stopped:
+                stopped_out_count += 1
+                
+        final_prices = [p[-1] for p in paths]
+        mean_final = np.mean(final_prices)
+        upside = ((mean_final - cp) / cp) * 100
+        stop_hit_prob = (stopped_out_count / num_paths) * 100
+        return round(upside, 1), round(stop_hit_prob, 1)
     except: 
-        return 0.0
+        return 0.0, 0.0
 
 def scan_vcp_setup(ticker_symbol):
     """
@@ -75,19 +115,19 @@ def scan_vcp_setup(ticker_symbol):
         
         # Check Strict Criteria First
         if is_compressed and is_volume_dried and is_in_uptrend and is_near_high:
-            upside_pct = run_kronos_upside(ticker_symbol)
+            upside_pct, stop_hit_prob = run_kronos_upside(ticker_symbol)
             return {
                 "Symbol": ticker_symbol, "Entry": entry, "Stop": stop,
-                "Upside": f"{upside_pct:>+5}%", "Range": f"{total_compression * 100:.1f}%",
+                "Upside": f"{upside_pct:>+5}%", "SHP": f"{stop_hit_prob}%", "Range": f"{total_compression * 100:.1f}%",
                 "Volume": f"{volume_dryness * 100:.0f}%"
             }, False
             
         # Check Near Miss Filter Next
         if near_compressed and near_volume and is_in_uptrend and near_high:
-            upside_pct = run_kronos_upside(ticker_symbol)
+            upside_pct, stop_hit_prob = run_kronos_upside(ticker_symbol)
             return {
                 "Symbol": ticker_symbol, "Entry": entry, "Stop": stop,
-                "Upside": f"{upside_pct:>+5}%", "Range": f"{total_compression * 100:.1f}%",
+                "Upside": f"{upside_pct:>+5}%", "SHP": f"{stop_hit_prob}%", "Range": f"{total_compression * 100:.1f}%",
                 "Volume": f"{volume_dryness * 100:.0f}%"
             }, True
             
@@ -129,7 +169,7 @@ def run_scan():
         msg += "`Ticker      Entry     Stop      Upside`\n"
         for row in strict_matches:
             msg += f"`{row['Symbol']:<11} {row['Entry']:<9} {row['Stop']:<9} {row['Upside']:<9}` 📈\n"
-            msg += f"↳ _Pivot Range: {row['Range']} | Vol: {row['Volume']} of normal_\n\n"
+            msg += f"↳ _Pivot Range: {row['Range']} | Vol: {row['Volume']} of normal | SHP: {row['SHP']}_\n\n"
     else:
         msg += "⚠️ _No pristine Element 4 setups met all strict parameters._\n\n"
 
@@ -140,7 +180,7 @@ def run_scan():
         # Display up to 5 best near matches to avoid Telegram text truncation
         for row in near_matches[:5]:
             msg += f"`{row['Symbol']:<11} {row['Entry']:<9} {row['Stop']:<9} {row['Upside']:<9}` 👀\n"
-            msg += f"↳ _Pivot Range: {row['Range']} | Vol: {row['Volume']} of normal_\n\n"
+            msg += f"↳ _Pivot Range: {row['Range']} | Vol: {row['Volume']} of normal | SHP: {row['SHP']}_\n\n"
 
     msg += "━━━━━━━━━━━━━━━━━━━━\n🎯 *Focus:* Tight Final Contraction + Projected Upside %"
     send_telegram(msg)

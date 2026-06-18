@@ -1,22 +1,103 @@
 {
-  "total_equity_value": 778544.50,
-  "last_updated": "2026-06-16",
+  "total_equity_value": 2317091.46,
+  "last_updated": "2026-06-18",
   "holdings": {
-    "PREMIERENE.NS": {"quantity": 150, "avg_cost": 943.30, "buy_date": "2026-04-07", "sector": "Infrastructure"},
-    "POWERINDIA.NS": {"quantity": 4, "avg_cost": 32905.00, "buy_date": "2026-04-29", "sector": "Infrastructure"},
-    "ADANIPORTS.NS": {"quantity": 70, "avg_cost": 1702.00, "buy_date": "2026-05-04", "sector": "Infrastructure"},
-    "HFCL.NS": {"quantity": 1000, "avg_cost": 122.50, "buy_date": "2026-05-04", "sector": "Telecommunication", "strategy": "trend"},
-    "LAURUSLABS.NS": {"quantity": 118, "avg_cost": 1278.50, "buy_date": "2026-05-30", "sector": "Pharma"},
-    "BHARATFORG.NS": {"quantity": 39, "avg_cost": 1959.00, "buy_date": "2026-05-15", "sector": "Industrial Manufacturing"},
-    "ATHERENERG.NS": {"quantity": 100, "avg_cost": 943.00, "buy_date": "2026-05-11", "sector": "Auto Components"},
-    "APARINDS.NS": {"quantity": 9, "avg_cost": 12905.00, "buy_date": "2026-05-12", "sector": "Capital Goods"},
-    "CARBORUNIV.NS": {"quantity": 111, "avg_cost": 1024.71, "buy_date": "2026-05-12", "sector": "Capital Goods"},
-    "RAINBOW.NS": {"quantity": 80, "avg_cost": 1341.00, "buy_date": "2026-05-18", "sector": "Healthcare"},
-    "INDUSTOWER.NS": {"quantity": 250, "avg_cost": 430.00, "buy_date": "2026-05-18", "sector": "Telecommunication"},
-    "GVT&D.NS": {"quantity": 31, "avg_cost": 4770.00, "buy_date": "2026-05-31", "sector": "Capital Goods"},
-    "POLYCAB.NS": {"quantity": 10, "avg_cost": 9652.00, "buy_date": "2026-06-09", "sector": "Capital Goods"},
-    "SYRMA.NS": {"quantity": 100, "avg_cost": 1238.00, "buy_date": "2026-06-09", "sector": "Capital Goods"},
-    "WELCORP.NS": {"quantity": 100, "avg_cost": 1406.00, "buy_date": "2026-06-09", "sector": "Capital Goods"},
-    "FEDERALBNK.NS": {"quantity": 595, "avg_cost": 305.57, "buy_date": "2026-06-10", "sector": "Financial Services"}
+    "PREMIERENE.NS": {
+      "quantity": 150,
+      "avg_cost": 943.3,
+      "buy_date": "2026-04-07",
+      "sector": "Infrastructure"
+    },
+    "POWERINDIA.NS": {
+      "quantity": 4,
+      "avg_cost": 32905.0,
+      "buy_date": "2026-04-29",
+      "sector": "Infrastructure"
+    },
+    "ADANIPORTS.NS": {
+      "quantity": 70,
+      "avg_cost": 1702.0,
+      "buy_date": "2026-05-04",
+      "sector": "Infrastructure"
+    },
+    "HFCL.NS": {
+      "quantity": 1000,
+      "avg_cost": 122.5,
+      "buy_date": "2026-05-04",
+      "sector": "Telecommunication",
+      "strategy": "trend"
+    },
+    "LAURUSLABS.NS": {
+      "quantity": 118,
+      "avg_cost": 1278.5,
+      "buy_date": "2026-05-30",
+      "sector": "Pharma"
+    },
+    "BHARATFORG.NS": {
+      "quantity": 39,
+      "avg_cost": 1959.0,
+      "buy_date": "2026-05-15",
+      "sector": "Industrial Manufacturing"
+    },
+    "ATHERENERG.NS": {
+      "quantity": 100,
+      "avg_cost": 943.0,
+      "buy_date": "2026-05-11",
+      "sector": "Auto Components"
+    },
+    "APARINDS.NS": {
+      "quantity": 9,
+      "avg_cost": 12905.0,
+      "buy_date": "2026-05-12",
+      "sector": "Capital Goods"
+    },
+    "CARBORUNIV.NS": {
+      "quantity": 111,
+      "avg_cost": 1024.71,
+      "buy_date": "2026-05-12",
+      "sector": "Capital Goods"
+    },
+    "RAINBOW.NS": {
+      "quantity": 80,
+      "avg_cost": 1341.0,
+      "buy_date": "2026-05-18",
+      "sector": "Healthcare"
+    },
+    "GVT&D.NS": {
+      "quantity": 31,
+      "avg_cost": 4770.0,
+      "buy_date": "2026-05-31",
+      "sector": "Capital Goods"
+    },
+    "POLYCAB.NS": {
+      "quantity": 16,
+      "avg_cost": 9782.5,
+      "buy_date": "2026-06-18",
+      "sector": "Capital Goods"
+    },
+    "SYRMA.NS": {
+      "quantity": 100,
+      "avg_cost": 1238.0,
+      "buy_date": "2026-06-09",
+      "sector": "Capital Goods"
+    },
+    "WELCORP.NS": {
+      "quantity": 100,
+      "avg_cost": 1406.0,
+      "buy_date": "2026-06-09",
+      "sector": "Capital Goods"
+    },
+    "FEDERALBNK.NS": {
+      "quantity": 595,
+      "avg_cost": 305.57,
+      "buy_date": "2026-06-10",
+      "sector": "Financial Services"
+    },
+    "RADICO.NS": {
+      "quantity": 46,
+      "avg_cost": 3618.0,
+      "buy_date": "2026-06-18",
+      "sector": "Fast Moving Consumer Goods"
+    }
   }
 }

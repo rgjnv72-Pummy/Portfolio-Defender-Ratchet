@@ -64,9 +64,9 @@ def parse_candidates_from_md():
                     ticker = parts[1].replace("**", "").strip()
                     strategy = parts[2].replace("`", "").strip()
                     grade = parts[3].strip()
-                    price = float(parts[4].replace("₹", "").replace(",", "").strip())
-                    entry = float(parts[5].replace("₹", "").replace(",", "").strip())
-                    stop = float(parts[6].replace("₹", "").replace(",", "").strip())
+                    price = float(parts[4].replace("**", "").replace("₹", "").replace(",", "").strip())
+                    entry = float(parts[5].replace("**", "").replace("₹", "").replace(",", "").strip())
+                    stop = float(parts[6].replace("**", "").replace("₹", "").replace(",", "").strip())
                     risk = parts[7].strip()
                     
                     candidates.append({

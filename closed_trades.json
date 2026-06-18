@@ -2278,5 +2278,11 @@
     "company_name": "Orient Electric Ltd",
     "exit_date": "2026-06-16",
     "exit_price": 178.0
+  },
+  {
+    "ticker": "INDUSTOWER.NS",
+    "company_name": "Indus Towers Ltd.",
+    "exit_date": "2026-06-18",
+    "exit_price": 410.0
   }
 ]
