@@ -9,8 +9,8 @@ import yfinance as yf
 import pandas_ta as ta
 
 # --- ENVIRONMENT & TELEGRAM AUTH ---
-MY_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID', '1280803679').strip()
-MY_TOKEN = os.getenv('TELEGRAM_TOKEN', '8711599818:AAGc-7qmFXdcbA_T-JFZTb4w5UlX9FiRm2o').strip()
+MY_CHAT_ID = (os.getenv('TELEGRAM_CHAT_ID') or '1280803679').strip()
+MY_TOKEN = (os.getenv('TELEGRAM_TOKEN') or '8711599818:AAGc-7qmFXdcbA_T-JFZTb4w5UlX9FiRm2o').strip()
 CSV_NAME = "ind_nifty500list.csv"
 
 # --- STRATEGY PARAMETERS ---
@@ -184,24 +184,42 @@ def run_stable_analysis(df_watchlist):
     sym_col = next((c for c in df_watchlist.columns if "symbol" in c.lower() or "ticker" in c.lower()), df_watchlist.columns[0])
     sec_col = next((c for c in df_watchlist.columns if "sector" in c.lower() or "industry" in c.lower()), None)
 
-    print(f"[INFO] Scanning unique assets inside matrix data blocks...")
+    print(f"[INFO] Preparing tickers for batch download...")
+    tickers = []
+    ticker_to_sector = {}
+    
+    for _, row in df_watchlist.iterrows():
+        raw_sym = str(row[sym_col]).strip().replace(",", "")
+        if not raw_sym or "NAN" in raw_sym.upper() or "SYMBOL" in raw_sym.upper():
+            continue
+        
+        if ".NS" in raw_sym.upper():
+            sym = raw_sym
+        else:
+            sym = f"{raw_sym}.NS"
+            
+        raw_sector = row[sec_col] if sec_col else "UNKNOWN"
+        sector = normalize_nse_industry(raw_sector)
+        
+        tickers.append(sym)
+        ticker_to_sector[sym] = sector
 
-    for _, row in tqdm(df_watchlist.iterrows(), total=len(df_watchlist), desc="Running Kalman State Space Scans"):
+    print(f"[INFO] Downloading historical data in batch for {len(tickers)} assets...")
+    try:
+        master_data = yf.download(tickers, period="1y", interval="1d", group_by="ticker", progress=False, auto_adjust=True)
+    except Exception as e:
+        print(f"[ERROR] Batch download failed: {e}. Falling back to sequential execution.")
+        master_data = None
+
+    print(f"[INFO] Running Kalman State Space Scans...")
+    for sym in tqdm(tickers, desc="Scanning Assets"):
         try:
-            raw_sym = str(row[sym_col]).strip().replace(",", "")
-            if not raw_sym or "NAN" in raw_sym.upper() or "SYMBOL" in raw_sym.upper():
-                continue
-
-            if ".NS" in raw_sym.upper():
-                sym = raw_sym
+            if master_data is not None and sym in master_data.columns.levels[0]:
+                df_history = master_data[sym].dropna(subset=["Close"])
             else:
-                sym = f"{raw_sym}.NS"
-
-            raw_sector = row[sec_col] if sec_col else "UNKNOWN"
-            sector = normalize_nse_industry(raw_sector)
-
-            tk = yf.Ticker(sym)
-            df_history = tk.history(period="1y", interval="1d", auto_adjust=True, raise_errors=False)
+                # Fallback to sequential ticker fetch if batch is missing this symbol
+                tk = yf.Ticker(sym)
+                df_history = tk.history(period="1y", interval="1d", auto_adjust=True, raise_errors=False)
 
             if df_history.empty or len(df_history) < EMA_TREND_PERIOD:
                 continue
@@ -211,7 +229,7 @@ def run_stable_analysis(df_watchlist):
             if passed:
                 results.append({
                     "Ticker": sym.replace(".NS", ""),
-                    "Sector": sector,
+                    "Sector": ticker_to_sector[sym],
                     "Price (INR)": data_metrics["Live_Price"],
                     "Kalman Value (INR)": data_metrics["Kalman_Fair_Value"],
                     "Discount (%)": data_metrics["Discount_Pct"],
