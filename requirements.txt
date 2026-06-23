@@ -2,7 +2,7 @@ yfinance
 pandas>=2.2.0
 numpy<2.0.0
 tqdm
-git+https://github.com
+pandas-ta @ git+https://github.com
 scipy
 scikit-learn
 hmmlearn
