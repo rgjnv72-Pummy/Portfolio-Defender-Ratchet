@@ -27,6 +27,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install setuptools wheel
         pip install -r requirements.txt
+        pip install pandas-ta-classic==0.3.15 --no-deps # FIXED: Forces installation bypassing the NumPy 2.x block
 
     # Fires up the script and securely injects your hidden Telegram API credentials
     - name: Execute Fibonacci Shape Curve Identifier
