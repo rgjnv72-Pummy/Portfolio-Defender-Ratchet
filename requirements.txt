@@ -1,8 +1,9 @@
+
 yfinance
-pandas==1.5.3
-numpy<2.0.0
+pandas>=2.2.0       # UPDATED: Minimum version for Python 3.12 support
+numpy<2.0.0         # KEPT: Prevents breaking changes from NumPy 2.0
 tqdm
-pandas-ta==0.4.71b0
-scipy
-scikit-learn
-hmmlearn
+pandas-ta==0.4.71b0 # CORRECT: This version is built for Python 3.12
+scipy               # Will automatically fetch the Py3.12 compatible version
+scikit-learn        # Will automatically fetch the Py3.12 compatible version
+hmmlearn            # Will automatically fetch the Py3.12 compatible version
