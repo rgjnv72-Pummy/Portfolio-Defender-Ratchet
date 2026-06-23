@@ -12,17 +12,21 @@ import yfinance as yf
 warnings.filterwarnings("ignore", category=FutureWarning, module="yfinance")
 warnings.filterwarnings("ignore", category=UserWarning)
 
+# --- UTF-8 CONSOLE ENCODING FIX (Windows Support) ---
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
 # --- AUTO-INSTALL DEPENDENCIES (Fallback) ---
 try:
     import pandas_ta as ta
 except ImportError:
     print("Installing required quant library pandas-ta... Please wait.")
-    os.system(f"{sys.executable} -m pip install pandas-ta==0.4.71b0 --quiet")
+    os.system(f"{sys.executable} -m pip install pandas-ta-classic==0.3.15 --no-deps --quiet")
     import pandas_ta as ta
 
 # --- CONFIGURATION ---
-TOKEN = os.getenv('TELEGRAM_TOKEN', '').strip()
-CHAT_ID = os.getenv('TELEGRAM_CHAT_ID', '').strip()
+TOKEN = (os.getenv('TELEGRAM_TOKEN') or '').strip()
+CHAT_ID = (os.getenv('TELEGRAM_CHAT_ID') or '').strip()
 TICKERS_CSV = 'ind_nifty500list.csv'
 MIN_AVG_TRADED_VALUE = 20000000  # ₹2 Crores minimum daily liquidity
 
@@ -92,12 +96,14 @@ def evaluate_strategies(df):
         if vol_ma20 is not None and macd is not None:
             last_vol = volume.iloc[-1]
             last_vol_ma = vol_ma20.iloc[-1]
-            macd_col = [c for c in macd.columns if "MACD_" in str(c)][0]
-            sig_col = [c for c in macd.columns if "MACDs_" in str(c)][0]
-
-            if last_vol > (last_vol_ma * 2.0) and macd[macd_col].iloc[-1] > macd[sig_col].iloc[-1]:
-                passed_strategies.append("cont5_relspike_confirmed")
-                entry_trigger = float(high.iloc[-3:].max())
+            macd_cols = [c for c in macd.columns if "MACD_" in str(c)]
+            sig_cols = [c for c in macd.columns if "MACDs_" in str(c)]
+            if macd_cols and sig_cols:
+                macd_col = macd_cols[0]
+                sig_col = sig_cols[0]
+                if last_vol > (last_vol_ma * 2.0) and macd[macd_col].iloc[-1] > macd[sig_col].iloc[-1]:
+                    passed_strategies.append("cont5_relspike_confirmed")
+                    entry_trigger = float(high.iloc[-3:].max())
 
         # 3. cont2_trendgated_asym (Trend-Gated Pullback)
         if current_close > ema200.iloc[-1]:
@@ -109,13 +115,16 @@ def evaluate_strategies(df):
         # 4. cont4_pyramid_cascade_rider (ADX Trend Rider)
         adx = ta.adx(high, low, close, length=14)
         if adx is not None:
-            adx_col = [c for c in adx.columns if "ADX_" in str(c)][0]
-            plus_di = [c for c in adx.columns if "DMP_" in str(c)][0]
-            minus_di = [c for c in adx.columns if "DMN_" in str(c)][0]
-
-            if adx[adx_col].iloc[-1] > 25 and adx[plus_di].iloc[-1] > adx[minus_di].iloc[-1]:
-                passed_strategies.append("cont4_pyramid_cascade_rider")
-                entry_trigger = float(high.iloc[-1])
+            adx_cols = [c for c in adx.columns if "ADX_" in str(c)]
+            plus_di_cols = [c for c in adx.columns if "DMP_" in str(c)]
+            minus_di_cols = [c for c in adx.columns if "DMN_" in str(c)]
+            if adx_cols and plus_di_cols and minus_di_cols:
+                adx_col = adx_cols[0]
+                plus_di = plus_di_cols[0]
+                minus_di = minus_di_cols[0]
+                if adx[adx_col].iloc[-1] > 25 and adx[plus_di].iloc[-1] > adx[minus_di].iloc[-1]:
+                    passed_strategies.append("cont4_pyramid_cascade_rider")
+                    entry_trigger = float(high.iloc[-1])
 
         # 5. cont1_cascade_zscore (Z-Score Mean Reversion with Trend Filter)
         # Modified to filter by EMA200 to avoid structural bear-trend traps
@@ -191,12 +200,20 @@ def run_scan():
     }
     confluences = []
     
+    if master_data.empty:
+        print("❌ Error: No data downloaded from Yahoo Finance.")
+        return
+        
+    is_multi = isinstance(master_data.columns, pd.MultiIndex)
+    
     for sym_ns in formatted_tickers:
         try:
-            if sym_ns not in master_data.columns.levels[0]:
-                continue
-            
-            d_df = master_data[sym_ns].dropna(subset=["Close"])
+            if is_multi:
+                if sym_ns not in master_data.columns.levels[0]:
+                    continue
+                d_df = master_data[sym_ns].dropna(subset=["Close"])
+            else:
+                d_df = master_data.dropna(subset=["Close"])
             if d_df.empty or len(d_df) < 200:
                 continue
                 
