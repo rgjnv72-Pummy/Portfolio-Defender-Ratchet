@@ -1,8 +1,7 @@
 yfinance
-pandas==1.5.3
-numpy<2.0.0
+pandas>=2.2.0
+numpy==1.26.4
 tqdm
-pandas-ta==0.4.71b0
 scipy
 scikit-learn
 hmmlearn
