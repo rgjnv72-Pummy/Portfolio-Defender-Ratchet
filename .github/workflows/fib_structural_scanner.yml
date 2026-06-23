@@ -19,12 +19,13 @@ jobs:
     - name: Initialize Python Runtime Environment
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12' # Updated from 3.10 to 3.12
+        python-version: '3.12'
         cache: 'pip'
 
     - name: Install Project Dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install setuptools wheel
         pip install -r requirements.txt
 
     # Fires up the script and securely injects your hidden Telegram API credentials
