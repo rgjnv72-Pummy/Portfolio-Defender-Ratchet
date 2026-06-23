@@ -2,6 +2,7 @@ import os
 import json
 import math
 import time
+import sys
 import urllib3
 import warnings
 import numpy as np
@@ -10,12 +11,16 @@ from tqdm import tqdm
 import yfinance as yf
 from concurrent.futures import ThreadPoolExecutor
 
+# --- UTF-8 CONSOLE ENCODING FIX (Windows Support) ---
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
 # --- WARNING FILTERS ---
 warnings.filterwarnings("ignore")
 
 # --- ENVIRONMENT & TELEGRAM AUTH ---
-MY_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID', '1280803679').strip()
-MY_TOKEN = os.getenv('TELEGRAM_TOKEN', '8711599818:AAGc-7qmFXdcbA_T-JFZTb4w5UlX9FiRm2o').strip()
+MY_CHAT_ID = (os.getenv('TELEGRAM_CHAT_ID') or '1280803679').strip()
+MY_TOKEN = (os.getenv('TELEGRAM_TOKEN') or '8711599818:AAGc-7qmFXdcbA_T-JFZTb4w5UlX9FiRm2o').strip()
 CSV_NAME = "ind_nifty500list.csv"
 
 # STRATEGY HYPERPARAMETERS
@@ -241,9 +246,12 @@ def run_stable_analysis(df_watchlist):
     sym_col = next((c for c in df_watchlist.columns if "symbol" in c.lower() or "ticker" in c.lower()), df_watchlist.columns[0])
     sec_col = next((c for c in df_watchlist.columns if "sector" in c.lower() or "industry" in c.lower()), None)
 
-    print(f"[INFO] Ingesting watchlist and scanning unique assets...")
+    print(f"[INFO] Ingesting watchlist and preparing batch download...")
     
     tasks = []
+    formatted_tickers = []
+    ticker_to_sector = {}
+    
     for _, row in df_watchlist.iterrows():
         raw_sym = str(row[sym_col]).strip().replace(",", "")
         if not raw_sym or "NAN" in raw_sym.upper() or "SYMBOL" in raw_sym.upper():
@@ -251,11 +259,77 @@ def run_stable_analysis(df_watchlist):
         sym = raw_sym if ".NS" in raw_sym.upper() else f"{raw_sym}.NS"
         sector = str(row[sec_col]).strip() if sec_col else "UNKNOWN"
         tasks.append((sym, sector))
+        formatted_tickers.append(sym)
+        ticker_to_sector[sym] = sector
 
+    print(f"[INFO] Downloading historical data in batch for {len(formatted_tickers)} assets...")
+    try:
+        master_data = yf.download(formatted_tickers, period="1y", interval="1d", group_by="ticker", progress=False, auto_adjust=True)
+    except Exception as e:
+        print(f"[ERROR] Batch download failed: {e}. Falling back to sequential execution.")
+        master_data = None
+
+    print(f"[INFO] Running Avellaneda-Stoikov Simulations...")
+    is_multi = isinstance(master_data.columns, pd.MultiIndex) if master_data is not None else False
     results = []
-    # Utilize multithreading to speed up the 500-ticker batch scan
+
+    def evaluate_single_simulation(sym, sector):
+        try:
+            if master_data is not None and is_multi and sym in master_data.columns.levels[0]:
+                historical_df = master_data[sym].dropna(subset=["Close"])
+            else:
+                ticker_handler = yf.Ticker(sym)
+                historical_df = ticker_handler.history(period="1y", interval="1d", raise_errors=False, auto_adjust=True)
+
+            if historical_df.empty or len(historical_df) < (VOL_WINDOW + 10):
+                return None
+
+            df_clean = historical_df.copy()
+            raw_price_feed = df_clean["Close"].squeeze().dropna().values
+            if len(raw_price_feed) < (VOL_WINDOW + 10):
+                return None
+
+            # CRITICAL QUANT ALIGNMENT: Normalize price to base 100 to scale daily absolute volatility.
+            # This keeps spreads proportional to the asset price and enables actual fill events.
+            price_feed = raw_price_feed / raw_price_feed[0] * 100
+
+            df_sim, paused, total_steps = run_simulation_session(price_feed)
+
+            if df_sim.empty:
+                return None
+
+            active_frames = df_sim[~df_sim["Paused"]]
+            pnl_diffs = active_frames["PnL"].diff().dropna()
+
+            if pnl_diffs.std() > 0:
+                sharpe = (pnl_diffs.mean() / pnl_diffs.std()) * math.sqrt(total_steps / HORIZON_T)
+            else:
+                sharpe = 0.0
+
+            final_pnl = float(df_sim["PnL"].iloc[-1])
+            max_inv = float(df_sim["Inventory"].abs().max())
+            trades = (df_sim['Inventory'].diff().fillna(0) != 0).sum()
+
+            # Only select assets that actually had trading activity in the simulation
+            if trades == 0:
+                return None
+
+            return {
+                "Ticker": sym.replace(".NS", ""),
+                "Sector": sector,
+                "Final_PnL": round(final_pnl, 2),
+                "Max_Inventory": max_inv,
+                "Steps_Paused": paused,
+                "Horizon_Sharpe": round(sharpe, 4),
+                "Total_Trades": int(trades),
+                "Last_Price_INR": round(float(raw_price_feed[-1]), 2)
+            }
+        except:
+            return None
+
+    # Utilize multithreading to speed up the local simulation fitting
     with ThreadPoolExecutor(max_workers=8) as executor:
-        futures = [executor.submit(scan_single_asset, t[0], t[1]) for t in tasks]
+        futures = [executor.submit(evaluate_single_simulation, t[0], t[1]) for t in tasks]
         for f in tqdm(futures, desc="Running Avellaneda-Stoikov Simulations"):
             res = f.result()
             if res is not None:
