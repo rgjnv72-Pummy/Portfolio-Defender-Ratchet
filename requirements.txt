@@ -1,8 +1,8 @@
 yfinance
-pandas>=2.2.0       # KEPT: Minimum version for Python 3.12 support
-numpy<2.0.0         # KEPT: Preserves system requirement for other workflows
+pandas>=2.2.0
+numpy<2.0.0
 tqdm
-pandas-ta==0.3.14b0 # FIXED: Rolled back to stable branch compatible with NumPy 1.x
-scipy               # Automatically fetches Py3.12 compatible version
-scikit-learn        # Automatically fetches Py3.12 compatible version
-hmmlearn            # Automatically fetches Py3.12 compatible version
+git+https://github.com
+scipy
+scikit-learn
+hmmlearn
