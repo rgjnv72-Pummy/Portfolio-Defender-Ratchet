@@ -2,7 +2,8 @@ yfinance
 pandas>=2.2.0
 numpy<2.0.0
 tqdm
-pandas-ta @ git+https://github.com
 scipy
 scikit-learn
 hmmlearn
+https://github.com/twopirllc/pandas-ta/tarball/main
+
