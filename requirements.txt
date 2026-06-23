@@ -5,4 +5,4 @@ tqdm
 scipy
 scikit-learn
 hmmlearn
-pandas-ta-classic
+pandas-ta-classic==0.1.11
