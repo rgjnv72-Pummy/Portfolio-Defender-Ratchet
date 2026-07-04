@@ -4,6 +4,7 @@ import urllib3
 import warnings
 import numpy as np
 import pandas as pd
+import requests
 from tqdm import tqdm
 import yfinance as yf
 import pandas_ta as ta
@@ -205,8 +206,11 @@ def run_stable_analysis(df_watchlist):
         ticker_to_sector[sym] = sector
 
     print(f"[INFO] Downloading historical data in batch for {len(tickers)} assets...")
+    session = requests.Session()
+    session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    
     try:
-        master_data = yf.download(tickers, period="1y", interval="1d", group_by="ticker", progress=False, auto_adjust=True)
+        master_data = yf.download(tickers, period="1y", interval="1d", group_by="ticker", progress=False, auto_adjust=True, session=session)
     except Exception as e:
         print(f"[ERROR] Batch download failed: {e}. Falling back to sequential execution.")
         master_data = None
