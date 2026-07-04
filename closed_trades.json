@@ -2284,5 +2284,35 @@
     "company_name": "Indus Towers Ltd.",
     "exit_date": "2026-06-18",
     "exit_price": 410.0
+  },
+  {
+    "ticker": "APARINDS.NS",
+    "company_name": "Apar Industries Ltd.",
+    "entry_date": "2026-05-12",
+    "entry_price": 12905.0,
+    "quantity": 9,
+    "exit_date": "2026-07-04",
+    "exit_price": 14168.0,
+    "reason": "sudden fall in power sector and bearish FVG seen"
+  },
+  {
+    "ticker": "GVT&D.NS",
+    "company_name": "GE Vernova T&D India Ltd.",
+    "entry_date": "2026-05-31",
+    "entry_price": 4770.0,
+    "quantity": 31,
+    "exit_date": "2026-07-04",
+    "exit_price": 4387.0,
+    "reason": "sudden fall in power sector and bearish FVG seen"
+  },
+  {
+    "ticker": "POWERINDIA.NS",
+    "company_name": "Hitachi Energy India Ltd.",
+    "entry_date": "2026-04-29",
+    "entry_price": 32905.0,
+    "quantity": 4,
+    "exit_date": "2026-07-04",
+    "exit_price": 30935.0,
+    "reason": "sudden fall in power sector and bearish FVG seen"
   }
 ]

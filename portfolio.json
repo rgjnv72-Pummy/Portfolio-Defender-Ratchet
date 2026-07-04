@@ -1,6 +1,6 @@
 {
-  "total_equity_value": 2317091.46,
-  "last_updated": "2026-06-18",
+  "total_equity_value": 1929842.46,
+  "last_updated": "2026-07-04",
   "holdings": {
     "PREMIERENE.NS": {
       "quantity": 150,
@@ -8,12 +8,7 @@
       "buy_date": "2026-04-07",
       "sector": "Infrastructure"
     },
-    "POWERINDIA.NS": {
-      "quantity": 4,
-      "avg_cost": 32905.0,
-      "buy_date": "2026-04-29",
-      "sector": "Infrastructure"
-    },
+
     "ADANIPORTS.NS": {
       "quantity": 70,
       "avg_cost": 1702.0,
@@ -25,7 +20,7 @@
       "avg_cost": 122.5,
       "buy_date": "2026-05-04",
       "sector": "Telecommunication",
-      "strategy": "trend"
+      "strategy": "swing"
     },
     "LAURUSLABS.NS": {
       "quantity": 118,
@@ -45,12 +40,7 @@
       "buy_date": "2026-05-11",
       "sector": "Auto Components"
     },
-    "APARINDS.NS": {
-      "quantity": 9,
-      "avg_cost": 12905.0,
-      "buy_date": "2026-05-12",
-      "sector": "Capital Goods"
-    },
+
     "CARBORUNIV.NS": {
       "quantity": 111,
       "avg_cost": 1024.71,
@@ -63,12 +53,7 @@
       "buy_date": "2026-05-18",
       "sector": "Healthcare"
     },
-    "GVT&D.NS": {
-      "quantity": 31,
-      "avg_cost": 4770.0,
-      "buy_date": "2026-05-31",
-      "sector": "Capital Goods"
-    },
+
     "POLYCAB.NS": {
       "quantity": 16,
       "avg_cost": 9782.5,

@@ -31,9 +31,8 @@ def load_live_portfolio():
     fallback_holdings = {
         "PREMIERENE.NS": [150, 943.30, "2026-04-07", "Infrastructure", 970.70, "swing"],
         "ORIENTELEC.NS": [700, 184.00, "2026-04-21", "Consumer Durables", 188.40, "swing"],
-        "POWERINDIA.NS": [4, 32905.00, "2026-04-29", "Infrastructure", 31905.00, "swing"],
         "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure", 1767.20, "swing"],
-        "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication", 142.44, "trend"],
+        "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication", 142.44, "swing"],
         "LAURUSLABS.NS": [118, 1278.50, "2026-05-30", "Pharma", 1299.70, "swing"],
         "FEDERALBNK.NS": [595, 305.57, "2026-06-10", "Financial Services", 315.00, "swing"]
     }
@@ -67,7 +66,13 @@ def send_msg(text):
     token = MY_TOKEN.strip() if MY_TOKEN else None
     chat_id = MY_CHAT_ID.strip() if MY_CHAT_ID else None
     if not token or not chat_id:
-        print(text)
+        try:
+            print(text)
+        except UnicodeEncodeError:
+            try:
+                print(text.encode('ascii', 'ignore').decode('ascii'))
+            except Exception:
+                pass
         return
     try:
         conn = http.client.HTTPSConnection("api.telegram.org")
@@ -77,7 +82,126 @@ def send_msg(text):
         conn.getresponse()  # Fixed multiple-assignment assignment typo string
         conn.close()
     except Exception as e:
-        print(f"❌ Telegram Error: {e}")
+        try:
+            print(f"❌ Telegram Error: {e}")
+        except UnicodeEncodeError:
+            print(f"Telegram Error: {e}")
+def compute_historical_ratchet(df, buy_date_str, buy_p, strategy="swing"):
+    df = df.copy()
+    buy_date = pd.to_datetime(buy_date_str)
+    
+    # Calculate ATR (14)
+    tr = pd.concat([
+        df['High'] - df['Low'], 
+        (df['High'] - df['Close'].shift(1)).abs(), 
+        (df['Low'] - df['Close'].shift(1)).abs()
+    ], axis=1).max(axis=1)
+    atr = tr.rolling(14).mean()
+    
+    # Pre-entry ATR (60 days prior to buy_date)
+    atr_pre_entry = atr[atr.index <= buy_date].tail(60)
+    if not atr_pre_entry.empty:
+        entry_atr = float(atr_pre_entry.max())
+    else:
+        entry_atr = float(atr.iloc[0]) if not atr.empty else 0.0
+        
+    initial_atr_floor = buy_p - (1.5 * entry_atr)
+    
+    # We only compute ratchet starting from the buy_date onwards
+    valid_df = df[df.index >= buy_date].copy()
+    if valid_df.empty:
+        return pd.Series(dtype='float64'), pd.Series(dtype='float64'), 0.0, 0, 1.5, 40
+        
+    valid_atr = atr.reindex(valid_df.index)
+    
+    # Historical returns standard dev (60 days lookback)
+    hist_vol = df['Close'].pct_change().tail(60).std()
+    if hist_vol >= 0.030:
+        lookback_days = 15
+    elif hist_vol >= 0.018:
+        lookback_days = 25
+    else:
+        lookback_days = 40
+        
+    ratchet_history = []
+    hard_floor_history = []
+    
+    # Peak price tracker
+    peak_price = 0.0
+    milestones_achieved = 0
+    mult = 2.0
+    
+    # Generate milestone thresholds
+    milestone_levels = []
+    m_val = buy_p
+    for i in range(1, 15):
+        m_val = m_val * 1.30
+        milestone_levels.append(m_val)
+        
+    for idx, row in valid_df.iterrows():
+        close_p = row['Close']
+        
+        # Determine milestones achieved by the peak price up to this index
+        running_df = valid_df.loc[valid_df.index <= idx]
+        peak_price = float(running_df['Close'].max())
+        
+        milestones_achieved = 0
+        active_base = buy_p
+        
+        if strategy == "swing":
+            for i, level in enumerate(milestone_levels):
+                if peak_price >= level:
+                    milestones_achieved = i + 1
+                    active_base = level
+                else:
+                    break
+        
+        # treating active_base like entry price for P&L-based multiplier
+        pnl_pct = ((close_p - active_base) / active_base) * 100
+        
+        # Dynamic Multiplier
+        if pnl_pct > 20.0:
+            mult = 2.5
+        elif pnl_pct < 0.0:
+            mult = 1.5
+        else:
+            mult = 2.0
+            
+        # Calculate lookback raw ratchet
+        history_so_far = valid_df.loc[valid_df.index <= idx].tail(lookback_days)
+        history_atr = valid_atr.reindex(history_so_far.index)
+        
+        # Calculate PnL for each day in lookback window relative to active_base
+        hist_pnl = ((history_so_far['Close'] - active_base) / active_base) * 100
+        hist_mult = hist_pnl.apply(lambda x: 2.5 if x > 20.0 else (1.5 if x < 0.0 else 2.0))
+        hist_raw_ratchets = history_so_far['Close'] - (hist_mult * history_atr)
+        rolling_ratchet = hist_raw_ratchets.max()
+        
+        # Hard Floor determination
+        if strategy == "swing" and milestones_achieved >= 1:
+            # 1. Lock in half of the milestone gains achieved so far
+            profit_lock = buy_p * (1.0 + (1.30**milestones_achieved - 1.0) / 2.0)
+            
+            # 2. Strict tight trailing stop: 1.5x ATR from running peak price
+            running_valid_df = valid_df.loc[valid_df.index <= idx]
+            running_atr = valid_atr.reindex(running_valid_df.index)
+            peak_stops = running_valid_df['Close'].cummax() - (1.5 * running_atr)
+            tight_trailing = float(peak_stops.max())
+            
+            # Dynamic floor is the highest of profit lock and tight trailing stop
+            hard_floor = max(profit_lock, tight_trailing)
+        else:
+            hard_floor = initial_atr_floor
+            
+        # Guardrails: soft trailing stop retreats during pullbacks to avoid shakeouts,
+        # but is strictly bounded by hard_floor and close_p * 0.97
+        final_ratchet = min(rolling_ratchet, close_p * 0.97)
+        final_ratchet = max(final_ratchet, hard_floor)
+        
+        ratchet_history.append(final_ratchet)
+        hard_floor_history.append(hard_floor)
+        
+    return pd.Series(ratchet_history, index=valid_df.index), pd.Series(hard_floor_history, index=valid_df.index), peak_price, milestones_achieved, mult, lookback_days
 
 def run_simplified_watchdog():
     CURRENT_HOLDINGS = load_live_portfolio()
@@ -136,69 +260,57 @@ def run_simplified_watchdog():
             close_p = float(df['Close'].iloc[-1])
             pnl_pct = ((close_p - buy_p) / buy_p) * 100
             
-            tr = pd.concat([
-                df['High'] - df['Low'], 
-                (df['High'] - df['Close'].shift(1)).abs(), 
-                (df['Low'] - df['Close'].shift(1)).abs()
-            ], axis=1).max(axis=1)
-            atr = tr.rolling(14).mean()
+            ratchet_series, floor_series, peak_p, milestones, mult, lookback_days = compute_historical_ratchet(
+                df, buy_date, buy_p, strategy
+            )
             
-            # --- SQUEEZE BREAKOUT ENTRY ENGINE LAYER ---
-            # Capture peak volatility prior to entry to avoid the compressed 'Squeeze trap'
-            atr_pre_entry = atr[(atr.index <= buy_date)].tail(60)
-            if not atr_pre_entry.empty:
-                entry_atr = float(atr_pre_entry.max())  # Maximum historical pre-burst structural baseline
-            else:
-                entry_atr = float(atr.iloc[-1])
-            
-            initial_atr_floor = buy_p - (1.5 * entry_atr)
-            
-            valid_df = df[df.index >= buy_date].copy()
-            if valid_df.empty: 
-                valid_df = df.iloc[-5:]
+            if ratchet_series.empty:
+                continue
                 
-            # --- ENGINE A: DYNAMIC TRAILING MULTIPLIER CONFIGURATION ---
-            if pnl_pct > 20.0:  
-                mult = 2.5     # Protect large winners early from deep profit-taking pullbacks
-            elif pnl_pct < 0.0:
-                mult = 1.5     # Tight capital restriction for entry phases
-            else:
-                mult = 2.0     # Standard trailing metric
-                
-            valid_atr = atr.reindex(valid_df.index)
-            ratchet_series = valid_df['Close'] - (mult * valid_atr)
+            ratchet = ratchet_series.iloc[-1]
+            hard_floor = floor_series.iloc[-1]
             
-            # --- ENGINE B: STOCK-SPECIFIC VOLATILITY TIME ENGINE ---
-            hist_vol = df['Close'].pct_change().tail(60).std()
-            
-            if hist_vol >= 0.030:
-                lookback_days = 15   # High Volatility Breakouts: Fast profit locking
-            elif hist_vol >= 0.018:
-                lookback_days = 25   
-            else:
-                lookback_days = 40   # Clean Institutional Trends: Maximum macro breathing room
-            
-            ratchet = ratchet_series.rolling(lookback_days, min_periods=1).max().iloc[-1]
-            
-            # --- ENGINE C: +30% RUN SWING PROFIT LOCK-IN ---
-            hard_floor = initial_atr_floor
+            # Check for milestone achievement alerts
             if strategy == "swing":
-                peak_price = float(valid_df['Close'].max())
-                peak_pnl_pct = ((peak_price - buy_p) / buy_p) * 100
+                milestone_levels = []
+                m_val = buy_p
+                for i in range(1, 15):
+                    m_val = m_val * 1.30
+                    milestone_levels.append(m_val)
                 
-                if peak_pnl_pct >= 30.0:
-                    # 1. Lock in 15% minimum profit (protecting half of the 30% milestone)
-                    profit_lock = buy_p * 1.15
-                    # 2. Strict tight trailing stop: 1.5x ATR from running peak price
-                    peak_stops = valid_df['Close'].cummax() - (1.5 * valid_atr)
-                    tight_trailing = float(peak_stops.max())
-                    # Dynamic floor is the highest of profit lock and tight trailing stop
-                    hard_floor = max(profit_lock, tight_trailing)
-            
-            # Dynamic Guardrails: soft trailing stop retreats during pullbacks to avoid shakeouts,
-            # but is strictly bounded by the hard_floor (which escalates and locks in gains after 30% run).
-            ratchet = min(ratchet, close_p * 0.97)
-            ratchet = max(ratchet, hard_floor)
+                # Check today's milestone count vs yesterday's
+                valid_df = df[df.index >= buy_date].copy()
+                if valid_df.empty:
+                    valid_df = df.iloc[-5:]
+                    
+                peak_price_today = float(valid_df['Close'].max())
+                milestones_today = 0
+                active_base_today = buy_p
+                for i, level in enumerate(milestone_levels):
+                    if peak_price_today >= level:
+                        milestones_today = i + 1
+                        active_base_today = level
+                    else:
+                        break
+                        
+                if len(valid_df) >= 2:
+                    peak_price_yesterday = float(valid_df['Close'].iloc[:-2].max()) if len(valid_df) > 2 else float(valid_df['Close'].iloc[0])
+                else:
+                    peak_price_yesterday = buy_p
+                    
+                milestones_yesterday = 0
+                for i, level in enumerate(milestone_levels):
+                    if peak_price_yesterday >= level:
+                        milestones_yesterday = i + 1
+                    else:
+                        break
+                        
+                if milestones_today > milestones_yesterday:
+                    locked_in_profit_pct = ((active_base_today - buy_p) / buy_p) * 100
+                    msg = (f"🏆 *KRONOS MILESTONE ACHIEVED:* `{ticker.replace('.NS','')}` has achieved the "
+                           f"*{milestones_today}* hard-floor milestone (CMP: ₹{close_p:.2f}). "
+                           f"Hard stop-floor elevated to lock in *+{locked_in_profit_pct:.1f}%* profit (₹{active_base_today:.2f}).")
+                    send_msg(msg)
             
             dist_to_stop = ((close_p - ratchet) / close_p) * 100
             
@@ -217,44 +329,48 @@ def run_simplified_watchdog():
             continue
 
     # --- REPORT COMPOSITION ---
-    report = f"📋 *LIVE RISK WATCHDOG (<3% Cushion): {datetime.now().strftime('%d %b')}*\n"
-    report += f"Nifty 50 Index: {nifty_chg:+.2f}%\n"
-    report += f"Total Active Scrips: {total_scrips}\n"
-    report += "━━━━━━━━━━━━━━━━━━━━\n\n"
-    
     if results:
+        report = f"📋 *LIVE RISK WATCHDOG (<3% Cushion): {datetime.now().strftime('%d %b')}*\n"
+        report += f"Nifty 50 Index: {nifty_chg:+.2f}%\n"
+        report += f"Total Active Scrips: {total_scrips}\n"
+        report += "━━━━━━━━━━━━━━━━━━━━\n\n"
+        
         sorted_results = sorted(results, key=lambda x: x['cushion'])
         for res in sorted_results: 
             report += res['text']
+    
+        report += "🏗️ *SECTOR EXPOSURE SUMMARY*\n"
+        for sec, val in sorted(sector_values.items(), key=lambda item: item[1], reverse=True): 
+            allocation_pct = (val / total_val) * 100 if total_val > 0 else 0
+            report += f"• {sec}: {allocation_pct:.1f}%\n"
+        report += "\n"
+    
+        if skipped_tickers:
+            report += f"ℹ️ *Skipped Risk Charts*: {', '.join(skipped_tickers)}\n\n"
+    
+        port_daily_pct = (daily_gain_sum / (total_val - daily_gain_sum)) * 100 if (total_val - daily_gain_sum) > 0 else 0
+        total_pnl_pct = ((total_val - total_cost) / total_cost) * 100 if total_cost > 0 else 0
+        
+        alpha_metric = port_daily_pct - nifty_chg
+        alpha_icon = "🔥" if alpha_metric > 0 else "❄️"
+        
+        val_lakhs = total_val / 100000
+        gain_lakhs = daily_gain_sum / 100000
+        
+        report += "━━━━━━━━━━━━━━━━━━━━\n"
+        report += f"📊 *SUMMARY*\n"
+        report += f"Live Account Value: ₹{val_lakhs:.2f}L\n"
+        report += f"Open Book Profit: {total_pnl_pct:+.2f}%\n"
+        report += f"Session Change: ₹{gain_lakhs:+.2f}L ({port_daily_pct:+.2f}%)\n"
+        report += f"Session Alpha: {alpha_metric:+.2f}% {alpha_icon}"
+        
+        send_msg(report)
     else:
-        report += "✅ All open positions currently have a healthy cushion (>6%).\n\n"
-
-    report += "🏗️ *SECTOR EXPOSURE SUMMARY*\n"
-    for sec, val in sorted(sector_values.items(), key=lambda item: item[1], reverse=True): 
-        allocation_pct = (val / total_val) * 100 if total_val > 0 else 0
-        report += f"• {sec}: {allocation_pct:.1f}%\n"
-    report += "\n"
-
-    if skipped_tickers:
-        report += f"ℹ️ *Skipped Risk Charts*: {', '.join(skipped_tickers)}\n\n"
-
-    port_daily_pct = (daily_gain_sum / (total_val - daily_gain_sum)) * 100 if (total_val - daily_gain_sum) > 0 else 0
-    total_pnl_pct = ((total_val - total_cost) / total_cost) * 100 if total_cost > 0 else 0
-    
-    alpha_metric = port_daily_pct - nifty_chg
-    alpha_icon = "🔥" if alpha_metric > 0 else "❄️"
-    
-    val_lakhs = total_val / 100000
-    gain_lakhs = daily_gain_sum / 100000
-    
-    report += "━━━━━━━━━━━━━━━━━━━━\n"
-    report += f"📊 *SUMMARY*\n"
-    report += f"Live Account Value: ₹{val_lakhs:.2f}L\n"
-    report += f"Open Book Profit: {total_pnl_pct:+.2f}%\n"
-    report += f"Session Change: ₹{gain_lakhs:+.2f}L ({port_daily_pct:+.2f}%)\n"
-    report += f"Session Alpha: {alpha_metric:+.2f}% {alpha_icon}"
-    
-    send_msg(report)
+        report = f"📋 *LIVE RISK WATCHDOG: {datetime.now().strftime('%d %b')}*\n"
+        report += f"Nifty 50 Index: {nifty_chg:+.2f}%\n"
+        report += "━━━━━━━━━━━━━━━━━━━━\n"
+        report += "✅ All open positions currently have a healthy cushion (>3%)."
+        send_msg(report)
 
 if __name__ == "__main__":
     run_simplified_watchdog()

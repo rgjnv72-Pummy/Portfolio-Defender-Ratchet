@@ -7,6 +7,7 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 import yfinance as yf
+import requests
 
 # --- WARNING FILTERS ---
 warnings.filterwarnings("ignore", category=FutureWarning, module="yfinance")
@@ -48,9 +49,9 @@ def send_telegram(text):
     finally:
         conn.close()
 
-def evaluate_strategies(df):
+def evaluate_strategies(df, nifty_close=None):
     """
-    Evaluates a single stock's historical DataFrame against all 5 strategies.
+    Evaluates a single stock's historical DataFrame against all 11 strategies.
     Returns: (list_of_passed_strategy_names, trigger_entry_level)
     """
     passed_strategies = []
@@ -165,6 +166,58 @@ def evaluate_strategies(df):
             passed_strategies.append("catalyst_acceleration")
             entry_trigger = float(high.iloc[-1])
 
+        # 8. rs_line_breakout (Relative Strength Line Breakout vs Nifty 50)
+        if nifty_close is not None:
+            nifty_reindexed = nifty_close.reindex(df.index).ffill()
+            if not nifty_reindexed.isna().all():
+                rs_line = df['Close'] / nifty_reindexed
+                rs_max_252 = rs_line.rolling(252, min_periods=100).max()
+                price_max_252 = df['Close'].rolling(252, min_periods=100).max()
+                
+                if rs_line.iloc[-1] >= rs_max_252.iloc[-1] and current_close < (price_max_252.iloc[-1] * 0.95):
+                    passed_strategies.append("rs_line_breakout")
+                    if entry_trigger == 0.0:
+                        entry_trigger = float(high.iloc[-1])
+
+        # 9. pocket_pivot (Morales Pocket Pivot Volume Accumulation)
+        if len(close) >= 12:
+            is_up_day = current_close > float(close.iloc[-2])
+            down_days_vol = []
+            for i in range(-11, -1):
+                if float(close.iloc[i]) < float(close.iloc[i-1]):
+                    down_days_vol.append(float(volume.iloc[i]))
+            max_down_vol = max(down_days_vol) if down_days_vol else 0.0
+            
+            if is_up_day and float(volume.iloc[-1]) > max_down_vol and current_close > ema200.iloc[-1]:
+                passed_strategies.append("pocket_pivot")
+                if entry_trigger == 0.0:
+                    entry_trigger = float(high.iloc[-1])
+
+        # 10. vol_compression (Volatility Compression Index / Squeeze)
+        if len(close) >= 100:
+            returns = close.pct_change()
+            hv_10 = returns.tail(10).std()
+            hv_100 = returns.tail(100).std()
+            if hv_100 > 0:
+                vci_ratio = hv_10 / hv_100
+                if vci_ratio < 0.15 and current_close > ema200.iloc[-1]:
+                    passed_strategies.append("vol_compression")
+                    if entry_trigger == 0.0:
+                        entry_trigger = float(high.iloc[-1])
+
+        # 11. ema_pullback (EMA Anchor Mean Reversion Pullback)
+        ema21 = ta.ema(close, length=21)
+        ema50 = ta.ema(close, length=50)
+        if ema21 is not None and ema50 is not None:
+            in_uptrend = current_close > ema21.iloc[-1] and ema21.iloc[-1] > ema50.iloc[-1] and ema50.iloc[-1] > ema200.iloc[-1]
+            touched_ema = float(low.iloc[-1]) <= ema21.iloc[-1] and current_close > ema21.iloc[-1]
+            green_candle = current_close > float(df['Open'].iloc[-1])
+            
+            if in_uptrend and touched_ema and green_candle:
+                passed_strategies.append("ema_pullback")
+                if entry_trigger == 0.0:
+                    entry_trigger = float(high.iloc[-1])
+
     except Exception:
         pass
 
@@ -181,13 +234,21 @@ def run_scan():
     n500_list = df_csv['Symbol'].dropna().unique().tolist()
     print(f"📊 Processing {len(n500_list)} active tickers from Nifty 500...")
     
-    # Format symbols for yfinance batch download
-    formatted_tickers = [f"{sym}.NS" for sym in n500_list]
+    # Format symbols for yfinance batch download (including Nifty index)
+    formatted_tickers = [f"{sym}.NS" for sym in n500_list] + ["^NSEI"]
     symbol_map = {f"{sym}.NS": sym for sym in n500_list}
+    symbol_map["^NSEI"] = "^NSEI"
     
-    # Download data in batch (prevents rate throttling)
+    # Download data in batch (prevents rate throttling) using a custom browser User-Agent session
     print("📥 Downloading historical market data...")
-    master_data = yf.download(formatted_tickers, period="2y", interval="1d", group_by="ticker", progress=False, auto_adjust=True)
+    session = requests.Session()
+    session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    
+    try:
+        master_data = yf.download(formatted_tickers, period="2y", interval="1d", group_by="ticker", progress=False, auto_adjust=True, session=session)
+    except Exception as e:
+        print(f"❌ Error during batch download: {e}")
+        master_data = pd.DataFrame()
     
     results = {
         "cont1_cascade_zscore": [],
@@ -196,7 +257,11 @@ def run_scan():
         "cont4_pyramid_cascade_rider": [],
         "cont5_relspike_confirmed": [],
         "stealth_accumulation": [],
-        "catalyst_acceleration": []
+        "catalyst_acceleration": [],
+        "rs_line_breakout": [],
+        "pocket_pivot": [],
+        "vol_compression": [],
+        "ema_pullback": []
     }
     confluences = []
     
@@ -206,7 +271,21 @@ def run_scan():
         
     is_multi = isinstance(master_data.columns, pd.MultiIndex)
     
+    # Extract Nifty index close series for relative strength checks
+    nifty_close = None
+    try:
+        if is_multi:
+            if "^NSEI" in master_data.columns.levels[0]:
+                nifty_close = master_data["^NSEI"]["Close"].dropna()
+        else:
+            if "Close" in master_data.columns:
+                nifty_close = master_data["Close"]
+    except Exception as e:
+        print(f"⚠️ Warning: Could not extract Nifty 50 close: {e}")
+    
     for sym_ns in formatted_tickers:
+        if sym_ns == "^NSEI":
+            continue
         try:
             if is_multi:
                 if sym_ns not in master_data.columns.levels[0]:
@@ -217,7 +296,7 @@ def run_scan():
             if d_df.empty or len(d_df) < 200:
                 continue
                 
-            passed_strats, entry_level = evaluate_strategies(d_df)
+            passed_strats, entry_level = evaluate_strategies(d_df, nifty_close)
             if not passed_strats:
                 continue
                 
@@ -264,7 +343,11 @@ def run_scan():
         "cont4_pyramid_cascade_rider": "ADX-Rider",
         "cont5_relspike_confirmed": "Vol-Spike",
         "stealth_accumulation": "Stealth-Base",
-        "catalyst_acceleration": "Catalyst-Accel"
+        "catalyst_acceleration": "Catalyst-Accel",
+        "rs_line_breakout": "RS-Breakout",
+        "pocket_pivot": "Pocket-Pivot",
+        "vol_compression": "Vol-Compression",
+        "ema_pullback": "EMA-Pullback"
     }
     
     if confluences:
@@ -283,7 +366,11 @@ def run_scan():
         "cont4_pyramid_cascade_rider": "🚀 4. Pyramid Cascade Rider (Trend)",
         "cont5_relspike_confirmed": "🔥 5. Relative Volume Spike Breakout",
         "stealth_accumulation": "📦 6. Stealth Accumulation Base (Wyckoff)",
-        "catalyst_acceleration": "⚡ 7. Catalyst Acceleration (Volume Launch)"
+        "catalyst_acceleration": "⚡ 7. Catalyst Acceleration (Volume Launch)",
+        "rs_line_breakout": "🏆 8. RS Line Breakout (Index Outperformance)",
+        "pocket_pivot": "💎 9. Institutional Pocket Pivot (Accumulation)",
+        "vol_compression": "🤐 10. Volatility Compression Index (Squeeze)",
+        "ema_pullback": "🎣 11. EMA Anchor Pullback (Mean Reversion)"
     }
     
     total_signals = 0
