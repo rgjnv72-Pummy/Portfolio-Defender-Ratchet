@@ -206,8 +206,10 @@ def run_stable_analysis(df_watchlist):
         ticker_to_sector[sym] = sector
 
     print(f"[INFO] Downloading historical data in batch for {len(tickers)} assets...")
-    session = requests.Session()
-    session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    session = None
+    if os.getenv("GITHUB_ACTIONS"):
+        session = requests.Session()
+        session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     
     try:
         master_data = yf.download(tickers, period="1y", interval="1d", group_by="ticker", progress=False, auto_adjust=True, session=session)
