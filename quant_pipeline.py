@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import warnings
 import urllib3
@@ -6,6 +7,10 @@ import html
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
+
+# --- UTF-8 CONSOLE ENCODING FIX (Windows Support) ---
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
 
 # --- WARNING FILTERS (Cleans environment log output) ---
 warnings.filterwarnings("ignore", category=FutureWarning)
