@@ -109,6 +109,8 @@ def load_universe_matrix(watchlist_df: pd.DataFrame, tracking_days: int = 60) ->
                 
             if not df_hist.empty and len(df_hist) >= (tracking_days - 15):
                 if df_hist["Volume"].iloc[-20:].mean() >= MIN_AVG_VOLUME:
+                    # Convert index to timezone-naive to prevent alignment conflicts
+                    df_hist.index = df_hist.index.tz_localize(None)
                     historical_close_map[yf_ticker] = df_hist["Close"].tail(tracking_days).squeeze()
         except Exception:
             continue
