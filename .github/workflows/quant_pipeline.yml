@@ -1,12 +1,7 @@
 name: Quant Friday Evening Engine
 
 on:
-  schedule:
-    # 01:15 PM UTC translates to exactly 06:45 PM IST (Indian Standard Time)
-    # Staggered 15 minutes after your VCP scanner to prevent Yahoo Finance API rate limits
-    - cron: '15 13 * * 5'
-  
-  # Adds a manual "Run workflow" button in GitHub so you can test it anytime
+  # Adds a manual "Run workflow" button in GitHub so you can test it anytime (schedule moved to Consolidated Pipeline)
   workflow_dispatch:
 
 jobs:

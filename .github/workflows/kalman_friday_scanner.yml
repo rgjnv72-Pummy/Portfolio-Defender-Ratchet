@@ -1,11 +1,7 @@
 name: Kalman Filter Friday Evening Scanner
 
 on:
-  schedule:
-    # 01:10 PM UTC translates to exactly 06:40 PM IST (Indian Standard Time) on Fridays
-    - cron: '10 13 * * 5'
-  
-  # Enable manual triggering from GitHub Actions UI
+  # Enable manual triggering from GitHub Actions UI (schedule moved to Consolidated Pipeline)
   workflow_dispatch:
 
 jobs:

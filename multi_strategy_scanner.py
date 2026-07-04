@@ -239,18 +239,30 @@ def run_scan():
     symbol_map = {f"{sym}.NS": sym for sym in n500_list}
     symbol_map["^NSEI"] = "^NSEI"
     
-    # Download data in batch (prevents rate throttling) using a custom browser User-Agent session
-    print("📥 Downloading historical market data...")
-    session = None
-    if os.getenv("GITHUB_ACTIONS"):
-        session = requests.Session()
-        session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-    
-    try:
-        master_data = yf.download(formatted_tickers, period="2y", interval="1d", group_by="ticker", progress=False, auto_adjust=True, session=session)
-    except Exception as e:
-        print(f"❌ Error during batch download: {e}")
+    CACHE_FILE = 'nifty500_data.pkl'
+    if os.path.exists(CACHE_FILE):
+        print(f"💾 Loading cached historical market data from '{CACHE_FILE}'...")
+        try:
+            master_data = pd.read_pickle(CACHE_FILE)
+        except Exception as e:
+            print(f"❌ Failed to load cache: {e}. Downloading instead.")
+            master_data = pd.DataFrame()
+    else:
         master_data = pd.DataFrame()
+        
+    if master_data.empty:
+        # Download data in batch (prevents rate throttling) using a custom browser User-Agent session
+        print("📥 Downloading historical market data...")
+        session = None
+        if os.getenv("GITHUB_ACTIONS"):
+            session = requests.Session()
+            session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        
+        try:
+            master_data = yf.download(formatted_tickers, period="2y", interval="1d", group_by="ticker", progress=False, auto_adjust=True, session=session)
+        except Exception as e:
+            print(f"❌ Error during batch download: {e}")
+            master_data = pd.DataFrame()
     
     results = {
         "cont1_cascade_zscore": [],

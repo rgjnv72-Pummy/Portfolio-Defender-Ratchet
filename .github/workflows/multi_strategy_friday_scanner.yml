@@ -1,11 +1,7 @@
 name: Multi-Strategy Friday Evening Scanner
 
 on:
-  schedule:
-    # 01:30 PM UTC translates to exactly 07:00 PM IST (Indian Standard Time) on Fridays
-    - cron: '30 13 * * 5'
-  
-  # Allow manual "Run workflow" button in the Actions tab for testing
+  # Allow manual "Run workflow" button in the Actions tab for testing (schedule moved to Consolidated Pipeline)
   workflow_dispatch:
 
 jobs:

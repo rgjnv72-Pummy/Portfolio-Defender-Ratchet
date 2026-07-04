@@ -73,6 +73,21 @@ def load_universe_matrix(watchlist_df: pd.DataFrame, tracking_days: int = 60) ->
     ticker_col = next((c for c in watchlist_df.columns if "symbol" in c.lower() or "ticker" in c.lower()), watchlist_df.columns)
     raw_tickers = watchlist_df[ticker_col].dropna().astype(str).tolist()
     historical_close_map = {}
+    
+    CACHE_FILE = 'nifty500_data.pkl'
+    if os.path.exists(CACHE_FILE):
+        print(f"💾 Loading cached historical market data from '{CACHE_FILE}' for 12-point pipeline...")
+        try:
+            master_data = pd.read_pickle(CACHE_FILE)
+            is_multi = isinstance(master_data.columns, pd.MultiIndex)
+        except Exception as e:
+            print(f"❌ Failed to load cache in pipeline: {e}. Falling back to downloads.")
+            master_data = None
+            is_multi = False
+    else:
+        master_data = None
+        is_multi = False
+
     print(f"📥 Compiling timeseries tracking data for {len(raw_tickers)} assets...")
 
     for symbol in raw_tickers:
@@ -81,11 +96,15 @@ def load_universe_matrix(watchlist_df: pd.DataFrame, tracking_days: int = 60) ->
             continue
         yf_ticker = clean_sym if clean_sym.upper().endswith(".NS") else f"{clean_sym}.NS"
         try:
-            asset_obj = yf.Ticker(yf_ticker)
-            df_hist = asset_obj.history(period=f"{tracking_days}d", interval="1d", auto_adjust=True, raise_errors=False)
+            if master_data is not None and is_multi and yf_ticker in master_data.columns.levels[0]:
+                df_hist = master_data[yf_ticker].dropna(subset=["Close"])
+            else:
+                asset_obj = yf.Ticker(yf_ticker)
+                df_hist = asset_obj.history(period=f"{tracking_days + 30}d", interval="1d", auto_adjust=True, raise_errors=False)
+                
             if not df_hist.empty and len(df_hist) >= (tracking_days - 15):
                 if df_hist["Volume"].iloc[-20:].mean() >= MIN_AVG_VOLUME:
-                    historical_close_map[yf_ticker] = df_hist["Close"].squeeze()
+                    historical_close_map[yf_ticker] = df_hist["Close"].tail(tracking_days).squeeze()
         except Exception:
             continue
             

@@ -205,17 +205,29 @@ def run_stable_analysis(df_watchlist):
         tickers.append(sym)
         ticker_to_sector[sym] = sector
 
-    print(f"[INFO] Downloading historical data in batch for {len(tickers)} assets...")
-    session = None
-    if os.getenv("GITHUB_ACTIONS"):
-        session = requests.Session()
-        session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-    
-    try:
-        master_data = yf.download(tickers, period="1y", interval="1d", group_by="ticker", progress=False, auto_adjust=True, session=session)
-    except Exception as e:
-        print(f"[ERROR] Batch download failed: {e}. Falling back to sequential execution.")
+    CACHE_FILE = 'nifty500_data.pkl'
+    if os.path.exists(CACHE_FILE):
+        print(f"💾 Loading cached historical market data from '{CACHE_FILE}'...")
+        try:
+            master_data = pd.read_pickle(CACHE_FILE)
+        except Exception as e:
+            print(f"❌ Failed to load cache: {e}. Downloading instead.")
+            master_data = None
+    else:
         master_data = None
+        
+    if master_data is None:
+        print(f"[INFO] Downloading historical data in batch for {len(tickers)} assets...")
+        session = None
+        if os.getenv("GITHUB_ACTIONS"):
+            session = requests.Session()
+            session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        
+        try:
+            master_data = yf.download(tickers, period="1y", interval="1d", group_by="ticker", progress=False, auto_adjust=True, session=session)
+        except Exception as e:
+            print(f"[ERROR] Batch download failed: {e}. Falling back to sequential execution.")
+            master_data = None
 
     print(f"[INFO] Running Kalman State Space Scans...")
     for sym in tqdm(tickers, desc="Scanning Assets"):

@@ -1,12 +1,7 @@
 name: Quant Friday Evening ARIMA-GARCH Scanner
 
 on:
-  schedule:
-    # 01:30 PM UTC translates to exactly 07:00 PM IST (Indian Standard Time)
-    # The '5' declaration restricts this script to run ONLY on Fridays
-    - cron: '30 13 * * 5'
-  
-  # Adds a manual "Run workflow" button in GitHub so you can test it anytime
+  # Adds a manual "Run workflow" button in GitHub so you can test it anytime (schedule moved to Consolidated Pipeline)
   workflow_dispatch:
 
 jobs:
