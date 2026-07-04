@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 import urllib3
 import warnings
 import numpy as np
@@ -8,6 +9,10 @@ import requests
 from arch import arch_model
 from statsmodels.tsa.arima.model import ARIMA
 from tqdm import tqdm
+
+# --- UTF-8 CONSOLE ENCODING FIX (Windows Support) ---
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
 
 # --- WARNING FILTERS (Cleans environment log output clutter) ---
 warnings.filterwarnings("ignore")
