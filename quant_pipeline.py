@@ -111,14 +111,15 @@ def load_universe_matrix(watchlist_df: pd.DataFrame, tracking_days: int = 60) ->
                 if df_hist["Volume"].iloc[-20:].mean() >= MIN_AVG_VOLUME:
                     # Convert index to timezone-naive to prevent alignment conflicts
                     df_hist.index = df_hist.index.tz_localize(None)
-                    historical_close_map[yf_ticker] = df_hist["Close"].tail(tracking_days).squeeze()
+                    historical_close_map[yf_ticker] = df_hist["Close"].squeeze()
         except Exception:
             continue
             
     if not historical_close_map:
         return pd.DataFrame()
 
-    raw_df = pd.DataFrame(historical_close_map).dropna(axis=1, how='any')
+    # Slice tail of merged DataFrame first, then drop columns with NaNs
+    raw_df = pd.DataFrame(historical_close_map).tail(tracking_days).dropna(axis=1, how='any')
     print(f"🛡️ Matrix Alignment: Retained {len(raw_df.columns)} stocks with valid history.")
     return raw_df.ffill().dropna()
 
