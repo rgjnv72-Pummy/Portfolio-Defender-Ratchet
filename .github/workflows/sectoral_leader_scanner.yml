@@ -1,9 +1,6 @@
 name: Sectoral Leader & Rotation Scanner
 
 on:
-  push:
-    branches:
-      - main
   schedule:
     # 02:00 PM UTC translates to exactly 07:30 PM IST (Indian Standard Time) on Fridays
     - cron: '0 14 * * 5'
