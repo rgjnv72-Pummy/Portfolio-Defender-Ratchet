@@ -25,9 +25,9 @@ jobs:
     - name: Install Project Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install setuptools wheel
-        pip install -r requirements.txt
-        pip install pandas-ta-classic==0.3.15 --no-deps
+        python -m pip install setuptools wheel
+        python -m pip install -r requirements.txt
+        python -m pip install pandas-ta
 
     - name: Run Unified Data Fetcher (Download & Cache)
       env:
