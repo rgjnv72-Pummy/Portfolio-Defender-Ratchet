@@ -38,12 +38,7 @@ jobs:
         python multi_strategy_scanner.py > run.log 2>&1
         status=$?
         if [ $status -ne 0 ]; then
-          echo "Script failed. Committing error log."
-          cp run.log error.log
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add error.log
-          git commit -m "chore: save failure log [skip ci]"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:refs/heads/debug-logs --force
+          echo "Script failed. Dispatching traceback to Telegram."
+          python send_error_to_telegram.py
           exit $status
         fi
