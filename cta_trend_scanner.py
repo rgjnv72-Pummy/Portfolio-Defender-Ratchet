@@ -179,16 +179,31 @@ def run_stable_analysis(df_watchlist):
         master_data = None
         
     if master_data is None:
-        print(f"[ERROR] Cache file '{CACHE_FILE}' is missing. Cannot perform scan. Please run unified data fetcher first.")
+        print(f"[INFO] Cache file '{CACHE_FILE}' is missing. Downloading historical data dynamically in batch for {len(tickers)} assets...")
+        try:
+            import yfinance as yf
+            master_data = yf.download(tickers, period="2y", interval="1d", group_by="ticker", progress=False, auto_adjust=True)
+        except Exception as e:
+            print(f"[ERROR] Dynamic batch download failed: {e}")
+            master_data = None
+
+    if master_data is None or master_data.empty:
+        print("[ERROR] No market data available to scan.")
         return pd.DataFrame()
 
     print(f"[INFO] Running Volatility-Normalized CTA Trend Scans...")
     for idx, sym in enumerate(tqdm(tickers, desc="Scanning Assets")):
         try:
-            if sym in master_data.columns.levels[0]:
+            # Robust data retrieval matching other system scanners
+            if isinstance(master_data.columns, pd.MultiIndex) and sym in master_data.columns.levels[0]:
                 df_history = master_data[sym].dropna(subset=["Close"])
+            elif not isinstance(master_data.columns, pd.MultiIndex) and sym in master_data.columns:
+                df_history = master_data.dropna(subset=["Close"])
             else:
-                continue
+                # Fallback to sequential fetch if symbol is missing in batch download
+                import yfinance as yf
+                tk = yf.Ticker(sym)
+                df_history = tk.history(period="2y", interval="1d", auto_adjust=True, raise_errors=False)
 
             if df_history.empty or len(df_history) < EMA_TREND_PERIOD:
                 continue
