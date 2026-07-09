@@ -1,0 +1,31 @@
+name: Volatility-Normalized CTA Trend Scanner
+
+on:
+  # Enable manual triggering from GitHub Actions UI (schedule moved to Consolidated Pipeline)
+  workflow_dispatch:
+
+jobs:
+  run-friday-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository Source Code
+      uses: actions/checkout@v4
+
+    - name: Initialize Python Runtime Environment
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install Project Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install setuptools wheel
+        python -m pip install -r requirements.txt
+        python -m pip install pandas-ta-classic==0.3.15 --no-deps
+
+    - name: Execute Volatility-Normalized CTA Trend Scanner
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: python cta_trend_scanner.py
