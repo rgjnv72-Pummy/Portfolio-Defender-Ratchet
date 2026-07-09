@@ -232,7 +232,10 @@ def main():
             msg += "`Ticker      1W-Ret    3M-Ret    RS-3M`\n"
             for s in item["leaders"]:
                 rs_indicator = "🟢" if s["3m_rs"] > 0 else "⚪"
-                msg += f"`{s['ticker']:<11} {s['1w_return']*100:<+8.1f}% {s['3m_return']*100:<+8.1f}% {s['3m_rs']*100:>+5.1f}%` {rs_indicator}\n"
+                w1_str = f"{s['1w_return']*100:+.1f}%"
+                m3_str = f"{s['3m_return']*100:+.1f}%"
+                rs_str = f"{s['3m_rs']*100:+.1f}%"
+                msg += f"`{s['ticker']:<11} {w1_str:<9} {m3_str:<9} {rs_str:>7}` {rs_indicator}\n"
             msg += "\n"
         msg += "━━━━━━━━━━━━━━━━━━━━\n"
         msg += "💡 *Legend:*\n"
