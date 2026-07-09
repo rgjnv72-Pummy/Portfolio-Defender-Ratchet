@@ -47,13 +47,8 @@ def main():
 
     print(f"📥 Downloading historical data in batch for {len(formatted_tickers)} assets (2y period)...")
     
-    session = None
-    if os.getenv("GITHUB_ACTIONS"):
-        session = requests.Session()
-        session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-        
     try:
-        master_data = yf.download(formatted_tickers, period="2y", interval="1d", group_by="ticker", progress=False, auto_adjust=True, session=session)
+        master_data = yf.download(formatted_tickers, period="2y", interval="1d", group_by="ticker", progress=False, auto_adjust=True)
     except Exception as e:
         print(f"❌ Batch download failed: {e}")
         sys.exit(1)
