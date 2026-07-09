@@ -208,7 +208,9 @@ def main():
     msg += "━━━━━━━━━━━━━━━━━━━━\n\n"
     msg += "`Ticker      Price      FCF-Yld   B/M    ROA`\n"
     for _, r in df_results.iterrows():
-        msg += f"`{r['Ticker']:<11} ₹{r['Price']:<9.1f} {r['FCF_Yield']:<7.1f}% {r['B_M_Ratio']:<6.1f} {r['ROA']:>4.1f}%`\n"
+        fcf_str = f"{r['FCF_Yield']:.1f}%"
+        roa_str = f"{r['ROA']:.1f}%"
+        msg += f"`{r['Ticker']:<11} ₹{r['Price']:<9.1f} {fcf_str:<9} {r['B_M_Ratio']:<6.1f} {roa_str:>5}`\n"
     msg += "\n━━━━━━━━━━━━━━━━━━━━\n"
     msg += "💡 *Core Methodology:*\n"
     msg += "• *Rule A*: Free Cash Flow Yield > 5% & Book-to-Market > 0.4\n"
