@@ -5,7 +5,8 @@ import yfinance as yf
 from datetime import datetime, timedelta
 
 # Core Path Setup
-CLOSED_TRADES_PATH = r"C:\Trading-Engine\Ratchet-System\closed_trades.json"
+script_dir = os.path.dirname(os.path.abspath(__file__))
+CLOSED_TRADES_PATH = os.path.join(script_dir, "closed_trades.json")
 
 def run_exit_audit():
     print("==========================================================")

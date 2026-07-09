@@ -1,6 +1,6 @@
 {
-  "total_equity_value": 1929842.46,
-  "last_updated": "2026-07-04",
+  "total_equity_value": 2333899.67,
+  "last_updated": "2026-07-07",
   "holdings": {
     "PREMIERENE.NS": {
       "quantity": 150,
@@ -83,6 +83,18 @@
       "avg_cost": 3618.0,
       "buy_date": "2026-06-18",
       "sector": "Fast Moving Consumer Goods"
+    },
+    "BELRISE.NS": {
+      "quantity": 834,
+      "avg_cost": 232.0,
+      "buy_date": "2026-07-07",
+      "sector": "Auto Components"
+    },
+    "OFSS.NS": {
+      "quantity": 17,
+      "avg_cost": 11260.0,
+      "buy_date": "2026-07-07",
+      "sector": "Information Technology"
     }
   }
 }

@@ -34,7 +34,9 @@ def load_live_portfolio():
         "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure", 1767.20, "swing"],
         "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication", 142.44, "swing"],
         "LAURUSLABS.NS": [118, 1278.50, "2026-05-30", "Pharma", 1299.70, "swing"],
-        "FEDERALBNK.NS": [595, 305.57, "2026-06-10", "Financial Services", 315.00, "swing"]
+        "FEDERALBNK.NS": [595, 305.57, "2026-06-10", "Financial Services", 315.00, "swing"],
+        "BELRISE.NS": [834, 232.00, "2026-07-07", "Auto Components", 232.00, "swing"],
+        "OFSS.NS": [17, 11260.00, "2026-07-07", "Information Technology", 11260.00, "swing"]
     }
     
     if not portfolio_path:
