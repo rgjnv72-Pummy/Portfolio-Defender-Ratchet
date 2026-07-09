@@ -1,13 +1,8 @@
 name: Multi-Strategy Friday Evening Scanner
 
 on:
-  push:
-    branches:
-      - main
+  # Allow manual "Run workflow" button in the Actions tab for testing (schedule moved to Consolidated Pipeline)
   workflow_dispatch:
-
-permissions:
-  contents: write
 
 jobs:
   run-multi-scan:
