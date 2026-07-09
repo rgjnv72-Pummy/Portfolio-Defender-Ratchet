@@ -1,9 +1,6 @@
 name: Quant Friday Evening Multi-Bagger Scanner
 
 on:
-  push:
-    branches:
-      - main
   schedule:
     # 02:15 PM UTC translates to exactly 07:45 PM IST on Fridays
     - cron: '15 14 * * 5'
