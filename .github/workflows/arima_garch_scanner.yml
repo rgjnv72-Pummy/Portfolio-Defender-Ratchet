@@ -1,9 +1,6 @@
 name: Quant Friday Evening ARIMA-GARCH Scanner
 
 on:
-  push:
-    branches:
-      - main
   # Adds a manual "Run workflow" button in GitHub so you can test it anytime (schedule moved to Consolidated Pipeline)
   workflow_dispatch:
 
