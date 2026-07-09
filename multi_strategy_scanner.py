@@ -21,11 +21,14 @@ if hasattr(sys.stdout, 'reconfigure'):
 try:
     import pandas_ta as ta
 except ImportError:
-    print("Installing required quant library pandas-ta... Please wait.")
-    os.system(f"{sys.executable} -m pip install pandas-ta-classic==0.3.15 --no-deps --quiet")
-    import importlib
-    importlib.invalidate_caches()
-    import pandas_ta as ta
+    try:
+        import pandas_ta_classic as ta
+    except ImportError:
+        print("Installing required quant library pandas-ta... Please wait.")
+        os.system(f"{sys.executable} -m pip install pandas-ta-classic==0.3.15 --no-deps --quiet")
+        import importlib
+        importlib.invalidate_caches()
+        import pandas_ta_classic as ta
 
 # --- CONFIGURATION ---
 TOKEN = (os.getenv('TELEGRAM_TOKEN') or '').strip()

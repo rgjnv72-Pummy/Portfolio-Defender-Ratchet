@@ -7,7 +7,10 @@ import pandas as pd
 import requests
 from tqdm import tqdm
 import yfinance as yf
-import pandas_ta as ta
+try:
+    import pandas_ta as ta
+except ImportError:
+    import pandas_ta_classic as ta
 
 # --- ENVIRONMENT & TELEGRAM AUTH ---
 MY_CHAT_ID = (os.getenv('TELEGRAM_CHAT_ID') or '1280803679').strip()
