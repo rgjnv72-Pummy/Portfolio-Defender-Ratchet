@@ -2314,5 +2314,15 @@
     "exit_date": "2026-07-04",
     "exit_price": 30935.0,
     "reason": "sudden fall in power sector and bearish FVG seen"
+  },
+  {
+    "ticker": "POLYCAB.NS",
+    "company_name": "Polycab",
+    "entry_date": "2026-06-18",
+    "entry_price": 9782.5,
+    "quantity": 16,
+    "exit_date": "2026-07-12",
+    "exit_price": 9100.0,
+    "reason": "Manual sell transaction"
   }
 ]

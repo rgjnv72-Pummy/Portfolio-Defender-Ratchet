@@ -1,6 +1,6 @@
 {
   "total_equity_value": 2333899.67,
-  "last_updated": "2026-07-07",
+  "last_updated": "2026-07-12",
   "holdings": {
     "PREMIERENE.NS": {
       "quantity": 150,
@@ -8,7 +8,6 @@
       "buy_date": "2026-04-07",
       "sector": "Infrastructure"
     },
-
     "ADANIPORTS.NS": {
       "quantity": 70,
       "avg_cost": 1702.0,
@@ -40,7 +39,6 @@
       "buy_date": "2026-05-11",
       "sector": "Auto Components"
     },
-
     "CARBORUNIV.NS": {
       "quantity": 111,
       "avg_cost": 1024.71,
@@ -52,13 +50,6 @@
       "avg_cost": 1341.0,
       "buy_date": "2026-05-18",
       "sector": "Healthcare"
-    },
-
-    "POLYCAB.NS": {
-      "quantity": 16,
-      "avg_cost": 9782.5,
-      "buy_date": "2026-06-18",
-      "sector": "Capital Goods"
     },
     "SYRMA.NS": {
       "quantity": 100,

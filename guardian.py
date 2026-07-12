@@ -30,12 +30,18 @@ def load_live_portfolio():
     # Ultimate Fallback Core if file isn't written yet
     # --- START FALLBACK ---
     fallback_holdings = {
-        "PREMIERENE.NS": [150, 943.30, "2026-04-07", "Infrastructure", 970.70, "swing"],
-        "ORIENTELEC.NS": [700, 184.00, "2026-04-21", "Consumer Durables", 188.40, "swing"],
-        "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure", 1767.20, "swing"],
-        "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication", 142.44, "swing"],
-        "LAURUSLABS.NS": [118, 1278.50, "2026-05-30", "Pharma", 1299.70, "swing"],
-        "FEDERALBNK.NS": [595, 305.57, "2026-06-10", "Financial Services", 315.00, "swing"],
+        "PREMIERENE.NS": [150, 943.30, "2026-04-07", "Infrastructure", 943.30, "swing"],
+        "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure", 1702.00, "swing"],
+        "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication", 122.50, "swing"],
+        "LAURUSLABS.NS": [118, 1278.50, "2026-05-30", "Pharma", 1278.50, "swing"],
+        "BHARATFORG.NS": [39, 1959.00, "2026-05-15", "Industrial Manufacturing", 1959.00, "swing"],
+        "ATHERENERG.NS": [100, 943.00, "2026-05-11", "Auto Components", 943.00, "swing"],
+        "CARBORUNIV.NS": [111, 1024.71, "2026-05-12", "Capital Goods", 1024.71, "swing"],
+        "RAINBOW.NS": [80, 1341.00, "2026-05-18", "Healthcare", 1341.00, "swing"],
+        "SYRMA.NS": [100, 1238.00, "2026-06-09", "Capital Goods", 1238.00, "swing"],
+        "WELCORP.NS": [100, 1406.00, "2026-06-09", "Capital Goods", 1406.00, "swing"],
+        "FEDERALBNK.NS": [595, 305.57, "2026-06-10", "Financial Services", 305.57, "swing"],
+        "RADICO.NS": [46, 3618.00, "2026-06-18", "Fast Moving Consumer Goods", 3618.00, "swing"],
         "BELRISE.NS": [834, 232.00, "2026-07-07", "Auto Components", 232.00, "swing"],
         "OFSS.NS": [17, 11260.00, "2026-07-07", "Information Technology", 11260.00, "swing"]
     }
