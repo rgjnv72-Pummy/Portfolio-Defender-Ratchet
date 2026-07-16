@@ -43,7 +43,8 @@ def load_live_portfolio():
         "FEDERALBNK.NS": [595, 305.57, "2026-06-10", "Financial Services", 305.57, "swing"],
         "RADICO.NS": [46, 3618.00, "2026-06-18", "Fast Moving Consumer Goods", 3618.00, "swing"],
         "BELRISE.NS": [834, 232.00, "2026-07-07", "Auto Components", 232.00, "swing"],
-        "OFSS.NS": [17, 11260.00, "2026-07-07", "Information Technology", 11260.00, "swing"]
+        "OFSS.NS": [17, 11260.00, "2026-07-07", "Information Technology", 11260.00, "swing"],
+        "CHOICEIN.NS": [175, 828.00, "2026-07-13", "Financial Services", 828.00, "swing"]
     }
     # --- END FALLBACK ---
     

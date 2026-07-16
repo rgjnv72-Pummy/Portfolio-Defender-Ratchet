@@ -1,6 +1,6 @@
 {
   "total_equity_value": 2333899.67,
-  "last_updated": "2026-07-12",
+  "last_updated": "2026-07-16",
   "holdings": {
     "PREMIERENE.NS": {
       "quantity": 150,
@@ -86,6 +86,13 @@
       "avg_cost": 11260.0,
       "buy_date": "2026-07-07",
       "sector": "Information Technology"
+    },
+    "CHOICEIN.NS": {
+      "quantity": 175,
+      "avg_cost": 828.0,
+      "buy_date": "2026-07-13",
+      "sector": "Financial Services",
+      "strategy": "swing"
     }
   }
 }
