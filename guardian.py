@@ -36,7 +36,6 @@ def load_live_portfolio():
         "LAURUSLABS.NS": [118, 1278.50, "2026-05-30", "Pharma", 1278.50, "swing"],
         "BHARATFORG.NS": [39, 1959.00, "2026-05-15", "Industrial Manufacturing", 1959.00, "swing"],
         "ATHERENERG.NS": [100, 943.00, "2026-05-11", "Auto Components", 943.00, "swing"],
-        "CARBORUNIV.NS": [111, 1024.71, "2026-05-12", "Capital Goods", 1024.71, "swing"],
         "RAINBOW.NS": [80, 1341.00, "2026-05-18", "Healthcare", 1341.00, "swing"],
         "SYRMA.NS": [100, 1238.00, "2026-06-09", "Capital Goods", 1238.00, "swing"],
         "WELCORP.NS": [100, 1406.00, "2026-06-09", "Capital Goods", 1406.00, "swing"],

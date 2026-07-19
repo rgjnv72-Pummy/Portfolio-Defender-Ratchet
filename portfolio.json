@@ -1,6 +1,6 @@
 {
   "total_equity_value": 2333899.67,
-  "last_updated": "2026-07-16",
+  "last_updated": "2026-07-18",
   "holdings": {
     "PREMIERENE.NS": {
       "quantity": 150,
@@ -38,12 +38,6 @@
       "avg_cost": 943.0,
       "buy_date": "2026-05-11",
       "sector": "Auto Components"
-    },
-    "CARBORUNIV.NS": {
-      "quantity": 111,
-      "avg_cost": 1024.71,
-      "buy_date": "2026-05-12",
-      "sector": "Capital Goods"
     },
     "RAINBOW.NS": {
       "quantity": 80,

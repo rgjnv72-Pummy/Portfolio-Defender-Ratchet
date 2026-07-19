@@ -2324,5 +2324,15 @@
     "exit_date": "2026-07-12",
     "exit_price": 9100.0,
     "reason": "Manual sell transaction"
+  },
+  {
+    "ticker": "CARBORUNIV.NS",
+    "company_name": "Carborundum Universal",
+    "entry_date": "2026-05-12",
+    "entry_price": 1024.71,
+    "quantity": 111,
+    "exit_date": "2026-07-18",
+    "exit_price": 1054.0,
+    "reason": "Manual sell transaction"
   }
 ]
