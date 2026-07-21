@@ -2334,5 +2334,15 @@
     "exit_date": "2026-07-18",
     "exit_price": 1054.0,
     "reason": "unclean chart"
+  },
+  {
+    "ticker": "PREMIERENE.NS",
+    "company_name": "Premier Energies",
+    "entry_date": "2026-04-07",
+    "entry_price": 943.3,
+    "quantity": 150,
+    "exit_date": "2026-07-20",
+    "exit_price": 1025.0,
+    "reason": "Manual sell transaction"
   }
 ]

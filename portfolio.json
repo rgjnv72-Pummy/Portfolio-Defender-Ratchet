@@ -1,13 +1,7 @@
 {
   "total_equity_value": 2333899.67,
-  "last_updated": "2026-07-18",
+  "last_updated": "2026-07-20",
   "holdings": {
-    "PREMIERENE.NS": {
-      "quantity": 150,
-      "avg_cost": 943.3,
-      "buy_date": "2026-04-07",
-      "sector": "Infrastructure"
-    },
     "ADANIPORTS.NS": {
       "quantity": 70,
       "avg_cost": 1702.0,
@@ -86,6 +80,20 @@
       "avg_cost": 828.0,
       "buy_date": "2026-07-13",
       "sector": "Financial Services",
+      "strategy": "swing"
+    },
+    "ACUTAAS.NS": {
+      "quantity": 32,
+      "avg_cost": 3651.0,
+      "buy_date": "2026-07-20",
+      "sector": "Chemicals",
+      "strategy": "swing"
+    },
+    "CAPLIPOINT.NS": {
+      "quantity": 57,
+      "avg_cost": 2656.0,
+      "buy_date": "2026-07-20",
+      "sector": "Pharma",
       "strategy": "swing"
     }
   }
