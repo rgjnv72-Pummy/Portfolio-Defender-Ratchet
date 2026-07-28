@@ -88,7 +88,8 @@
       "avg_cost": 2519.0,
       "buy_date": "2026-07-27",
       "sector": "Consumer Durables",
-      "strategy": "swing"
+      "strategy": "swing",
+      "entry_reason": "Appeared in NSE Weekly/Monthly Leaders & Confluence"
     }
   }
 }

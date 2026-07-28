@@ -2621,7 +2621,7 @@
     "quantity": 1000,
     "exit_date": "2026-07-27",
     "exit_price": 195.0,
-    "reason": "Sell transaction"
+    "reason": "Broken ratchet"
   },
   {
     "ticker": "SYRMA.NS",
@@ -2631,6 +2631,6 @@
     "quantity": 100,
     "exit_date": "2026-07-27",
     "exit_price": 1279.0,
-    "reason": "Sell transaction"
+    "reason": "Broken ratchet"
   }
 ]
