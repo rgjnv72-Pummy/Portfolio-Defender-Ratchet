@@ -2066,274 +2066,542 @@
   {
     "ticker": "IPCA.NS",
     "company_name": "Ipca Labs",
+    "entry_date": "2026-01-20",
+    "entry_price": 1493.8,
+    "quantity": 63,
     "exit_date": "2026-04-02",
-    "exit_price": 1442.0
+    "exit_price": 1442.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
+  },
+  {
+    "ticker": "IPCA.NS",
+    "company_name": "Ipca Labs",
+    "entry_date": "2026-03-16",
+    "entry_price": 1560.0,
+    "quantity": 70,
+    "exit_date": "2026-04-02",
+    "exit_price": 1442.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "AJANTA.NS",
     "company_name": "Ajanta Pharma",
+    "entry_date": "2026-03-10",
+    "entry_price": 2988.0,
+    "quantity": 100,
     "exit_date": "2026-04-02",
-    "exit_price": 2773.0
+    "exit_price": 2773.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "TORRENT.NS",
     "company_name": "Torrent Pharma",
+    "entry_date": "2026-03-13",
+    "entry_price": 4101.1,
+    "quantity": 50,
     "exit_date": "2026-04-02",
-    "exit_price": 3904.0
+    "exit_price": 3904.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "LUPIN.NS",
     "company_name": "Lupin",
+    "entry_date": "2026-02-04",
+    "entry_price": 2200.0,
+    "quantity": 58,
     "exit_date": "2026-04-02",
-    "exit_price": 2183.0
+    "exit_price": 2183.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "CCL.NS",
     "company_name": "CCL Products",
+    "entry_date": "2026-04-07",
+    "entry_price": 1146.1,
+    "quantity": 100,
     "exit_date": "2026-04-10",
-    "exit_price": 1069.0
+    "exit_price": 1069.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "COAL.NS",
     "company_name": "Coal India",
+    "entry_date": "2026-04-07",
+    "entry_price": 463.0,
+    "quantity": 300,
     "exit_date": "2026-04-14",
-    "exit_price": 435.0
+    "exit_price": 435.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "AUROBINDO.NS",
     "company_name": "Aurobindo Pharm",
+    "entry_date": "2026-04-10",
+    "entry_price": 1350.0,
+    "quantity": 70,
     "exit_date": "2026-04-20",
-    "exit_price": 1370.0
+    "exit_price": 1370.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
   },
   {
     "ticker": "ONGC.NS",
     "company_name": "ONGC",
+    "entry_date": "2026-04-02",
+    "entry_price": 287.2,
+    "quantity": 700,
     "exit_date": "2026-04-20",
-    "exit_price": 283.0
+    "exit_price": 283.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "ABB.NS",
     "company_name": "ABB India",
+    "entry_date": "2026-03-18",
+    "entry_price": 6320.0,
+    "quantity": 30,
     "exit_date": "2026-04-27",
-    "exit_price": 7330.0
+    "exit_price": 7330.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
+  },
+  {
+    "ticker": "ASHOKLEY.NS",
+    "company_name": "Ashok Leyland",
+    "entry_date": "2026-04-09",
+    "entry_price": 173.0,
+    "quantity": 1400,
+    "exit_date": "2026-04-29",
+    "exit_price": 166.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "SAMMAAN.NS",
     "company_name": "Sammaan Capital",
+    "entry_date": "2026-04-13",
+    "entry_price": 154.01,
+    "quantity": 650,
     "exit_date": "2026-04-29",
-    "exit_price": 140.0
+    "exit_price": 140.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
+  },
+  {
+    "ticker": "SAMMAAN.NS",
+    "company_name": "Sammaan Capital",
+    "entry_date": "2026-04-15",
+    "entry_price": 157.0,
+    "quantity": 272,
+    "exit_date": "2026-04-29",
+    "exit_price": 140.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "GODAWARI.NS",
     "company_name": "Godawari Power",
+    "entry_date": "2026-03-23",
+    "entry_price": 257.0,
+    "quantity": 530,
     "exit_date": "2026-04-30",
-    "exit_price": 296.0
+    "exit_price": 296.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
+  },
+  {
+    "ticker": "GODAWARI.NS",
+    "company_name": "Godawari Power",
+    "entry_date": "2026-04-02",
+    "entry_price": 276.75,
+    "quantity": 230,
+    "exit_date": "2026-04-30",
+    "exit_price": 296.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
   },
   {
     "ticker": "TATA.NS",
     "company_name": "Tata Power",
+    "entry_date": "2026-03-23",
+    "entry_price": 403.0,
+    "quantity": 500,
     "exit_date": "2026-05-05",
-    "exit_price": 437.0
+    "exit_price": 437.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
   },
   {
     "ticker": "CHENNAI.NS",
     "company_name": "Chennai Petro",
+    "entry_date": "2026-03-12",
+    "entry_price": 910.0,
+    "quantity": 200,
     "exit_date": "2026-05-06",
-    "exit_price": 1063.0
+    "exit_price": 1063.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
   },
   {
     "ticker": "LLOYDS.NS",
     "company_name": "Lloyds Metals",
+    "entry_date": "2026-04-07",
+    "entry_price": 1441.9,
+    "quantity": 100,
     "exit_date": "2026-05-06",
-    "exit_price": 1748.0
+    "exit_price": 1748.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
+  },
+  {
+    "ticker": "LLOYDS.NS",
+    "company_name": "Lloyds Metals",
+    "entry_date": "2026-04-10",
+    "entry_price": 1498.3,
+    "quantity": 9,
+    "exit_date": "2026-05-06",
+    "exit_price": 1748.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
   },
   {
     "ticker": "ABB.NS",
     "company_name": "ABB India",
+    "entry_date": "2026-04-28",
+    "entry_price": 7432.0,
+    "quantity": 15,
     "exit_date": "2026-05-11",
-    "exit_price": 6345.0
+    "exit_price": 6345.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "AARTI.NS",
     "company_name": "Aarti Ind",
+    "entry_date": "2026-04-22",
+    "entry_price": 455.0,
+    "quantity": 200,
     "exit_date": "2026-05-11",
-    "exit_price": 482.0
+    "exit_price": 482.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
+  },
+  {
+    "ticker": "AARTI.NS",
+    "company_name": "Aarti Ind",
+    "entry_date": "2026-04-29",
+    "entry_price": 510.0,
+    "quantity": 18,
+    "exit_date": "2026-05-11",
+    "exit_price": 482.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
+  },
+  {
+    "ticker": "ADANIPOWER.NS",
+    "company_name": "Adani Power",
+    "entry_date": "2026-04-07",
+    "entry_price": 163.36,
+    "quantity": 1000,
+    "exit_date": "2026-05-11",
+    "exit_price": 224.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
   },
   {
     "ticker": "SKY.NS",
     "company_name": "Sky Gold",
+    "entry_date": "2026-04-22",
+    "entry_price": 417.0,
+    "quantity": 218,
     "exit_date": "2026-05-11",
-    "exit_price": 482.0
+    "exit_price": 482.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
   },
   {
     "ticker": "GE.NS",
     "company_name": "GE Vernova T&D",
+    "entry_date": "2026-05-07",
+    "entry_price": 4700.0,
+    "quantity": 25,
     "exit_date": "2026-05-13",
-    "exit_price": 4257.0
+    "exit_price": 4257.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "KIRLOSKAR.NS",
     "company_name": "Kirloskar Oil",
+    "entry_date": "2026-04-30",
+    "entry_price": 1694.8,
+    "quantity": 60,
     "exit_date": "2026-05-13",
-    "exit_price": 1564.0
+    "exit_price": 1564.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "GALLANTT.NS",
     "company_name": "Gallantt Ispat",
+    "entry_date": "2026-05-11",
+    "entry_price": 906.0,
+    "quantity": 100,
     "exit_date": "2026-05-14",
-    "exit_price": 768.0
-  },
-  {
-    "ticker": "NETWEB.NS",
-    "company_name": "Netweb",
-    "exit_date": "2026-05-18",
-    "exit_price": 3786.0
-  },
-  {
-    "ticker": "BHEL.NS",
-    "company_name": "BHEL",
-    "exit_date": "2026-05-18",
-    "exit_price": 391.0
-  },
-  {
-    "ticker": "HINDUSTAN.NS",
-    "company_name": "Hindustan Aeron",
-    "exit_date": "2026-05-18",
-    "exit_price": 4210.0
+    "exit_price": 768.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "JAIN.NS",
     "company_name": "Jain Resource",
+    "entry_date": "2026-05-12",
+    "entry_price": 560.0,
+    "quantity": 200,
     "exit_date": "2026-05-18",
-    "exit_price": 490.0
+    "exit_price": 490.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
+  },
+  {
+    "ticker": "NETWEB.NS",
+    "company_name": "Netweb",
+    "entry_date": "2026-05-06",
+    "entry_price": 4344.0,
+    "quantity": 25,
+    "exit_date": "2026-05-18",
+    "exit_price": 3786.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
+  },
+  {
+    "ticker": "BHEL.NS",
+    "company_name": "BHEL",
+    "entry_date": "2026-04-30",
+    "entry_price": 349.0,
+    "quantity": 300,
+    "exit_date": "2026-05-18",
+    "exit_price": 391.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
+  },
+  {
+    "ticker": "HINDUSTAN.NS",
+    "company_name": "Hindustan Aeron",
+    "entry_date": "2026-05-07",
+    "entry_price": 4700.9,
+    "quantity": 21,
+    "exit_date": "2026-05-18",
+    "exit_price": 4210.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "TENNECO.NS",
     "company_name": "Tenneco Clean",
+    "entry_date": "2026-05-04",
+    "entry_price": 635.0,
+    "quantity": 145,
     "exit_date": "2026-05-19",
-    "exit_price": 584.0
+    "exit_price": 584.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "HIND.NS",
     "company_name": "Hind Copper",
+    "entry_date": "2026-05-13",
+    "entry_price": 595.0,
+    "quantity": 150,
     "exit_date": "2026-05-29",
-    "exit_price": 557.0
+    "exit_price": 557.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
+  },
+  {
+    "ticker": "HIND.NS",
+    "company_name": "Hind Copper",
+    "entry_date": "2026-05-14",
+    "entry_price": 610.0,
+    "quantity": 48,
+    "exit_date": "2026-05-29",
+    "exit_price": 557.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "DR.NS",
     "company_name": "Dr Lal PathLab",
+    "entry_date": "2026-05-06",
+    "entry_price": 1570.5,
+    "quantity": 65,
     "exit_date": "2026-05-29",
-    "exit_price": 1603.0
+    "exit_price": 1603.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
   },
   {
     "ticker": "MCX.NS",
     "company_name": "MCX India",
+    "entry_date": "2026-05-19",
+    "entry_price": 3430.0,
+    "quantity": 24,
     "exit_date": "2026-05-29",
-    "exit_price": 3170.0
+    "exit_price": 3170.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "NATCO.NS",
     "company_name": "Natco Pharma",
+    "entry_date": "2026-04-07",
+    "entry_price": 1066.0,
+    "quantity": 150,
     "exit_date": "2026-05-29",
-    "exit_price": 1077.0
+    "exit_price": 1077.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
   },
   {
     "ticker": "BHEL.NS",
-    "company_name": "Bharat Heavy Electricals Ltd",
+    "company_name": "BHEL",
+    "entry_date": "2026-05-29",
+    "entry_price": 420.0,
+    "quantity": 250,
     "exit_date": "2026-06-05",
-    "exit_price": 390.0
-  },
-  {
-    "ticker": "HINDZINC.NS",
-    "company_name": "Hindustan Zinc Ltd",
-    "exit_date": "2026-06-05",
-    "exit_price": 550.0
-  },
-  {
-    "ticker": "NATIONALUM.NS",
-    "company_name": "National Aluminium Co Ltd",
-    "exit_date": "2026-06-05",
-    "exit_price": 385.0
-  },
-  {
-    "ticker": "APTUS.NS",
-    "company_name": "Aptus Value Housing Finance India Ltd",
-    "exit_date": "2026-06-09",
-    "exit_price": 250.0
+    "exit_price": 390.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "NLCINDIA.NS",
-    "company_name": "NLC India Ltd",
-    "exit_date": "2026-06-09",
-    "exit_price": 321.0
+    "company_name": "NLC India",
+    "entry_date": "2026-05-19",
+    "entry_price": 358.35,
+    "quantity": 300,
+    "exit_date": "2026-06-08",
+    "exit_price": 321.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "SAIL.NS",
-    "company_name": "Steel Authority of India Ltd",
+    "company_name": "SAIL",
+    "entry_date": "2026-05-19",
+    "entry_price": 198.0,
+    "quantity": 382,
+    "exit_date": "2026-06-08",
+    "exit_price": 185.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
+  },
+  {
+    "ticker": "HINDZINC.NS",
+    "company_name": "Hind Zinc",
+    "entry_date": "2026-05-07",
+    "entry_price": 641.7,
+    "quantity": 160,
+    "exit_date": "2026-06-08",
+    "exit_price": 555.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
+  },
+  {
+    "ticker": "NATIONALUM.NS",
+    "company_name": "NALCO",
+    "entry_date": "2026-05-29",
+    "entry_price": 435.0,
+    "quantity": 300,
+    "exit_date": "2026-06-08",
+    "exit_price": 385.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
+  },
+  {
+    "ticker": "APTUS.NS",
+    "company_name": "APTUS VALUE",
+    "entry_date": "2026-05-13",
+    "entry_price": 270.25,
+    "quantity": 300,
     "exit_date": "2026-06-09",
-    "exit_price": 185.0
+    "exit_price": 250.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "ORIENTELEC.NS",
-    "company_name": "Orient Electric Ltd",
+    "company_name": "Orient Electric",
+    "entry_date": "2026-04-21",
+    "entry_price": 184.0,
+    "quantity": 600,
     "exit_date": "2026-06-16",
-    "exit_price": 178.0
+    "exit_price": 178.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
+  },
+  {
+    "ticker": "ORIENTELEC.NS",
+    "company_name": "Orient Electric",
+    "entry_date": "2026-05-04",
+    "entry_price": 184.0,
+    "quantity": 100,
+    "exit_date": "2026-06-16",
+    "exit_price": 178.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "INDUSTOWER.NS",
-    "company_name": "Indus Towers Ltd.",
-    "exit_date": "2026-06-18",
-    "exit_price": 410.0
+    "company_name": "INDUS TOWERS",
+    "entry_date": "2026-05-18",
+    "entry_price": 430.9,
+    "quantity": 250,
+    "exit_date": "2026-06-17",
+    "exit_price": 410.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "APARINDS.NS",
-    "company_name": "Apar Industries Ltd.",
+    "company_name": "Apar Ind",
     "entry_date": "2026-05-12",
     "entry_price": 12905.0,
     "quantity": 9,
-    "exit_date": "2026-07-04",
+    "exit_date": "2026-07-03",
     "exit_price": 14168.0,
-    "reason": "sudden fall in power sector and bearish FVG seen"
+    "reason": "Reconstructed from ledger (Target achieved)"
   },
   {
     "ticker": "GVT&D.NS",
-    "company_name": "GE Vernova T&D India Ltd.",
-    "entry_date": "2026-05-31",
+    "company_name": "GE Vernova T&D",
+    "entry_date": "2026-06-02",
     "entry_price": 4770.0,
     "quantity": 31,
-    "exit_date": "2026-07-04",
+    "exit_date": "2026-07-03",
     "exit_price": 4387.0,
-    "reason": "sudden fall in power sector and bearish FVG seen"
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "POWERINDIA.NS",
-    "company_name": "Hitachi Energy India Ltd.",
+    "company_name": "Hitachi Energy",
     "entry_date": "2026-04-29",
-    "entry_price": 32905.0,
-    "quantity": 4,
-    "exit_date": "2026-07-04",
+    "entry_price": 32800.0,
+    "quantity": 3,
+    "exit_date": "2026-07-03",
     "exit_price": 30935.0,
-    "reason": "sudden fall in power sector and bearish FVG seen"
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
+  },
+  {
+    "ticker": "POWERINDIA.NS",
+    "company_name": "Hitachi Energy",
+    "entry_date": "2026-05-04",
+    "entry_price": 33220.0,
+    "quantity": 1,
+    "exit_date": "2026-07-03",
+    "exit_price": 30935.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
+  },
+  {
+    "ticker": "POLYCAB.NS",
+    "company_name": "Polycab",
+    "entry_date": "2026-06-09",
+    "entry_price": 9652.0,
+    "quantity": 10,
+    "exit_date": "2026-07-10",
+    "exit_price": 9100.0,
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "POLYCAB.NS",
     "company_name": "Polycab",
     "entry_date": "2026-06-18",
-    "entry_price": 9782.5,
-    "quantity": 16,
-    "exit_date": "2026-07-12",
+    "entry_price": 10000.0,
+    "quantity": 6,
+    "exit_date": "2026-07-10",
     "exit_price": 9100.0,
-    "reason": "Manual sell transaction"
+    "reason": "Reconstructed from ledger (Hit stop-loss floor)"
   },
   {
     "ticker": "CARBORUNIV.NS",
-    "company_name": "Carborundum Universal",
+    "company_name": "Carborundum",
     "entry_date": "2026-05-12",
-    "entry_price": 1024.71,
-    "quantity": 111,
-    "exit_date": "2026-07-18",
-    "exit_price": 1054.0,
-    "reason": "unclean chart"
+    "entry_price": 1026.0,
+    "quantity": 100,
+    "exit_date": "2026-07-17",
+    "exit_price": 1055.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
+  },
+  {
+    "ticker": "CARBORUNIV.NS",
+    "company_name": "Carborundum",
+    "entry_date": "2026-05-13",
+    "entry_price": 1013.0,
+    "quantity": 11,
+    "exit_date": "2026-07-17",
+    "exit_price": 1055.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
   },
   {
     "ticker": "PREMIERENE.NS",
@@ -2342,7 +2610,27 @@
     "entry_price": 943.3,
     "quantity": 150,
     "exit_date": "2026-07-20",
-    "exit_price": 1025.0,
-    "reason": "Manual sell transaction"
+    "exit_price": 1024.0,
+    "reason": "Reconstructed from ledger (Target achieved)"
+  },
+  {
+    "ticker": "HFCL.NS",
+    "company_name": "Hfcl",
+    "entry_date": "2026-05-04",
+    "entry_price": 122.5,
+    "quantity": 1000,
+    "exit_date": "2026-07-27",
+    "exit_price": 195.0,
+    "reason": "Sell transaction"
+  },
+  {
+    "ticker": "SYRMA.NS",
+    "company_name": "Syrma",
+    "entry_date": "2026-06-09",
+    "entry_price": 1238.0,
+    "quantity": 100,
+    "exit_date": "2026-07-27",
+    "exit_price": 1279.0,
+    "reason": "Sell transaction"
   }
 ]

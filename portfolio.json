@@ -1,19 +1,12 @@
 {
   "total_equity_value": 2333899.67,
-  "last_updated": "2026-07-20",
+  "last_updated": "2026-07-28",
   "holdings": {
     "ADANIPORTS.NS": {
       "quantity": 70,
       "avg_cost": 1702.0,
       "buy_date": "2026-05-04",
       "sector": "Infrastructure"
-    },
-    "HFCL.NS": {
-      "quantity": 1000,
-      "avg_cost": 122.5,
-      "buy_date": "2026-05-04",
-      "sector": "Telecommunication",
-      "strategy": "swing"
     },
     "LAURUSLABS.NS": {
       "quantity": 118,
@@ -35,15 +28,9 @@
     },
     "RAINBOW.NS": {
       "quantity": 80,
-      "avg_cost": 1341.0,
+      "avg_cost": 1340.0,
       "buy_date": "2026-05-18",
       "sector": "Healthcare"
-    },
-    "SYRMA.NS": {
-      "quantity": 100,
-      "avg_cost": 1238.0,
-      "buy_date": "2026-06-09",
-      "sector": "Capital Goods"
     },
     "WELCORP.NS": {
       "quantity": 100,
@@ -59,7 +46,7 @@
     },
     "RADICO.NS": {
       "quantity": 46,
-      "avg_cost": 3618.0,
+      "avg_cost": 3615.35,
       "buy_date": "2026-06-18",
       "sector": "Fast Moving Consumer Goods"
     },
@@ -84,16 +71,23 @@
     },
     "ACUTAAS.NS": {
       "quantity": 32,
-      "avg_cost": 3651.0,
+      "avg_cost": 3652.0,
       "buy_date": "2026-07-20",
       "sector": "Chemicals",
       "strategy": "swing"
     },
     "CAPLIPOINT.NS": {
       "quantity": 57,
-      "avg_cost": 2656.0,
+      "avg_cost": 2654.35,
       "buy_date": "2026-07-20",
       "sector": "Pharma",
+      "strategy": "swing"
+    },
+    "RRKABEL.NS": {
+      "quantity": 100,
+      "avg_cost": 2519.0,
+      "buy_date": "2026-07-27",
+      "sector": "Consumer Durables",
       "strategy": "swing"
     }
   }

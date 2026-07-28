@@ -31,20 +31,19 @@ def load_live_portfolio():
     # --- START FALLBACK ---
     fallback_holdings = {
         "ADANIPORTS.NS": [70, 1702.00, "2026-05-04", "Infrastructure", 1702.00, "swing"],
-        "HFCL.NS": [1000, 122.50, "2026-05-04", "Telecommunication", 122.50, "swing"],
         "LAURUSLABS.NS": [118, 1278.50, "2026-05-30", "Pharma", 1278.50, "swing"],
         "BHARATFORG.NS": [39, 1959.00, "2026-05-15", "Industrial Manufacturing", 1959.00, "swing"],
         "ATHERENERG.NS": [100, 943.00, "2026-05-11", "Auto Components", 943.00, "swing"],
-        "RAINBOW.NS": [80, 1341.00, "2026-05-18", "Healthcare", 1341.00, "swing"],
-        "SYRMA.NS": [100, 1238.00, "2026-06-09", "Capital Goods", 1238.00, "swing"],
+        "RAINBOW.NS": [80, 1340.00, "2026-05-18", "Healthcare", 1340.00, "swing"],
         "WELCORP.NS": [100, 1406.00, "2026-06-09", "Capital Goods", 1406.00, "swing"],
         "FEDERALBNK.NS": [595, 305.57, "2026-06-10", "Financial Services", 305.57, "swing"],
-        "RADICO.NS": [46, 3618.00, "2026-06-18", "Fast Moving Consumer Goods", 3618.00, "swing"],
+        "RADICO.NS": [46, 3615.35, "2026-06-18", "Fast Moving Consumer Goods", 3615.35, "swing"],
         "BELRISE.NS": [834, 232.00, "2026-07-07", "Auto Components", 232.00, "swing"],
         "OFSS.NS": [17, 11260.00, "2026-07-07", "Information Technology", 11260.00, "swing"],
         "CHOICEIN.NS": [175, 828.00, "2026-07-13", "Financial Services", 828.00, "swing"],
-        "ACUTAAS.NS": [32, 3651.00, "2026-07-20", "Chemicals", 3651.00, "swing"],
-        "CAPLIPOINT.NS": [57, 2656.00, "2026-07-20", "Pharma", 2656.00, "swing"]
+        "ACUTAAS.NS": [32, 3652.00, "2026-07-20", "Chemicals", 3652.00, "swing"],
+        "CAPLIPOINT.NS": [57, 2654.35, "2026-07-20", "Pharma", 2654.35, "swing"],
+        "RRKABEL.NS": [100, 2519.00, "2026-07-27", "Consumer Durables", 2519.00, "swing"]
     }
     # --- END FALLBACK ---
     
