@@ -1,20 +1,50 @@
-import http.client, json, os, pandas as pd, numpy as np, yfinance as yf
+import sys, http.client, json, os, pandas as pd, numpy as np, yfinance as yf
 from nselib import capital_market
 from datetime import datetime, timedelta
 
+# --- UTF-8 CONSOLE ENCODING FIX (Windows Support) ---
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
 # --- CONFIG ---
+def load_custom_dotenv():
+    base_dir = r"C:\Users\rgjnv\Trading-Engine"
+    env_paths = [
+        os.path.join(base_dir, ".env"),
+        os.path.join(base_dir, "Ratchet-System", ".env")
+    ]
+    for path in env_paths:
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    if "=" in line:
+                        key, val = line.split("=", 1)
+                        os.environ[key.strip()] = val.strip().strip("'").strip('"')
+            break
+
+load_custom_dotenv()
 TOKEN = os.getenv('TELEGRAM_TOKEN', '').strip()
 CHAT_ID = os.getenv('TELEGRAM_CHAT_ID', '').strip()
 MANUAL_N500_CSV = 'ind_nifty500list.csv'
 
 def send_telegram(text):
-    if not TOKEN or not CHAT_ID: return
+    print("\n--- WHALE & KRONOS FORECAST REPORT ---")
+    print(text)
+    print("--------------------------------------\n")
+    if not TOKEN or not CHAT_ID: 
+        print("[WARNING] Telegram credentials not configured. Skipping message send.")
+        return
     conn = http.client.HTTPSConnection("api.telegram.org")
     payload = json.dumps({"chat_id": CHAT_ID, "text": text, "parse_mode": "Markdown"})
     headers = {"Content-Type": "application/json"}
     try:
         conn.request("POST", f"/bot{TOKEN}/sendMessage", payload, headers)
         conn.getresponse()
+    except Exception as e:
+        print(f"❌ Telegram Send Error: {e}")
     finally: conn.close()
 
 def get_5day_delivery_avg(symbol):

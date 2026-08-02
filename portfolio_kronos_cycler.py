@@ -192,6 +192,12 @@ def run_portfolio_analysis():
             tele_msg += f"• {l['ticker'].replace('.NS', '')}: Price ₹{l['price']} | Target ₹{l['target']} | Conf {l['confidence']}%\n"
         tele_msg += "\n"
         
+    if holds:
+        tele_msg += "⏳ *Holds (Neutral / Peer Alignment):*\n"
+        for h in holds:
+            tele_msg += f"• {h['ticker'].replace('.NS', '')}: Price ₹{h['price']} | Target ₹{h['target']} | Conf {h['confidence']}%\n"
+        tele_msg += "\n"
+        
     if laggards:
         tele_msg += "⚠️ *Laggards (Underperforming / Low Confidence):*\n"
         for lg in laggards:

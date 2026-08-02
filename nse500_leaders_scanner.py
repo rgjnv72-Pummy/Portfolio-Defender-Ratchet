@@ -104,75 +104,80 @@ def run_nse500_scanner():
         print(f"[ERROR] Benchmark index ^NSEI has insufficient data ({len(nifty_close)} days).")
         return
         
-    nifty_perf_60d = (nifty_close.iloc[-1] - nifty_close.iloc[-60]) / nifty_close.iloc[-60]
-    
-    results = []
-    
-    for ticker in tickers:
-        try:
-            # Safely extract close series
-            if ticker not in data['Close']:
-                continue
-            df = data['Close'][ticker].dropna()
-            if len(df) < 60: # Ensure we have at least 60 trading days of data
-                continue
+    # We run both Weekly (5D performance lookback, 5D forecast) and Monthly (20D performance lookback, 20D forecast) scans
+    for scan_type, days in [("weekly", 5), ("monthly", 20)]:
+        print(f"\n[INFO] Running {scan_type.upper()} leaders scan (lookback: {days} days, GBM forecast: {days} days)...")
+        
+        # Calculate benchmark performance for the lookback window
+        nifty_perf = (nifty_close.iloc[-1] - nifty_close.iloc[-days]) / nifty_close.iloc[-days]
+        results = []
+        
+        for ticker in tickers:
+            try:
+                # Safely extract close series
+                if ticker not in data['Close']:
+                    continue
+                df = data['Close'][ticker].dropna()
+                if len(df) < 60: # Ensure we have at least 60 trading days of data for GBM calculations
+                    continue
+                    
+                price = df.iloc[-1]
+                perf_stk = (price - df.iloc[-days]) / df.iloc[-days]
+                relative_perf = perf_stk - nifty_perf
                 
-            price = df.iloc[-1]
-            perf_60d = (price - df.iloc[-60]) / df.iloc[-60]
-            relative_perf = perf_60d - nifty_perf_60d
-            
-            # Execute GBM Monte Carlo
-            confidence, target_p, vol_pct = calculate_gbm_simulation(df, price)
-            
-            # Leader Criteria: Confidence >= 60% and Relative Performance (Alpha) > 0
-            if confidence >= 60.0 and relative_perf > 0:
-                results.append({
-                    "ticker": ticker,
-                    "price": round(price, 2),
-                    "confidence": round(confidence, 1),
-                    "target": round(target_p, 2),
-                    "volatility": round(vol_pct, 2),
-                    "relative_perf": round(relative_perf * 100, 2)
-                })
-        except Exception:
-            continue # Silently skip errors for batch processing stability
-            
-    # Sort by Confidence (descending), then Relative Performance (descending)
-    sorted_leaders = sorted(results, key=lambda x: (-x["confidence"], -x["relative_perf"]))
-    top_20 = sorted_leaders[:20]
-    
-    # Save report to Obsidian
-    report_file = os.path.join(OBSIDIAN_DIR, "NSE500-Leaders.md")
-    with open(report_file, "w", encoding="utf-8") as f:
-        f.write(f"# 🏆 Top 20 NSE 500 Leaders Report\n")
-        f.write(f"**Generated:** `{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`\n\n")
-        f.write(f"This report highlights the top 20 strongest leaders in the NSE 500 universe. ")
-        f.write(f"Selection criteria requires a **GBM upward confidence $\ge 60\%$** and **outperformance against the Nifty 50 benchmark** over the last 60 trading days.\n\n")
+                # Execute GBM Monte Carlo with the respective forecast days
+                confidence, target_p, vol_pct = calculate_gbm_simulation(df, price, days=days)
+                
+                # Leader Criteria: Confidence >= 60% and Relative Performance (Alpha) > 0
+                if confidence >= 60.0 and relative_perf > 0:
+                    results.append({
+                        "ticker": ticker,
+                        "price": round(price, 2),
+                        "confidence": round(confidence, 1),
+                        "target": round(target_p, 2),
+                        "volatility": round(vol_pct, 2),
+                        "relative_perf": round(relative_perf * 100, 2)
+                    })
+            except Exception:
+                continue # Silently skip errors for batch processing stability
+                
+        # Sort by Confidence (descending), then Relative Performance (descending)
+        sorted_leaders = sorted(results, key=lambda x: (-x["confidence"], -x["relative_perf"]))
+        top_20 = sorted_leaders[:20]
         
-        f.write("### 📋 Leaderboard Grid\n")
-        f.write("| Rank | Ticker | Price | Upward Confidence | Target (5D) | Volatility (60D) | 60D Alpha vs Nifty |\n")
-        f.write("| --- | --- | --- | --- | --- | --- | --- |\n")
-        
-        for idx, r in enumerate(top_20, 1):
-            alpha_style = f"+{r['relative_perf']}%" if r['relative_perf'] >= 0 else f"{r['relative_perf']}%"
-            f.write(f"| #{idx} | **{r['ticker'].replace('.NS', '')}** | ₹{r['price']} | **{r['confidence']}%** | ₹{r['target']} | {r['volatility']}% | {alpha_style} |\n")
+        # Save report to Obsidian
+        report_file_name = "NSE500-Leaders.md" if scan_type == "weekly" else "NSE500-Leaders-Monthly.md"
+        report_file = os.path.join(OBSIDIAN_DIR, report_file_name)
+        with open(report_file, "w", encoding="utf-8") as f:
+            f.write(f"# 🏆 Top 20 NSE 500 Leaders Report ({scan_type.capitalize()})\n")
+            f.write(f"**Generated:** `{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`\n\n")
+            f.write(f"This report highlights the top 20 strongest leaders in the NSE 500 universe for a {scan_type} horizon. ")
+            f.write(f"Selection criteria requires a **GBM upward confidence $\\ge 60\\%$** and **outperformance against the Nifty 50 benchmark** over the last {days} trading days.\n\n")
             
-        f.write("\n\n*Note: Calculations utilize a 10,000-run Geometric Brownian Motion (GBM) Monte Carlo simulation aligned to a 60-day historical drift and volatility window.*")
+            f.write("### 📋 Leaderboard Grid\n")
+            f.write(f"| Rank | Ticker | Price | Upward Confidence | Target ({days}D) | Volatility (60D) | {days}D Alpha vs Nifty |\n")
+            f.write("| --- | --- | --- | --- | --- | --- | --- |\n")
+            
+            for idx, r in enumerate(top_20, 1):
+                alpha_style = f"+{r['relative_perf']}%" if r['relative_perf'] >= 0 else f"{r['relative_perf']}%"
+                f.write(f"| #{idx} | **{r['ticker'].replace('.NS', '')}** | ₹{r['price']} | **{r['confidence']}%** | ₹{r['target']} | {r['volatility']}% | {alpha_style} |\n")
+                
+            f.write(f"\n\n*Note: Calculations utilize a 10,000-run Geometric Brownian Motion (GBM) Monte Carlo simulation aligned to a 60-day historical drift and volatility window forecasting {days} days ahead.*")
+            
+        print(f"[SUCCESS] Obsidian report compiled and saved: {report_file}")
         
-    print(f"[SUCCESS] Obsidian report compiled and saved: {report_file}")
-    
-    # Compile Telegram Message
-    tele_msg = f"🏆 *NSE 500 Top 20 Leaders:* {datetime.date.today().strftime('%d-%b-%Y')}\n\n"
-    if top_20:
-        for idx, l in enumerate(top_20, 1):
-            alpha_sign = "+" if l['relative_perf'] >= 0 else ""
-            tele_msg += f"#{idx} *{l['ticker'].replace('.NS', '')}*: Price ₹{l['price']} | Conf {l['confidence']}% | Alpha {alpha_sign}{l['relative_perf']}%\n"
-    else:
-        tele_msg += "No leaders met the criteria this week."
-        
-    tele_msg += "\n👉 Check Obsidian: `NSE500-Leaders.md` for full metrics."
-    send_telegram_message(tele_msg)
-    print("[SUCCESS] Dispatch completed via Telegram.")
+        # Compile Telegram Message
+        tele_msg = f"🏆 *NSE 500 Top 20 Leaders ({scan_type.capitalize()}):* {datetime.date.today().strftime('%d-%b-%Y')}\n\n"
+        if top_20:
+            for idx, l in enumerate(top_20, 1):
+                alpha_sign = "+" if l['relative_perf'] >= 0 else ""
+                tele_msg += f"#{idx} *{l['ticker'].replace('.NS', '')}*: Price ₹{l['price']} | Conf {l['confidence']}% | Alpha {alpha_sign}{l['relative_perf']}%\n"
+        else:
+            tele_msg += f"No leaders met the criteria this {scan_type}."
+            
+        tele_msg += f"\n👉 Check Obsidian: `{report_file_name}` for full metrics."
+        send_telegram_message(tele_msg)
+        print(f"[SUCCESS] Dispatch completed via Telegram for {scan_type} scan.")
 
 def scheduler_loop(hour=18, minute=30):
     print(f"[INFO] Background daemon started. Scheduled to scan NSE 500 every Friday at {hour:02}:{minute:02} IST.")
