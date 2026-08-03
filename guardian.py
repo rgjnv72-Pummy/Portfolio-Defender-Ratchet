@@ -33,7 +33,7 @@ def load_live_portfolio():
         "LAURUSLABS.NS": [159, 1392.35, "2026-05-30", "Pharma", 1392.35, "swing"],
         "BHARATFORG.NS": [39, 1959.00, "2026-05-15", "Industrial Manufacturing", 1959.00, "swing"],
         "ATHERENERG.NS": [100, 943.00, "2026-05-11", "Auto Components", 943.00, "swing"],
-        "RAINBOW.NS": [80, 1340.00, "2026-05-18", "Healthcare", 1340.00, "swing"],
+        "RAINBOW.NS": [110, 1397.27, "2026-05-18", "Healthcare", 1397.27, "swing"],
         "WELCORP.NS": [100, 1406.00, "2026-06-09", "Capital Goods", 1406.00, "swing"],
         "FEDERALBNK.NS": [595, 305.57, "2026-06-10", "Financial Services", 305.57, "swing"],
         "RADICO.NS": [46, 3615.35, "2026-06-18", "Fast Moving Consumer Goods", 3615.35, "swing"],
@@ -41,7 +41,8 @@ def load_live_portfolio():
         "OFSS.NS": [17, 11260.00, "2026-07-07", "Information Technology", 11260.00, "swing"],
         "CHOICEIN.NS": [175, 828.00, "2026-07-13", "Financial Services", 828.00, "swing"],
         "CAPLIPOINT.NS": [57, 2654.35, "2026-07-20", "Pharma", 2654.35, "swing"],
-        "RRKABEL.NS": [100, 2519.00, "2026-07-27", "Consumer Durables", 2519.00, "swing"]
+        "RRKABEL.NS": [100, 2519.00, "2026-07-27", "Consumer Durables", 2519.00, "swing"],
+        "SONACOMS.NS": [231, 775.00, "2026-08-03", "Auto Components", 775.00, "swing"]
     }
     # --- END FALLBACK ---
     
