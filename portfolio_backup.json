@@ -1,6 +1,6 @@
 {
   "total_equity_value": 2333899.67,
-  "last_updated": "2026-07-29",
+  "last_updated": "2026-08-03",
   "holdings": {
     "LAURUSLABS.NS": {
       "quantity": 159,
@@ -21,8 +21,8 @@
       "sector": "Auto Components"
     },
     "RAINBOW.NS": {
-      "quantity": 80,
-      "avg_cost": 1340.0,
+      "quantity": 110,
+      "avg_cost": 1397.27,
       "buy_date": "2026-05-18",
       "sector": "Healthcare"
     },
@@ -77,6 +77,13 @@
       "sector": "Consumer Durables",
       "strategy": "swing",
       "entry_reason": "Appeared in NSE Weekly/Monthly Leaders & Confluence"
+    },
+    "SONACOMS.NS": {
+      "quantity": 231,
+      "avg_cost": 775.0,
+      "buy_date": "2026-08-03",
+      "sector": "Auto Components",
+      "strategy": "swing"
     }
   }
 }
