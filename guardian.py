@@ -2,6 +2,7 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 import http.client, json, os
+import requests
 from datetime import datetime
 
 yf.set_tz_cache_location("cache")
@@ -216,7 +217,9 @@ def run_simplified_watchdog():
     CURRENT_HOLDINGS = load_live_portfolio()
     try:
         tickers = list(CURRENT_HOLDINGS.keys()) + ["^NSEI"]
-        data = yf.download(tickers, period="1y", interval="1d", progress=False, auto_adjust=True)
+        session = requests.Session()
+        session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        data = yf.download(tickers, period="1y", interval="1d", progress=False, auto_adjust=True, session=session)
     except Exception:
         data = pd.DataFrame()
 
