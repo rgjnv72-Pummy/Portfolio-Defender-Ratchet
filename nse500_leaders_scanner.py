@@ -75,6 +75,31 @@ def calculate_gbm_simulation(df, price, days=5, simulations=10000):
     
     return confidence, target_p, vol * 100
 
+def safe_batch_download(tickers, period="6mo", interval="1d"):
+    """
+    Downloads tickers in batch with auto-retry fallback for missing or failed tickers.
+    """
+    data = yf.download(tickers, period=period, interval=interval, progress=False, auto_adjust=True)
+    if isinstance(data.columns, pd.MultiIndex) and 'Close' in data:
+        downloaded = set(data['Close'].columns)
+        missing = [t for t in tickers if t not in downloaded or data['Close'][t].dropna().empty]
+        if missing:
+            print(f"[INFO] Batch download skipped {len(missing)} tickers. Running individual fallback downloads...")
+            for t in missing:
+                try:
+                    sdf = yf.download(t, period=period, interval=interval, progress=False, auto_adjust=True)
+                    if not sdf.empty:
+                        if isinstance(sdf.columns, pd.MultiIndex):
+                            sdf.columns = sdf.columns.get_level_values(0)
+                        if 'Close' in sdf and not sdf['Close'].dropna().empty:
+                            for col in ['Open', 'High', 'Low', 'Close', 'Volume']:
+                                if col in sdf:
+                                    data[(col, t)] = sdf[col]
+                            print(f"  [SUCCESS] Recovered {t} via individual download.")
+                except Exception as e:
+                    print(f"  [WARNING] Retry failed for {t}: {e}")
+    return data
+
 def run_nse500_scanner():
     print(f"\n[INFO] [{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting NSE 500 Leaders Scan...")
     
@@ -96,8 +121,8 @@ def run_nse500_scanner():
     # Add benchmark
     tickers_to_fetch = tickers + ["^NSEI"]
     
-    # Batch download to save time (changed from 60d to 6mo to ensure at least 60 trading days)
-    data = yf.download(tickers_to_fetch, period="6mo", interval="1d", progress=False, auto_adjust=True)
+    # Batch download with individual ticker fallback
+    data = safe_batch_download(tickers_to_fetch, period="6mo", interval="1d")
     
     nifty_close = data['Close']['^NSEI'].dropna()
     if len(nifty_close) < 60:

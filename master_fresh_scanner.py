@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import warnings
 import http.client
@@ -7,6 +8,13 @@ import pandas as pd
 from tqdm import tqdm
 from datetime import datetime
 import yfinance as yf
+
+# Configure UTF-8 for Windows Console Output
+if hasattr(sys.stdout, 'reconfigure'):
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
 
 # --- WARNING FILTERS ---
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -75,6 +83,63 @@ def send_telegram(text):
             print("Telegram Error (Console print encoding failure)")
     finally:
         conn.close()
+
+def get_macro_regime():
+    """
+    Fetches Nifty 50 (^NSEI) data to determine the Macro Market Regime ("Go/No-Go" Rule).
+    """
+    try:
+        nifty = yf.download('^NSEI', period='1y', progress=False, auto_adjust=True)
+        if isinstance(nifty.columns, pd.MultiIndex):
+            nifty.columns = nifty.columns.get_level_values(0)
+            
+        close = nifty['Close'].dropna()
+        if len(close) < 200:
+            return {
+                "close": 0, "ema50": 0, "ema200": 0,
+                "regime": "UNKNOWN (INSUFFICIENT DATA)",
+                "sizing_multiplier": 1.0, "status_code": "GO", "emoji": "⚪"
+            }
+            
+        ema50 = close.ewm(span=50, adjust=False).mean()
+        ema200 = close.ewm(span=200, adjust=False).mean()
+        
+        last_close = float(close.iloc[-1])
+        last_ema50 = float(ema50.iloc[-1])
+        last_ema200 = float(ema200.iloc[-1])
+        
+        if last_close > last_ema50 and last_ema50 > last_ema200:
+            regime = "BULLISH / STRONG TREND (GO)"
+            size_mult = 1.0
+            status_code = "GO"
+            emoji = "🟢"
+        elif last_close > last_ema200:
+            regime = "CAUTIOUS / SIDEWAYS (SCALE SIZING 50%)"
+            size_mult = 0.5
+            status_code = "CAUTION"
+            emoji = "🟡"
+        else:
+            regime = "BEARISH / CHOPPY REGIME (NO-GO / PAUSE NEW ENTRIES)"
+            size_mult = 0.0
+            status_code = "NO-GO"
+            emoji = "🔴"
+            
+        return {
+            "close": round(last_close, 2),
+            "ema50": round(last_ema50, 2),
+            "ema200": round(last_ema200, 2),
+            "regime": regime,
+            "sizing_multiplier": size_mult,
+            "status_code": status_code,
+            "emoji": emoji
+        }
+    except Exception as e:
+        print(f"[WARNING] Could not fetch Nifty Macro Regime: {e}")
+        return {
+            "close": 0, "ema50": 0, "ema200": 0,
+            "regime": "UNKNOWN (FETCH ERROR)",
+            "sizing_multiplier": 1.0, "status_code": "GO", "emoji": "⚪"
+        }
 
 MIN_AVG_VOLUME = 100000
 EMA_TREND_PERIOD = 200
@@ -196,10 +261,14 @@ def check_vcp_signal(df):
     return None
 
 def scan_fresh_opportunities():
+    macro_info = get_macro_regime()
     watchlist = load_watchlist()
     if not watchlist:
         return
         
+    print(f"\n[INFO] Macro Market Regime: {macro_info['emoji']} {macro_info['regime']}")
+    print(f"       Nifty 50: {macro_info['close']} | 50 EMA: {macro_info['ema50']} | 200 EMA: {macro_info['ema200']}")
+    print(f"       Position Sizing Multiplier: {macro_info['sizing_multiplier'] * 100:.0f}%\n")
     print(f"[INFO] Scanning {len(watchlist)} stocks...")
     results = []
     
@@ -214,7 +283,7 @@ def scan_fresh_opportunities():
             except:
                 df = None
                 
-        # Real-time yfinance downloader fallback (critical for running on GitHub)
+        # Real-time yfinance downloader fallback (critical for running on GitHub or missing tickers)
         if df is None:
             try:
                 ticker_ns = f"{ticker}.NS" if not ticker.endswith(".NS") else ticker
@@ -256,6 +325,7 @@ def scan_fresh_opportunities():
     
     print("\n" + "="*85)
     print("   KRONOS QUANT SYSTEM: FRESH ACTIONABLE WATCHLIST DEPLOYMENT")
+    print(f"   MACRO REGIME: {macro_info['emoji']} {macro_info['regime']} (SIZING: {macro_info['sizing_multiplier']*100:.0f}%)")
     print("="*85)
     print(f"{'Ticker':<12} {'Strategy':<14} {'Grade':<15} {'Price':<8} {'Entry':<8} {'Stop Loss':<9} {'Risk%':<6}")
     print("-"*85)
@@ -264,10 +334,10 @@ def scan_fresh_opportunities():
         print(f"{row['Ticker']:<12} {row['Strategy']:<14} {row['Grade']:<15} {row['Price']:<8.2f} {row['Entry_Trigger']:<8.2f} {row['Stop_Loss']:<9.2f} {row['Risk%']:>5.1f}%")
     print("="*85)
     
-    generate_obsidian_report(df_res)
-    send_telegram_report(df_res)
+    generate_obsidian_report(df_res, macro_info)
+    send_telegram_report(df_res, macro_info)
 
-def generate_obsidian_report(df_res):
+def generate_obsidian_report(df_res, macro_info):
     os.makedirs(os.path.dirname(REPORT_PATH), exist_ok=True)
     target_date = datetime.now().strftime('%Y-%m-%d')
     
@@ -278,6 +348,16 @@ def generate_obsidian_report(df_res):
 - **Scan Date:** {target_date}
 - **Watchlist Source:** NSE 500 Watchlist
 - **Strategies Active:** SMC FVG (Pullbacks) & Minervini VCP (Breakouts)
+- **Macro Market Regime:** {macro_info['emoji']} **{macro_info['regime']}**
+- **Nifty 50 Benchmark:** Price ₹{macro_info['close']} | 50 EMA: ₹{macro_info['ema50']} | 200 EMA: ₹{macro_info['ema200']}
+- **Sizing Multiplier:** **{macro_info['sizing_multiplier']*100:.0f}%** (Recommended Position Sizing)
+
+---
+
+## 🌐 Macro Market Regime Filter ("Go/No-Go" Status)
+> {macro_info['emoji']} **System Regime:** `{macro_info['regime']}`  
+> **Position Sizing Multiplier:** `{macro_info['sizing_multiplier']*100:.0f}%`  
+> *Guidance: {"Full deployment permitted." if macro_info['status_code'] == "GO" else ("Scale cash allocation per trade to 50% due to sideways/choppy market conditions." if macro_info['status_code'] == "CAUTION" else "PAUSE NEW ENTRIES. Market is in a high-risk bearish/choppy regime.")}*
 
 ---
 
@@ -306,12 +386,12 @@ Sorted by **Lowest Risk %** (Entry-to-Stop cushion). Prioritize setups with Risk
             report += f"- **{row['Ticker']}** ({row['Sector']}): Current Price **₹{row['Price']:.2f}** | Entry Trigger **₹{row['Entry_Trigger']:.2f}** | Stop Loss **₹{row['Stop_Loss']:.2f}** ({row['Risk%']:.1f}% Risk)\n"
             report += f"  ↳ _Setup Profile:_ {row['Details']}\n\n"
             
-    report += """
+    report += f"""
 ---
 
 ## 🛠️ Capital Allocation & Sizing Guidelines
-1. **Compounding Weight Sizing**: Calculate your trade allocation as `Total Portfolio Value * 10%`.
-2. **Fractional Sizing**: If your available cash is less than the calculated 10% allocation, sweep the remaining cash into the trade (as long as it exceeds ₹10,000) to avoid missing signals.
+1. **Macro Regime Multiplier**: Apply **{macro_info['sizing_multiplier']*100:.0f}%** to standard sizing. Base allocation = `(Total Portfolio Value * 10%) * {macro_info['sizing_multiplier']}`.
+2. **Fractional Sizing**: If your available cash is less than the calculated allocation, sweep the remaining cash into the trade (as long as it exceeds ₹10,000) to avoid missing signals.
 3. **Execution**: Place a Buy Stop Limit order at the **Entry Trigger** price. Ensure stop losses are hard-coded in your execution journal.
 """
     
@@ -320,12 +400,13 @@ Sorted by **Lowest Risk %** (Entry-to-Stop cushion). Prioritize setups with Risk
         
     print(f"[SUCCESS] Obsidian deployment report saved to: {REPORT_PATH}")
 
-def send_telegram_report(df_res):
-    # Take the top 20 candidates (since user requested top 20)
+def send_telegram_report(df_res, macro_info):
     top_20 = df_res.head(20)
     
     target_date = datetime.now().strftime('%d-%m-%Y')
-    msg = f"📡 *KRONOS FRESH ALERTS REPORT ({target_date})*\n_Top 20 candidates sorted by lowest Risk%_\n\n"
+    msg = f"📡 *KRONOS FRESH ALERTS REPORT ({target_date})*\n"
+    msg += f"Regime: {macro_info['emoji']} *{macro_info['regime']}*\n"
+    msg += f"Sizing Multiplier: *{macro_info['sizing_multiplier']*100:.0f}%*\n\n"
     
     watchlist_tickers = []
     for _, r in top_20.iterrows():
@@ -343,3 +424,4 @@ def send_telegram_report(df_res):
 
 if __name__ == "__main__":
     scan_fresh_opportunities()
+
