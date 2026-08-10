@@ -1,18 +1,12 @@
 {
   "total_equity_value": 2333899.67,
-  "last_updated": "2026-08-03",
+  "last_updated": "2026-08-10",
   "holdings": {
     "LAURUSLABS.NS": {
       "quantity": 159,
       "avg_cost": 1392.35,
       "buy_date": "2026-05-30",
       "sector": "Pharma"
-    },
-    "BHARATFORG.NS": {
-      "quantity": 39,
-      "avg_cost": 1959.0,
-      "buy_date": "2026-05-15",
-      "sector": "Industrial Manufacturing"
     },
     "ATHERENERG.NS": {
       "quantity": 100,

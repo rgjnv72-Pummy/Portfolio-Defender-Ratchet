@@ -2652,5 +2652,15 @@
     "exit_date": "2026-07-29",
     "exit_price": 1723.0,
     "reason": "Weak result not performing"
+  },
+  {
+    "ticker": "BHARATFORG.NS",
+    "company_name": "Bharat Forge",
+    "entry_date": "2026-05-15",
+    "entry_price": 1959.0,
+    "quantity": 39,
+    "exit_date": "2026-08-10",
+    "exit_price": 2166.0,
+    "reason": "Selling pressure came today due to disappointing result for q1"
   }
 ]

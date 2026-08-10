@@ -32,7 +32,6 @@ def load_live_portfolio():
     # --- START FALLBACK ---
     fallback_holdings = {
         "LAURUSLABS.NS": [159, 1392.35, "2026-05-30", "Pharma", 1392.35, "swing"],
-        "BHARATFORG.NS": [39, 1959.00, "2026-05-15", "Industrial Manufacturing", 1959.00, "swing"],
         "ATHERENERG.NS": [100, 943.00, "2026-05-11", "Auto Components", 943.00, "swing"],
         "RAINBOW.NS": [110, 1397.27, "2026-05-18", "Healthcare", 1397.27, "swing"],
         "WELCORP.NS": [100, 1406.00, "2026-06-09", "Capital Goods", 1406.00, "swing"],
