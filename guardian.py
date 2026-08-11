@@ -42,7 +42,8 @@ def load_live_portfolio():
         "CHOICEIN.NS": [175, 828.00, "2026-07-13", "Financial Services", 828.00, "swing"],
         "CAPLIPOINT.NS": [57, 2654.35, "2026-07-20", "Pharma", 2654.35, "swing"],
         "RRKABEL.NS": [100, 2519.00, "2026-07-27", "Consumer Durables", 2519.00, "swing"],
-        "SONACOMS.NS": [231, 775.00, "2026-08-03", "Auto Components", 775.00, "swing"]
+        "SONACOMS.NS": [231, 775.00, "2026-08-03", "Auto Components", 775.00, "swing"],
+        "EXIDEIND.NS": [174, 483.00, "2026-08-11", "Auto Components", 483.00, "swing"]
     }
     # --- END FALLBACK ---
     

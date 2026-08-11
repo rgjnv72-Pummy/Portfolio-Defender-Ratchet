@@ -1,6 +1,6 @@
 {
   "total_equity_value": 2333899.67,
-  "last_updated": "2026-08-10",
+  "last_updated": "2026-08-11",
   "holdings": {
     "LAURUSLABS.NS": {
       "quantity": 159,
@@ -78,6 +78,14 @@
       "buy_date": "2026-08-03",
       "sector": "Auto Components",
       "strategy": "swing"
+    },
+    "EXIDEIND.NS": {
+      "quantity": 174,
+      "avg_cost": 483.0,
+      "buy_date": "2026-08-11",
+      "sector": "Auto Components",
+      "strategy": "swing",
+      "entry_reason": "Capital Deployment Plan (Triple Crown #10 Weekly / #9 Monthly & ADX-Rider / Pocket Pivot)"
     }
   }
 }
