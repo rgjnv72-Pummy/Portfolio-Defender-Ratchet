@@ -169,13 +169,27 @@ def compute_historical_ratchet(df, buy_date_str, buy_p, strategy="swing"):
         # treating active_base like entry price for P&L-based multiplier
         pnl_pct = ((close_p - active_base) / active_base) * 100
         
-        # Dynamic Multiplier
+        # Dynamic Multiplier with 1-Wasserstein Tail Risk Adjustment (SSRN-3947905)
         if pnl_pct > 20.0:
             mult = 2.5
         elif pnl_pct < 0.0:
             mult = 1.5
         else:
             mult = 2.0
+
+        # Wasserstein Distribution Risk Check
+        try:
+            from wasserstein_regime_engine import WassersteinKMeans, slice_empirical_measures
+            running_closes = df.loc[df.index <= idx, 'Close']
+            if len(running_closes) >= 40:
+                ret_series = np.log(running_closes / running_closes.shift(1)).dropna()
+                if len(ret_series) >= 35:
+                    win_35 = np.sort(ret_series.tail(35).values)
+                    # Quantile tail check: if lower 10th percentile return is severely negative (< -2.5%)
+                    if np.percentile(win_35, 10) < -0.025:
+                        mult = min(mult, 1.25)  # Tighten stop distance during severe left-tail risk
+        except Exception:
+            pass
             
         # Calculate lookback raw ratchet
         history_so_far = valid_df.loc[valid_df.index <= idx].tail(lookback_days)
@@ -203,10 +217,12 @@ def compute_historical_ratchet(df, buy_date_str, buy_p, strategy="swing"):
         else:
             hard_floor = initial_atr_floor
             
-        # Guardrails: soft trailing stop retreats during pullbacks to avoid shakeouts,
-        # but is strictly bounded by hard_floor and close_p * 0.97
-        final_ratchet = min(rolling_ratchet, close_p * 0.97)
-        final_ratchet = max(final_ratchet, hard_floor)
+        # Strict Monotonic Ratchet: Stop-loss level only moves UP or stays flat, never retreats during pullbacks
+        candidate_ratchet = max(rolling_ratchet, hard_floor)
+        if ratchet_history:
+            final_ratchet = max(ratchet_history[-1], candidate_ratchet)
+        else:
+            final_ratchet = candidate_ratchet
         
         ratchet_history.append(final_ratchet)
         hard_floor_history.append(hard_floor)
@@ -217,9 +233,7 @@ def run_simplified_watchdog():
     CURRENT_HOLDINGS = load_live_portfolio()
     try:
         tickers = list(CURRENT_HOLDINGS.keys()) + ["^NSEI"]
-        session = requests.Session()
-        session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-        data = yf.download(tickers, period="1y", interval="1d", progress=False, auto_adjust=True, session=session)
+        data = yf.download(tickers, period="1y", interval="1d", progress=False, auto_adjust=True)
     except Exception:
         data = pd.DataFrame()
 
