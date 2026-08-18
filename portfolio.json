@@ -1,54 +1,48 @@
 {
-  "total_equity_value": 2333899.67,
-  "last_updated": "2026-08-11",
+  "total_equity_value": 2450000.0,
+  "last_updated": "2026-08-17",
   "holdings": {
     "LAURUSLABS.NS": {
       "quantity": 159,
       "avg_cost": 1392.35,
-      "buy_date": "2026-05-30",
-      "sector": "Pharma"
+      "buy_date": "2026-05-29",
+      "sector": "Pharma",
+      "strategy": "swing"
     },
     "ATHERENERG.NS": {
       "quantity": 100,
       "avg_cost": 943.0,
       "buy_date": "2026-05-11",
-      "sector": "Auto Components"
-    },
-    "RAINBOW.NS": {
-      "quantity": 110,
-      "avg_cost": 1397.27,
-      "buy_date": "2026-05-18",
-      "sector": "Healthcare"
+      "sector": "Auto Components",
+      "strategy": "swing"
     },
     "WELCORP.NS": {
       "quantity": 100,
       "avg_cost": 1406.0,
       "buy_date": "2026-06-09",
-      "sector": "Capital Goods"
+      "sector": "Capital Goods",
+      "strategy": "swing"
     },
     "FEDERALBNK.NS": {
       "quantity": 595,
       "avg_cost": 305.57,
       "buy_date": "2026-06-10",
-      "sector": "Financial Services"
+      "sector": "Financial Services",
+      "strategy": "swing"
     },
     "RADICO.NS": {
       "quantity": 46,
       "avg_cost": 3615.35,
       "buy_date": "2026-06-18",
-      "sector": "Fast Moving Consumer Goods"
-    },
-    "BELRISE.NS": {
-      "quantity": 834,
-      "avg_cost": 232.0,
-      "buy_date": "2026-07-07",
-      "sector": "Auto Components"
+      "sector": "Fast Moving Consumer Goods",
+      "strategy": "swing"
     },
     "OFSS.NS": {
       "quantity": 17,
       "avg_cost": 11260.0,
       "buy_date": "2026-07-07",
-      "sector": "Information Technology"
+      "sector": "Information Technology",
+      "strategy": "swing"
     },
     "CHOICEIN.NS": {
       "quantity": 175,
@@ -57,20 +51,12 @@
       "sector": "Financial Services",
       "strategy": "swing"
     },
-    "CAPLIPOINT.NS": {
-      "quantity": 57,
-      "avg_cost": 2654.35,
-      "buy_date": "2026-07-20",
-      "sector": "Pharma",
-      "strategy": "swing"
-    },
     "RRKABEL.NS": {
       "quantity": 100,
       "avg_cost": 2519.0,
       "buy_date": "2026-07-27",
       "sector": "Consumer Durables",
-      "strategy": "swing",
-      "entry_reason": "Appeared in NSE Weekly/Monthly Leaders & Confluence"
+      "strategy": "swing"
     },
     "SONACOMS.NS": {
       "quantity": 231,
@@ -80,12 +66,25 @@
       "strategy": "swing"
     },
     "EXIDEIND.NS": {
-      "quantity": 174,
-      "avg_cost": 483.0,
+      "quantity": 274,
+      "avg_cost": 484.09,
       "buy_date": "2026-08-11",
       "sector": "Auto Components",
-      "strategy": "swing",
-      "entry_reason": "Capital Deployment Plan (Triple Crown #10 Weekly / #9 Monthly & ADX-Rider / Pocket Pivot)"
+      "strategy": "swing"
+    },
+    "NEULANDLAB.NS": {
+      "quantity": 5,
+      "avg_cost": 23062.0,
+      "buy_date": "2026-08-17",
+      "sector": "Pharma",
+      "strategy": "swing"
+    },
+    "HONASA.NS": {
+      "quantity": 267,
+      "avg_cost": 505.0,
+      "buy_date": "2026-08-17",
+      "sector": "Fast Moving Consumer Goods",
+      "strategy": "swing"
     }
   }
 }

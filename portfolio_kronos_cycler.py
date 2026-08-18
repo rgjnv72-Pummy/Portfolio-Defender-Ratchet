@@ -177,7 +177,7 @@ def run_portfolio_analysis():
             p_return = ((r["price"] - r["avg_cost"]) / r["avg_cost"]) * 100 if r["avg_cost"] > 0 else 0
             ret_style = f"**{round(p_return, 1)}%**" if p_return >= 0 else f"*{round(p_return, 1)}%*"
             alpha_style = f"+{r['relative_perf']}%" if r['relative_perf'] >= 0 else f"{r['relative_perf']}%"
-            f.write(f"| **{r['ticker']}** | ₹{r['price']} | ₹{r['avg_cost']} | {ret_style} | {r['confidence']}% | ₹{r['target']} | {r['volatility']}% | ₹{r['var_95']} | {alpha_style} | **{r['classification']}** |\n")
+            f.write(f"| **{r['ticker']}** | Rs. {r['price']} | Rs. {r['avg_cost']} | {ret_style} | {r['confidence']}% | Rs. {r['target']} | {r['volatility']}% | Rs. {r['var_95']} | {alpha_style} | **{r['classification']}** |\n")
             
         f.write("\n\n*Note: Calculations utilize a 10,000-run Geometric Brownian Motion (GBM) Monte Carlo simulation aligned to a 60-day historical drift and volatility window.*")
         
@@ -189,20 +189,20 @@ def run_portfolio_analysis():
     if leaders:
         tele_msg += "🔥 *Leaders (Outperforming & High Confidence):*\n"
         for l in leaders:
-            tele_msg += f"• {l['ticker'].replace('.NS', '')}: Price ₹{l['price']} | Target ₹{l['target']} | Conf {l['confidence']}%\n"
+            tele_msg += f"• {l['ticker'].replace('.NS', '')}: Price Rs. {l['price']} | Target Rs. {l['target']} | Conf {l['confidence']}%\n"
         tele_msg += "\n"
         
     if holds:
         tele_msg += "⏳ *Holds (Neutral / Peer Alignment):*\n"
         for h in holds:
-            tele_msg += f"• {h['ticker'].replace('.NS', '')}: Price ₹{h['price']} | Target ₹{h['target']} | Conf {h['confidence']}%\n"
+            tele_msg += f"• {h['ticker'].replace('.NS', '')}: Price Rs. {h['price']} | Target Rs. {h['target']} | Conf {h['confidence']}%\n"
         tele_msg += "\n"
         
     if laggards:
         tele_msg += "⚠️ *Laggards (Underperforming / Low Confidence):*\n"
         for lg in laggards:
             alpha_sign = "+" if lg['relative_perf'] >= 0 else ""
-            tele_msg += f"• {lg['ticker'].replace('.NS', '')}: Price ₹{lg['price']} | Conf {lg['confidence']}% | Alpha {alpha_sign}{lg['relative_perf']}%\n"
+            tele_msg += f"• {lg['ticker'].replace('.NS', '')}: Price Rs. {lg['price']} | Conf {lg['confidence']}% | Alpha {alpha_sign}{lg['relative_perf']}%\n"
         tele_msg += "\n"
         
     tele_msg += "👉 Check Obsidian: `Portfolio-Analysis.md` for complete simulation metrics."

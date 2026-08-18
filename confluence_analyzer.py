@@ -42,6 +42,14 @@ MASTER_FRESH_MD = os.path.join(BASE_DIR, "Obsidian-Journal", "Ticker-Research", 
 CONFLUENCE_REPORT_MD = os.path.join(BASE_DIR, "Obsidian-Journal", "Ticker-Research", "Confluence-Report.md")
 MIN_AVG_TRADED_VALUE = 20000000  # ₹2 Crores minimum daily liquidity
 
+# Dynamic Confluence Optimizer (SSRN 6682038 Engine)
+try:
+    from dynamic_confluence_optimizer import DynamicConfluenceOptimizer
+    dyn_optimizer = DynamicConfluenceOptimizer()
+except Exception:
+    dyn_optimizer = None
+
+
 def load_env_file():
     env_paths = [
         os.path.join(BASE_DIR, ".env"),
@@ -485,12 +493,28 @@ def run_confluence_audit():
                 for s in active_signals:
                     triggered_domains.add(map_signal_to_domain(s))
                 
+                # Dynamic Confluence Optimizer (SSRN 6682038)
+                dci_score = 50.0
+                allocation_tier = "Standard"
+                exposure_scale = 1.0
+                if dyn_optimizer is not None:
+                    try:
+                        res_dyn = dyn_optimizer.score_setup(active_signals)
+                        dci_score = res_dyn["dynamic_conviction_score"]
+                        allocation_tier = res_dyn["allocation_tier"]
+                        exposure_scale = res_dyn["exposure_scale"]
+                    except Exception:
+                        pass
+
                 confluences[ticker] = {
                     "Price": round(current_close, 2),
                     "Signals": active_signals,
                     "Count": len(active_signals),
                     "Domains": list(triggered_domains),
-                    "Domain_Count": len(triggered_domains)
+                    "Domain_Count": len(triggered_domains),
+                    "DCI": dci_score,
+                    "Tier": allocation_tier,
+                    "Exposure": exposure_scale
                 }
                 
         except Exception:
@@ -501,29 +525,31 @@ def run_confluence_audit():
     report_md = f"# 🔥 Cross-Scanner Confluence Report\n"
     report_md += f"- **Generated On:** {target_date}\n"
     report_md += f"- **Threshold:** Stocks triggering 2+ distinct signals simultaneously\n"
+    report_md += f"- **Optimization Engine:** Dynamic Continuous Sharpe Sizing (SSRN-6682038)\n"
     report_md += f"━━━━━━━━━━━━━━━━━━━━\n\n"
     
     if confluences:
         report_md += "## 🏆 High-Conviction Confluence Setups\n"
-        report_md += "| Ticker | Price | Unique Domains | Total Signals | Active Domains | Active Signals / Scanners |\n"
-        report_md += "| :--- | :---: | :---: | :---: | :--- | :--- |\n"
+        report_md += "| Ticker | Price | DCI Score | Sizing Scale | Unique Domains | Total Signals | Active Domains | Active Signals / Scanners |\n"
+        report_md += "| :--- | :---: | :---: | :---: | :---: | :---: | :--- | :--- |\n"
         
-        # Sort confluences by Domain Count (descending) then Total Signals (descending)
-        sorted_conf = sorted(confluences.items(), key=lambda x: (x[1]['Domain_Count'], x[1]['Count']), reverse=True)
+        # Sort confluences by DCI Score (descending) then Domain Count (descending)
+        sorted_conf = sorted(confluences.items(), key=lambda x: (x[1].get('DCI', 0), x[1]['Domain_Count'], x[1]['Count']), reverse=True)
         for ticker, data in sorted_conf:
             domains_str = ", ".join(data['Domains'])
             signals_str = ", ".join(data['Signals'])
-            report_md += f"| **{ticker}** | ₹{data['Price']:.2f} | **{data['Domain_Count']}** | {data['Count']} | {domains_str} | {signals_str} |\n"
+            report_md += f"| **{ticker}** | ₹{data['Price']:.2f} | **{data.get('DCI', 0):.1f}%** | {int(data.get('Exposure', 1.0)*100)}% | **{data['Domain_Count']}** | {data['Count']} | {domains_str} | {signals_str} |\n"
             
         # Compile Telegram Alert
         tg_msg = f"🏆 *HIGH-CONVICTION CONFLUENCES ({target_date})*\n"
-        tg_msg += "Independent scanners aligned across unique quant domains:\n━━━━━━━━━━━━━━━━━━━━\n\n"
+        tg_msg += "Independent scanners aligned across unique quant domains (SSRN-6682038 Engine):\n━━━━━━━━━━━━━━━━━━━━\n\n"
         for ticker, data in sorted_conf[:10]:  # Limit top 10 for TG
-            tg_msg += f"🔥 *{ticker}* | Price: ₹{data['Price']:.2f}\n"
+            tg_msg += f"🔥 *{ticker}* | Price: ₹{data['Price']:.2f} | *DCI: {data.get('DCI', 0):.1f}%* ({int(data.get('Exposure', 1.0)*100)}% Size)\n"
             tg_msg += f" ├ Domains: *{data['Domain_Count']}* ({', '.join(data['Domains'])})\n"
             tg_msg += f" └ Signals: _{', '.join(data['Signals'])}_\n\n"
-        tg_msg += "━━━━━━━━━━━━━━━━━━━━\n🎯 *Focus:* Multi-domain setups yield the highest win rates."
+        tg_msg += "━━━━━━━━━━━━━━━━━━━━\n🎯 *Focus:* Multi-domain setups with DCI ≥ 70% yield the highest risk-adjusted expectancy."
         send_telegram(tg_msg)
+
     else:
         report_md += "✅ No cross-scanner confluences detected in the current window.\n"
         print("✅ No confluences found today.")
