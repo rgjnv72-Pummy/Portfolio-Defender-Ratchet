@@ -1,6 +1,6 @@
 {
-  "total_equity_value": 2450000.0,
-  "last_updated": "2026-08-18",
+  "total_equity_value": 2550000.0,
+  "last_updated": "2026-08-20",
   "holdings": {
     "LAURUSLABS.NS": {
       "quantity": 159,
@@ -73,8 +73,8 @@
       "strategy": "swing"
     },
     "HONASA.NS": {
-      "quantity": 267,
-      "avg_cost": 505.0,
+      "quantity": 327,
+      "avg_cost": 499.86,
       "buy_date": "2026-08-17",
       "sector": "Fast Moving Consumer Goods",
       "strategy": "swing"
@@ -84,6 +84,13 @@
       "avg_cost": 2195.0,
       "buy_date": "2026-08-18",
       "sector": "Financial Services",
+      "strategy": "swing"
+    },
+    "BOSCHLTD.NS": {
+      "quantity": 2,
+      "avg_cost": 48460.0,
+      "buy_date": "2026-08-20",
+      "sector": "Auto Components",
       "strategy": "swing"
     }
   }

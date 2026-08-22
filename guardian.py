@@ -29,7 +29,7 @@ def load_live_portfolio():
             break
     
     # Ultimate Fallback Core if file isn't written yet
-    # --- START FALLBACK ---
+        # --- START FALLBACK ---
     fallback_holdings = {
         "LAURUSLABS.NS": [159, 1392.35, "2026-05-29", "Pharma", 1392.35, "swing"],
         "ATHERENERG.NS": [100, 943.00, "2026-05-11", "Auto Components", 943.00, "swing"],
@@ -41,8 +41,9 @@ def load_live_portfolio():
         "SONACOMS.NS": [231, 775.00, "2026-08-03", "Auto Components", 775.00, "swing"],
         "EXIDEIND.NS": [274, 484.09, "2026-08-11", "Auto Components", 484.09, "swing"],
         "NEULANDLAB.NS": [7, 23180.57, "2026-08-17", "Pharma", 23180.57, "swing"],
-        "HONASA.NS": [267, 505.00, "2026-08-17", "Fast Moving Consumer Goods", 505.00, "swing"],
-        "ANANDRATHI.NS": [75, 2195.00, "2026-08-18", "Financial Services", 2195.00, "swing"]
+        "HONASA.NS": [327, 499.86, "2026-08-17", "Fast Moving Consumer Goods", 499.86, "swing"],
+        "ANANDRATHI.NS": [75, 2195.00, "2026-08-18", "Financial Services", 2195.00, "swing"],
+        "BOSCHLTD.NS": [2, 48460.00, "2026-08-20", "Auto Components", 48460.00, "swing"]
     }
     # --- END FALLBACK ---
     
