@@ -37,12 +37,12 @@ def load_live_portfolio():
         "FEDERALBNK.NS": [595, 305.57, "2026-06-10", "Financial Services", 305.57, "swing"],
         "RADICO.NS": [46, 3615.35, "2026-06-18", "Fast Moving Consumer Goods", 3615.35, "swing"],
         "OFSS.NS": [17, 11260.00, "2026-07-07", "Information Technology", 11260.00, "swing"],
-        "CHOICEIN.NS": [175, 828.00, "2026-07-13", "Financial Services", 828.00, "swing"],
         "RRKABEL.NS": [100, 2519.00, "2026-07-27", "Consumer Durables", 2519.00, "swing"],
         "SONACOMS.NS": [231, 775.00, "2026-08-03", "Auto Components", 775.00, "swing"],
         "EXIDEIND.NS": [274, 484.09, "2026-08-11", "Auto Components", 484.09, "swing"],
-        "NEULANDLAB.NS": [5, 23062.00, "2026-08-17", "Pharma", 23062.00, "swing"],
-        "HONASA.NS": [267, 505.00, "2026-08-17", "Fast Moving Consumer Goods", 505.00, "swing"]
+        "NEULANDLAB.NS": [7, 23180.57, "2026-08-17", "Pharma", 23180.57, "swing"],
+        "HONASA.NS": [267, 505.00, "2026-08-17", "Fast Moving Consumer Goods", 505.00, "swing"],
+        "ANANDRATHI.NS": [75, 2195.00, "2026-08-18", "Financial Services", 2195.00, "swing"]
     }
     # --- END FALLBACK ---
     

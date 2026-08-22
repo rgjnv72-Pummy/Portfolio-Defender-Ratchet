@@ -1,6 +1,6 @@
 {
   "total_equity_value": 2450000.0,
-  "last_updated": "2026-08-17",
+  "last_updated": "2026-08-18",
   "holdings": {
     "LAURUSLABS.NS": {
       "quantity": 159,
@@ -44,13 +44,6 @@
       "sector": "Information Technology",
       "strategy": "swing"
     },
-    "CHOICEIN.NS": {
-      "quantity": 175,
-      "avg_cost": 828.0,
-      "buy_date": "2026-07-13",
-      "sector": "Financial Services",
-      "strategy": "swing"
-    },
     "RRKABEL.NS": {
       "quantity": 100,
       "avg_cost": 2519.0,
@@ -73,8 +66,8 @@
       "strategy": "swing"
     },
     "NEULANDLAB.NS": {
-      "quantity": 5,
-      "avg_cost": 23062.0,
+      "quantity": 7,
+      "avg_cost": 23180.57,
       "buy_date": "2026-08-17",
       "sector": "Pharma",
       "strategy": "swing"
@@ -84,6 +77,13 @@
       "avg_cost": 505.0,
       "buy_date": "2026-08-17",
       "sector": "Fast Moving Consumer Goods",
+      "strategy": "swing"
+    },
+    "ANANDRATHI.NS": {
+      "quantity": 75,
+      "avg_cost": 2195.0,
+      "buy_date": "2026-08-18",
+      "sector": "Financial Services",
       "strategy": "swing"
     }
   }

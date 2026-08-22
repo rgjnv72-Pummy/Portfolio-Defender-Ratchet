@@ -118,5 +118,15 @@
     "exit_date": "2026-08-17",
     "exit_price": 240.0,
     "reason": "Sudden 6% fall; result not very enthusiastic"
+  },
+  {
+    "ticker": "CHOICEIN.NS",
+    "company_name": "Choice International Ltd",
+    "entry_date": "2026-07-13",
+    "entry_price": 828.0,
+    "quantity": 175,
+    "exit_date": "2026-08-18",
+    "exit_price": 803.0,
+    "reason": "Ratchet broken. Overhead supply. Not showing strength to break ceiling."
   }
 ]
