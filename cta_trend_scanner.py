@@ -1,3 +1,4 @@
+from beast_standards import check_beast_liquidity_standards
 import os
 import sys
 import gc
@@ -48,6 +49,9 @@ def normalize_nse_industry(raw_industry_str):
     return "UNKNOWN"
 
 def check_paper_trend_filter(df):
+    is_passed, beast_metrics = check_beast_liquidity_standards(df)
+    if not is_passed:
+        return None
     """
     Applies the mathematical framework of volatility-normalized returns
     fed into a robust 112-day exponential moving average filter.

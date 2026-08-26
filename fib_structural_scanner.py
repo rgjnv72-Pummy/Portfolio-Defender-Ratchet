@@ -1,3 +1,4 @@
+from beast_standards import check_beast_liquidity_standards
 import http.client, json, os, warnings, html
 import pandas as pd
 import numpy as np

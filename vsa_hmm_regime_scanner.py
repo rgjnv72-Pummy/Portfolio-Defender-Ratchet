@@ -1,3 +1,4 @@
+from beast_standards import check_beast_liquidity_standards
 import os
 import json
 import warnings
@@ -29,6 +30,9 @@ LOOKBACK_WINDOW = 252        # 1 Full trading year to fit and optimize the Gauss
 MIN_DAILY_TURNOVER_INR = 50000000  # ₹5 Crores minimum daily turnover (Price * Volume) for institutional liquidity
 
 def run_vsa_hmm_engine(df):
+    is_passed, beast_metrics = check_beast_liquidity_standards(df)
+    if not is_passed:
+        return None
     """
     Constructs multi-dimensional VSA features based on Wyckoff's Law of Effort vs Result
     and applies a Hidden Markov Model to classify hidden institutional market states.

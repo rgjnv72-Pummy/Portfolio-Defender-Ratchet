@@ -1,3 +1,4 @@
+from beast_standards import check_beast_liquidity_standards
 import json
 import os
 import sys
@@ -35,6 +36,9 @@ except ImportError:
     exit(1)
 
 def check_arima_garch_filter(df):
+    is_passed, beast_metrics = check_beast_liquidity_standards(df)
+    if not is_passed:
+        return None
     """
     Applies Liquidity checks and executes a 20-day compounded time-series projection
     designed to identify institutional-grade bullish swing breakout candidates.

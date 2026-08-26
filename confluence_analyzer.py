@@ -1,3 +1,4 @@
+from beast_standards import check_beast_liquidity_standards
 import os
 import sys
 import json
@@ -111,6 +112,9 @@ def map_signal_to_domain(sig_name):
     return "Other Momentum"
 
 def evaluate_strategies(df, nifty_close=None, macro_factors_df=None):
+    is_passed, beast_metrics = check_beast_liquidity_standards(df)
+    if not is_passed:
+        return []
     passed_strategies = []
     try:
         close = df["Close"].squeeze()

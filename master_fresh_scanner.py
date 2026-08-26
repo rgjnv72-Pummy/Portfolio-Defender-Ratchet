@@ -1,3 +1,4 @@
+from beast_standards import check_beast_liquidity_standards
 import os
 import sys
 import json
@@ -163,6 +164,9 @@ def load_watchlist():
     return mapping
 
 def check_smc_fvg_signal(df):
+    is_passed, beast_metrics = check_beast_liquidity_standards(df)
+    if not is_passed:
+        return None
     n = len(df)
     if n < 30:
         return None

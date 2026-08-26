@@ -1,3 +1,4 @@
+from beast_standards import check_beast_liquidity_standards
 import http.client
 import json
 import os
@@ -55,6 +56,9 @@ def send_telegram(text):
         conn.close()
 
 def evaluate_strategies(df, nifty_close=None):
+    is_passed, beast_metrics = check_beast_liquidity_standards(df)
+    if not is_passed:
+        return []
     """
     Evaluates a single stock's historical DataFrame against all 11 strategies.
     Returns: (list_of_passed_strategy_names, trigger_entry_level)

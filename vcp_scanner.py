@@ -1,3 +1,4 @@
+from beast_standards import check_beast_liquidity_standards
 import http.client, json, os, pandas as pd, numpy as np, yfinance as yf
 import warnings
 from datetime import datetime, timedelta
@@ -24,6 +25,9 @@ def run_kronos_upside(ticker_symbol):
     """Calculates a 30-day projected Upside % and Stop-Loss Hit Probability using decayed drift."""
     try:
         df = yf.download(ticker_symbol + ".NS", period="2y", progress=False, auto_adjust=True)
+        if df is None or df.empty: return None
+        is_passed, beast_metrics = check_beast_liquidity_standards(df)
+        if not is_passed: return None
         if df.empty or len(df) < 30: return 0.0, 0.0
         close = df['Close'].squeeze().astype(float)
         high = df['High'].squeeze().astype(float)

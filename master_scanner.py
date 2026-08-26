@@ -1,3 +1,4 @@
+from beast_standards import check_beast_liquidity_standards
 import os
 import json
 import http.client
@@ -98,6 +99,11 @@ def scan_confluence(item):
         if isinstance(c, pd.DataFrame):
             c = c.iloc[:, 0]
         c = c.astype(float)
+        
+        # --- UNIVERSAL BEAST SWING & LIQUIDITY STANDARDS GATE (₹2L TICKET SIZE) ---
+        is_passed, beast_metrics = check_beast_liquidity_standards(df)
+        if not is_passed:
+            return None
         
         score, signals = 0, []
         sma20, std20 = c.rolling(20).mean(), c.rolling(20).std()

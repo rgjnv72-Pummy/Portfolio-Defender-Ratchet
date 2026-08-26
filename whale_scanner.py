@@ -1,3 +1,4 @@
+from beast_standards import check_beast_liquidity_standards
 import sys, http.client, json, os, pandas as pd, numpy as np, yfinance as yf
 from nselib import capital_market
 from datetime import datetime, timedelta
@@ -76,6 +77,9 @@ def run_kronos_forecast(ticker):
     """Calculates 30-day Upside %, Confidence, and Stop-Loss Hit Probability using decayed drift."""
     try:
         df = yf.download(ticker + ".NS", period="2y", progress=False, auto_adjust=True)
+        if df is None or df.empty: return None
+        is_passed, beast_metrics = check_beast_liquidity_standards(df)
+        if not is_passed: return None
         if df.empty or len(df) < 30: return "N/A", "N/A", "N/A"
         close = df['Close'].squeeze().astype(float)
         high = df['High'].squeeze().astype(float)

@@ -1,3 +1,4 @@
+from beast_standards import check_beast_liquidity_standards
 import http.client, json, os, warnings
 import pandas as pd
 import numpy as np
@@ -93,6 +94,9 @@ def rank_sector_momentum():
     return sector_ranks
 
 def scan_recent_bullish_fvgs(df):
+    is_passed, beast_metrics = check_beast_liquidity_standards(df)
+    if not is_passed:
+        return None
     try:
         df_clean = df.copy()
         if isinstance(df_clean.columns, pd.MultiIndex):

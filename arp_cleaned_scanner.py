@@ -1,3 +1,4 @@
+from beast_standards import check_beast_liquidity_standards
 import os
 import json
 import math

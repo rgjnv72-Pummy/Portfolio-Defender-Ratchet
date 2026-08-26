@@ -1,3 +1,4 @@
+from beast_standards import check_beast_liquidity_standards
 import json
 import os
 import urllib3
@@ -68,6 +69,9 @@ def normalize_nse_industry(raw_industry_str):
     return "UNKNOWN"
 
 def scan_kalman_bullish_deviations(df):
+    is_passed, beast_metrics = check_beast_liquidity_standards(df)
+    if not is_passed:
+        return None
     """Processes clean historical structures using the Kalman Filter model."""
     try:
         df_clean = df.copy()

@@ -2,3 +2,5 @@ cache/
 dir
 Execution_Logs/
 .env
+__pycache__/
+*.pyc
