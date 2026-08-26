@@ -29,12 +29,10 @@ def load_live_portfolio():
             break
     
     # Ultimate Fallback Core if file isn't written yet
-        # --- START FALLBACK ---
+    # --- START FALLBACK ---
     fallback_holdings = {
         "LAURUSLABS.NS": [159, 1392.35, "2026-05-29", "Pharma", 1392.35, "swing"],
         "ATHERENERG.NS": [100, 943.00, "2026-05-11", "Auto Components", 943.00, "swing"],
-        "WELCORP.NS": [100, 1406.00, "2026-06-09", "Capital Goods", 1406.00, "swing"],
-        "FEDERALBNK.NS": [595, 305.57, "2026-06-10", "Financial Services", 305.57, "swing"],
         "RADICO.NS": [46, 3615.35, "2026-06-18", "Fast Moving Consumer Goods", 3615.35, "swing"],
         "OFSS.NS": [17, 11260.00, "2026-07-07", "Information Technology", 11260.00, "swing"],
         "RRKABEL.NS": [100, 2519.00, "2026-07-27", "Consumer Durables", 2519.00, "swing"],
@@ -42,7 +40,8 @@ def load_live_portfolio():
         "NEULANDLAB.NS": [7, 23180.57, "2026-08-17", "Pharma", 23180.57, "swing"],
         "HONASA.NS": [327, 499.86, "2026-08-17", "Fast Moving Consumer Goods", 499.86, "swing"],
         "ANANDRATHI.NS": [75, 2195.00, "2026-08-18", "Financial Services", 2195.00, "swing"],
-        "BOSCHLTD.NS": [2, 48460.00, "2026-08-20", "Auto Components", 48460.00, "swing"]
+        "BOSCHLTD.NS": [2, 48460.00, "2026-08-20", "Auto Components", 48460.00, "swing"],
+        "DIVISLAB.NS": [20, 8818.00, "2026-08-26", "Pharma", 8818.00, "swing"]
     }
     # --- END FALLBACK ---
     

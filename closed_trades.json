@@ -138,5 +138,25 @@
     "exit_date": "2026-08-25",
     "exit_price": 452.0,
     "reason": "Did not perform. Continuous red bars ratchet broken."
+  },
+  {
+    "ticker": "FEDERALBNK.NS",
+    "company_name": "Federal Bank Ltd",
+    "entry_date": "2026-06-10",
+    "entry_price": 305.57,
+    "quantity": 595,
+    "exit_date": "2026-08-26",
+    "exit_price": 348.0,
+    "reason": "Broke ratchet and long red candle seen"
+  },
+  {
+    "ticker": "WELCORP.NS",
+    "company_name": "Welspun Corp Ltd",
+    "entry_date": "2026-06-09",
+    "entry_price": 1406.0,
+    "quantity": 100,
+    "exit_date": "2026-08-26",
+    "exit_price": 2217.0,
+    "reason": "Sudden 5% fall seen in welcorp due to block deal sell by promoters"
   }
 ]
