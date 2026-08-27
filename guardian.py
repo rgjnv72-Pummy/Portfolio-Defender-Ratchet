@@ -40,8 +40,10 @@ def load_live_portfolio():
         "NEULANDLAB.NS": [7, 23180.57, "2026-08-17", "Pharma", 23180.57, "swing"],
         "HONASA.NS": [327, 499.86, "2026-08-17", "Fast Moving Consumer Goods", 499.86, "swing"],
         "ANANDRATHI.NS": [75, 2195.00, "2026-08-18", "Financial Services", 2195.00, "swing"],
-        "BOSCHLTD.NS": [2, 48460.00, "2026-08-20", "Auto Components", 48460.00, "swing"],
-        "DIVISLAB.NS": [20, 8818.00, "2026-08-26", "Pharma", 8818.00, "swing"]
+        "BOSCHLTD.NS": [3, 48606.67, "2026-08-20", "Auto Components", 48606.67, "swing"],
+        "DIVISLAB.NS": [20, 8818.00, "2026-08-26", "Pharma", 8818.00, "swing"],
+        "HFCL.NS": [650, 242.00, "2026-08-27", "Telecommunication", 242.00, "swing"],
+        "AUBANK.NS": [150, 1123.00, "2026-08-27", "Financial Services", 1123.00, "swing"]
     }
     # --- END FALLBACK ---
     

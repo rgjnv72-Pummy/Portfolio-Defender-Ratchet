@@ -1,6 +1,6 @@
 {
   "total_equity_value": 2550000.0,
-  "last_updated": "2026-08-26",
+  "last_updated": "2026-08-27",
   "holdings": {
     "LAURUSLABS.NS": {
       "quantity": 159,
@@ -66,8 +66,8 @@
       "strategy": "swing"
     },
     "BOSCHLTD.NS": {
-      "quantity": 2,
-      "avg_cost": 48460.0,
+      "quantity": 3,
+      "avg_cost": 48606.67,
       "buy_date": "2026-08-20",
       "sector": "Auto Components",
       "strategy": "swing"
@@ -77,6 +77,20 @@
       "avg_cost": 8818.0,
       "buy_date": "2026-08-26",
       "sector": "Pharma",
+      "strategy": "swing"
+    },
+    "HFCL.NS": {
+      "quantity": 650,
+      "avg_cost": 242.0,
+      "buy_date": "2026-08-27",
+      "sector": "Telecommunication",
+      "strategy": "swing"
+    },
+    "AUBANK.NS": {
+      "quantity": 150,
+      "avg_cost": 1123.0,
+      "buy_date": "2026-08-27",
+      "sector": "Financial Services",
       "strategy": "swing"
     }
   }
