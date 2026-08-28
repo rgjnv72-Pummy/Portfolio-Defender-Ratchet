@@ -1,14 +1,46 @@
 from beast_standards import check_beast_liquidity_standards
-import http.client, json, os, warnings
+import http.client, json, os, sys, warnings
 import pandas as pd
 import numpy as np
 import yfinance as yf
 from datetime import datetime
 
-# --- CONFIG (Maps securely to your GitHub Action Environment) ---
+# --- UTF-8 CONSOLE ENCODING FIX (Windows Support) ---
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
+# --- CONFIG (Maps securely to your GitHub Action Environment / Local .env) ---
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PARENT_DIR = os.path.dirname(SCRIPT_DIR)
+MANUAL_N500_CSV = os.path.join(SCRIPT_DIR, 'ind_nifty500list.csv')
+if not os.path.exists(MANUAL_N500_CSV):
+    MANUAL_N500_CSV = os.path.join(PARENT_DIR, 'ind_nifty500list.csv')
+
+def load_env_file():
+    env_paths = [
+        os.path.join(PARENT_DIR, ".env"),
+        os.path.join(SCRIPT_DIR, ".env"),
+        os.path.join(PARENT_DIR, "Ratchet-System", ".env")
+    ]
+    for path in env_paths:
+        if os.path.exists(path):
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    for line in f:
+                        line = line.strip()
+                        if not line or line.startswith("#"):
+                            continue
+                        if "=" in line:
+                            key, val = line.split("=", 1)
+                            val = val.strip().strip("'").strip('"')
+                            os.environ[key.strip()] = val
+                break
+            except Exception:
+                pass
+
+load_env_file()
 TOKEN = os.getenv('TELEGRAM_TOKEN', '').strip()
 CHAT_ID = os.getenv('TELEGRAM_CHAT_ID', '').strip()
-MANUAL_N500_CSV = 'ind_nifty500list.csv'
 
 warnings.filterwarnings("ignore")
 MIN_AVG_VOLUME = 100000

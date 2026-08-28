@@ -23,9 +23,12 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 # --- DYNAMIC CONFIGURATION FOR LOCAL VS GITHUB RUN ---
 script_dir = os.path.dirname(os.path.abspath(__file__))
-if "Trading-Engine" in script_dir:
-    BASE_DIR = r"C:\Users\rgjnv\Trading-Engine"
-    CSV_PATH = os.path.join(BASE_DIR, "Ratchet-System", "ind_nifty500list.csv")
+parent_dir = os.path.dirname(script_dir)
+if os.path.exists(os.path.join(parent_dir, "Obsidian-Journal")):
+    BASE_DIR = parent_dir
+    CSV_PATH = os.path.join(script_dir, "ind_nifty500list.csv")
+    if not os.path.exists(CSV_PATH):
+        CSV_PATH = os.path.join(BASE_DIR, "Ratchet-System", "ind_nifty500list.csv")
     CACHE_DIR = os.path.join(BASE_DIR, "backtest_cache")
     REPORT_PATH = os.path.join(BASE_DIR, "Obsidian-Journal", "Ticker-Research", "Master-Fresh-Trades-Scan.md")
 else:

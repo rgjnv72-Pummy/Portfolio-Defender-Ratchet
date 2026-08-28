@@ -1,6 +1,6 @@
 {
   "total_equity_value": 2550000.0,
-  "last_updated": "2026-08-27",
+  "last_updated": "2026-08-28",
   "holdings": {
     "LAURUSLABS.NS": {
       "quantity": 159,
@@ -49,13 +49,6 @@
       "avg_cost": 23180.57,
       "buy_date": "2026-08-17",
       "sector": "Pharma",
-      "strategy": "swing"
-    },
-    "HONASA.NS": {
-      "quantity": 327,
-      "avg_cost": 499.86,
-      "buy_date": "2026-08-17",
-      "sector": "Fast Moving Consumer Goods",
       "strategy": "swing"
     },
     "ANANDRATHI.NS": {

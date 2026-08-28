@@ -38,7 +38,6 @@ def load_live_portfolio():
         "RRKABEL.NS": [100, 2519.00, "2026-07-27", "Consumer Durables", 2519.00, "swing"],
         "SONACOMS.NS": [231, 775.00, "2026-08-03", "Auto Components", 775.00, "swing"],
         "NEULANDLAB.NS": [7, 23180.57, "2026-08-17", "Pharma", 23180.57, "swing"],
-        "HONASA.NS": [327, 499.86, "2026-08-17", "Fast Moving Consumer Goods", 499.86, "swing"],
         "ANANDRATHI.NS": [75, 2195.00, "2026-08-18", "Financial Services", 2195.00, "swing"],
         "BOSCHLTD.NS": [3, 48606.67, "2026-08-20", "Auto Components", 48606.67, "swing"],
         "DIVISLAB.NS": [20, 8818.00, "2026-08-26", "Pharma", 8818.00, "swing"],

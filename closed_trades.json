@@ -158,5 +158,15 @@
     "exit_date": "2026-08-26",
     "exit_price": 2217.0,
     "reason": "Sudden 5% fall seen in welcorp due to block deal sell by promoters"
+  },
+  {
+    "ticker": "HONASA.NS",
+    "company_name": "Honasa Consumer Ltd",
+    "entry_date": "2026-08-17",
+    "entry_price": 499.86,
+    "quantity": 327,
+    "exit_date": "2026-08-28",
+    "exit_price": 469.0,
+    "reason": "Ratchet broken. Recent addition but no green candle. Planning to buy IIFL from freed capital."
   }
 ]
