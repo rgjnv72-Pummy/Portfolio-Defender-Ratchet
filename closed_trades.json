@@ -168,5 +168,25 @@
     "exit_date": "2026-08-28",
     "exit_price": 469.0,
     "reason": "Ratchet broken. Recent addition but no green candle. Planning to buy IIFL from freed capital."
+  },
+  {
+    "ticker": "LAURUSLABS.NS",
+    "company_name": "Laurus Labs Ltd",
+    "entry_date": "2026-05-29",
+    "entry_price": 1392.35,
+    "quantity": 159,
+    "exit_date": "2026-08-31",
+    "exit_price": 1850.0,
+    "reason": "Seen falling around 5% without giving second thought sold. Happened near closing market. Stock recovered but fell with huge volume. Booked handsome profit. Broken ratchet."
+  },
+  {
+    "ticker": "RADICO.NS",
+    "company_name": "Radico Khaitan Ltd",
+    "entry_date": "2026-06-18",
+    "entry_price": 3615.35,
+    "quantity": 46,
+    "exit_date": "2026-08-31",
+    "exit_price": 4480.0,
+    "reason": "Broke ratchet so booked good profit."
   }
 ]

@@ -1,26 +1,12 @@
 {
   "total_equity_value": 2550000.0,
-  "last_updated": "2026-08-27",
+  "last_updated": "2026-08-31",
   "holdings": {
-    "LAURUSLABS.NS": {
-      "quantity": 159,
-      "avg_cost": 1392.35,
-      "buy_date": "2026-05-29",
-      "sector": "Pharma",
-      "strategy": "swing"
-    },
     "ATHERENERG.NS": {
       "quantity": 100,
       "avg_cost": 943.0,
       "buy_date": "2026-05-11",
       "sector": "Auto Components",
-      "strategy": "swing"
-    },
-    "RADICO.NS": {
-      "quantity": 46,
-      "avg_cost": 3615.35,
-      "buy_date": "2026-06-18",
-      "sector": "Fast Moving Consumer Goods",
       "strategy": "swing"
     },
     "OFSS.NS": {
@@ -49,13 +35,6 @@
       "avg_cost": 23180.57,
       "buy_date": "2026-08-17",
       "sector": "Pharma",
-      "strategy": "swing"
-    },
-    "HONASA.NS": {
-      "quantity": 327,
-      "avg_cost": 499.86,
-      "buy_date": "2026-08-17",
-      "sector": "Fast Moving Consumer Goods",
       "strategy": "swing"
     },
     "ANANDRATHI.NS": {
@@ -91,6 +70,13 @@
       "avg_cost": 1123.0,
       "buy_date": "2026-08-27",
       "sector": "Financial Services",
+      "strategy": "swing"
+    },
+    "BHEL.NS": {
+      "quantity": 352,
+      "avg_cost": 430.0,
+      "buy_date": "2026-08-31",
+      "sector": "Capital Goods",
       "strategy": "swing"
     }
   }
