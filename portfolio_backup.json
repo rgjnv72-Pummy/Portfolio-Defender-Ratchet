@@ -1,6 +1,6 @@
 {
   "total_equity_value": 2550000.0,
-  "last_updated": "2026-08-31",
+  "last_updated": "2026-09-01",
   "holdings": {
     "ATHERENERG.NS": {
       "quantity": 100,
@@ -77,6 +77,27 @@
       "avg_cost": 430.0,
       "buy_date": "2026-08-31",
       "sector": "Capital Goods",
+      "strategy": "swing"
+    },
+    "CPPLUS.NS": {
+      "quantity": 45,
+      "avg_cost": 3555.0,
+      "buy_date": "2026-09-01",
+      "sector": "Electronics",
+      "strategy": "swing"
+    },
+    "HONASA.NS": {
+      "quantity": 350,
+      "avg_cost": 485.0,
+      "buy_date": "2026-09-01",
+      "sector": "Fast Moving Consumer Goods",
+      "strategy": "swing"
+    },
+    "WELCORP.NS": {
+      "quantity": 70,
+      "avg_cost": 2420.0,
+      "buy_date": "2026-09-01",
+      "sector": "Metals & Mining",
       "strategy": "swing"
     }
   }

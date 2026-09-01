@@ -41,7 +41,10 @@ def load_live_portfolio():
         "DIVISLAB.NS": [20, 8818.00, "2026-08-26", "Pharma", 8818.00, "swing"],
         "HFCL.NS": [650, 242.00, "2026-08-27", "Telecommunication", 242.00, "swing"],
         "AUBANK.NS": [150, 1123.00, "2026-08-27", "Financial Services", 1123.00, "swing"],
-        "BHEL.NS": [352, 430.00, "2026-08-31", "Capital Goods", 430.00, "swing"]
+        "BHEL.NS": [352, 430.00, "2026-08-31", "Capital Goods", 430.00, "swing"],
+        "CPPLUS.NS": [45, 3555.00, "2026-09-01", "Electronics", 3555.00, "swing"],
+        "HONASA.NS": [350, 485.00, "2026-09-01", "Fast Moving Consumer Goods", 485.00, "swing"],
+        "WELCORP.NS": [70, 2420.00, "2026-09-01", "Metals & Mining", 2420.00, "swing"]
     }
     # --- END FALLBACK ---
     
