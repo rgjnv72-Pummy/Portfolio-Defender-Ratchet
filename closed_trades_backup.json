@@ -188,5 +188,25 @@
     "exit_date": "2026-08-31",
     "exit_price": 4480.0,
     "reason": "Broke ratchet so booked good profit."
+  },
+  {
+    "ticker": "HFCL.NS",
+    "company_name": "HFCL Ltd",
+    "entry_date": "2026-08-27",
+    "entry_price": 242.0,
+    "quantity": 650,
+    "exit_date": "2026-09-02",
+    "exit_price": 225.0,
+    "reason": "Ratchet broken and sudden fall seen"
+  },
+  {
+    "ticker": "RRKABEL.NS",
+    "company_name": "R R Kabel Ltd",
+    "entry_date": "2026-07-27",
+    "entry_price": 2519.0,
+    "quantity": 100,
+    "exit_date": "2026-09-02",
+    "exit_price": 2659.0,
+    "reason": "Ratchet broken and sudden fall seen"
   }
 ]

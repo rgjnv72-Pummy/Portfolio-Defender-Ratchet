@@ -1,6 +1,6 @@
 {
   "total_equity_value": 2550000.0,
-  "last_updated": "2026-09-01",
+  "last_updated": "2026-09-03",
   "holdings": {
     "ATHERENERG.NS": {
       "quantity": 100,
@@ -14,13 +14,6 @@
       "avg_cost": 11260.0,
       "buy_date": "2026-07-07",
       "sector": "Information Technology",
-      "strategy": "swing"
-    },
-    "RRKABEL.NS": {
-      "quantity": 100,
-      "avg_cost": 2519.0,
-      "buy_date": "2026-07-27",
-      "sector": "Consumer Durables",
       "strategy": "swing"
     },
     "SONACOMS.NS": {
@@ -58,13 +51,6 @@
       "sector": "Pharma",
       "strategy": "swing"
     },
-    "HFCL.NS": {
-      "quantity": 650,
-      "avg_cost": 242.0,
-      "buy_date": "2026-08-27",
-      "sector": "Telecommunication",
-      "strategy": "swing"
-    },
     "AUBANK.NS": {
       "quantity": 150,
       "avg_cost": 1123.0,
@@ -98,6 +84,20 @@
       "avg_cost": 2420.0,
       "buy_date": "2026-09-01",
       "sector": "Metals & Mining",
+      "strategy": "swing"
+    },
+    "FEDERALBNK.NS": {
+      "quantity": 300,
+      "avg_cost": 356.0,
+      "buy_date": "2026-09-03",
+      "sector": "Financial Services",
+      "strategy": "swing"
+    },
+    "LTFOODS.NS": {
+      "quantity": 250,
+      "avg_cost": 445.0,
+      "buy_date": "2026-09-03",
+      "sector": "Fast Moving Consumer Goods",
       "strategy": "swing"
     }
   }

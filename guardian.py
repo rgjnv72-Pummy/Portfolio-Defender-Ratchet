@@ -33,18 +33,18 @@ def load_live_portfolio():
     fallback_holdings = {
         "ATHERENERG.NS": [100, 943.00, "2026-05-11", "Auto Components", 943.00, "swing"],
         "OFSS.NS": [17, 11260.00, "2026-07-07", "Information Technology", 11260.00, "swing"],
-        "RRKABEL.NS": [100, 2519.00, "2026-07-27", "Consumer Durables", 2519.00, "swing"],
         "SONACOMS.NS": [231, 775.00, "2026-08-03", "Auto Components", 775.00, "swing"],
         "NEULANDLAB.NS": [7, 23180.57, "2026-08-17", "Pharma", 23180.57, "swing"],
         "ANANDRATHI.NS": [75, 2195.00, "2026-08-18", "Financial Services", 2195.00, "swing"],
         "BOSCHLTD.NS": [3, 48606.67, "2026-08-20", "Auto Components", 48606.67, "swing"],
         "DIVISLAB.NS": [20, 8818.00, "2026-08-26", "Pharma", 8818.00, "swing"],
-        "HFCL.NS": [650, 242.00, "2026-08-27", "Telecommunication", 242.00, "swing"],
         "AUBANK.NS": [150, 1123.00, "2026-08-27", "Financial Services", 1123.00, "swing"],
         "BHEL.NS": [352, 430.00, "2026-08-31", "Capital Goods", 430.00, "swing"],
         "CPPLUS.NS": [45, 3555.00, "2026-09-01", "Electronics", 3555.00, "swing"],
         "HONASA.NS": [350, 485.00, "2026-09-01", "Fast Moving Consumer Goods", 485.00, "swing"],
-        "WELCORP.NS": [70, 2420.00, "2026-09-01", "Metals & Mining", 2420.00, "swing"]
+        "WELCORP.NS": [70, 2420.00, "2026-09-01", "Metals & Mining", 2420.00, "swing"],
+        "FEDERALBNK.NS": [300, 356.00, "2026-09-03", "Financial Services", 356.00, "swing"],
+        "LTFOODS.NS": [250, 445.00, "2026-09-03", "Fast Moving Consumer Goods", 445.00, "swing"]
     }
     # --- END FALLBACK ---
     
