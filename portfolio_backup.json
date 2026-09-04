@@ -1,14 +1,7 @@
 {
   "total_equity_value": 2550000.0,
-  "last_updated": "2026-09-03",
+  "last_updated": "2026-09-04",
   "holdings": {
-    "ATHERENERG.NS": {
-      "quantity": 100,
-      "avg_cost": 943.0,
-      "buy_date": "2026-05-11",
-      "sector": "Auto Components",
-      "strategy": "swing"
-    },
     "OFSS.NS": {
       "quantity": 17,
       "avg_cost": 11260.0,
@@ -97,6 +90,20 @@
       "quantity": 250,
       "avg_cost": 445.0,
       "buy_date": "2026-09-03",
+      "sector": "Fast Moving Consumer Goods",
+      "strategy": "swing"
+    },
+    "SAIL.NS": {
+      "quantity": 500,
+      "avg_cost": 197.0,
+      "buy_date": "2026-09-04",
+      "sector": "Metals & Mining",
+      "strategy": "swing"
+    },
+    "ZYDUSWELL.NS": {
+      "quantity": 200,
+      "avg_cost": 540.0,
+      "buy_date": "2026-09-04",
       "sector": "Fast Moving Consumer Goods",
       "strategy": "swing"
     }

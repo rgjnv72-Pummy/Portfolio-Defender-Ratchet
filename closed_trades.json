@@ -208,5 +208,15 @@
     "exit_date": "2026-09-02",
     "exit_price": 2659.0,
     "reason": "Ratchet broken and sudden fall seen"
+  },
+  {
+    "ticker": "ATHERENERG.NS",
+    "company_name": "Ather Energy Ltd",
+    "entry_date": "2026-05-11",
+    "entry_price": 943.0,
+    "quantity": 100,
+    "exit_date": "2026-09-04",
+    "exit_price": 1623.0,
+    "reason": "Booked handsome profit ratchet broken continuous red candles"
   }
 ]
