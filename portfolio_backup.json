@@ -1,6 +1,6 @@
 {
   "total_equity_value": 2550000.0,
-  "last_updated": "2026-09-04",
+  "last_updated": "2026-09-07",
   "holdings": {
     "OFSS.NS": {
       "quantity": 17,
@@ -30,25 +30,11 @@
       "sector": "Financial Services",
       "strategy": "swing"
     },
-    "BOSCHLTD.NS": {
-      "quantity": 3,
-      "avg_cost": 48606.67,
-      "buy_date": "2026-08-20",
-      "sector": "Auto Components",
-      "strategy": "swing"
-    },
     "DIVISLAB.NS": {
       "quantity": 20,
       "avg_cost": 8818.0,
       "buy_date": "2026-08-26",
       "sector": "Pharma",
-      "strategy": "swing"
-    },
-    "AUBANK.NS": {
-      "quantity": 150,
-      "avg_cost": 1123.0,
-      "buy_date": "2026-08-27",
-      "sector": "Financial Services",
       "strategy": "swing"
     },
     "BHEL.NS": {
@@ -87,15 +73,15 @@
       "strategy": "swing"
     },
     "LTFOODS.NS": {
-      "quantity": 250,
-      "avg_cost": 445.0,
+      "quantity": 350,
+      "avg_cost": 444.71,
       "buy_date": "2026-09-03",
       "sector": "Fast Moving Consumer Goods",
       "strategy": "swing"
     },
     "SAIL.NS": {
-      "quantity": 500,
-      "avg_cost": 197.0,
+      "quantity": 750,
+      "avg_cost": 196.0,
       "buy_date": "2026-09-04",
       "sector": "Metals & Mining",
       "strategy": "swing"

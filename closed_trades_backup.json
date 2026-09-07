@@ -218,5 +218,25 @@
     "exit_date": "2026-09-04",
     "exit_price": 1623.0,
     "reason": "Booked handsome profit ratchet broken continuous red candles"
+  },
+  {
+    "ticker": "AUBANK.NS",
+    "company_name": "AU Small Finance Bank Ltd.",
+    "entry_date": "2026-08-27",
+    "entry_price": 1123.0,
+    "quantity": 150,
+    "exit_date": "2026-09-07",
+    "exit_price": 1061.0,
+    "reason": "Ratchet broken / dual-timeframe divergence exit"
+  },
+  {
+    "ticker": "BOSCHLTD.NS",
+    "company_name": "Bosch Ltd.",
+    "entry_date": "2026-08-20",
+    "entry_price": 48606.67,
+    "quantity": 3,
+    "exit_date": "2026-09-07",
+    "exit_price": 46575.0,
+    "reason": "Ratchet broken / stop-loss floor hit"
   }
 ]
