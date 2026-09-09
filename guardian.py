@@ -32,9 +32,7 @@ def load_live_portfolio():
     # --- START FALLBACK ---
     fallback_holdings = {
         "OFSS.NS": [17, 11260.00, "2026-07-07", "Information Technology", 11260.00, "swing"],
-        "SONACOMS.NS": [231, 775.00, "2026-08-03", "Auto Components", 775.00, "swing"],
         "NEULANDLAB.NS": [7, 23180.57, "2026-08-17", "Pharma", 23180.57, "swing"],
-        "ANANDRATHI.NS": [75, 2195.00, "2026-08-18", "Financial Services", 2195.00, "swing"],
         "DIVISLAB.NS": [20, 8818.00, "2026-08-26", "Pharma", 8818.00, "swing"],
         "BHEL.NS": [352, 430.00, "2026-08-31", "Capital Goods", 430.00, "swing"],
         "CPPLUS.NS": [45, 3555.00, "2026-09-01", "Electronics", 3555.00, "swing"],
@@ -43,9 +41,11 @@ def load_live_portfolio():
         "FEDERALBNK.NS": [300, 356.00, "2026-09-03", "Financial Services", 356.00, "swing"],
         "LTFOODS.NS": [350, 444.71, "2026-09-03", "Fast Moving Consumer Goods", 444.71, "swing"],
         "SAIL.NS": [750, 196.00, "2026-09-04", "Metals & Mining", 196.00, "swing"],
-        "ZYDUSWELL.NS": [200, 540.00, "2026-09-04", "Fast Moving Consumer Goods", 540.00, "swing"]
+        "ZYDUSWELL.NS": [200, 540.00, "2026-09-04", "Fast Moving Consumer Goods", 540.00, "swing"],
+        "ATHERENERG.NS": [100, 1591.00, "2026-09-09", "Auto Components", 1591.00, "swing"],
+        "HINDCOPPER.NS": [300, 539.00, "2026-09-09", "Metals & Mining", 539.00, "swing"]
     }
-    # --- END FALLBACK ---
+# --- END FALLBACK ---
     
     if not portfolio_path:
         return fallback_holdings

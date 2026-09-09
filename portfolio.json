@@ -1,6 +1,6 @@
 {
   "total_equity_value": 2550000.0,
-  "last_updated": "2026-09-07",
+  "last_updated": "2026-09-09",
   "holdings": {
     "OFSS.NS": {
       "quantity": 17,
@@ -9,25 +9,11 @@
       "sector": "Information Technology",
       "strategy": "swing"
     },
-    "SONACOMS.NS": {
-      "quantity": 231,
-      "avg_cost": 775.0,
-      "buy_date": "2026-08-03",
-      "sector": "Auto Components",
-      "strategy": "swing"
-    },
     "NEULANDLAB.NS": {
       "quantity": 7,
       "avg_cost": 23180.57,
       "buy_date": "2026-08-17",
       "sector": "Pharma",
-      "strategy": "swing"
-    },
-    "ANANDRATHI.NS": {
-      "quantity": 75,
-      "avg_cost": 2195.0,
-      "buy_date": "2026-08-18",
-      "sector": "Financial Services",
       "strategy": "swing"
     },
     "DIVISLAB.NS": {
@@ -91,6 +77,20 @@
       "avg_cost": 540.0,
       "buy_date": "2026-09-04",
       "sector": "Fast Moving Consumer Goods",
+      "strategy": "swing"
+    },
+    "ATHERENERG.NS": {
+      "quantity": 100,
+      "avg_cost": 1591.0,
+      "buy_date": "2026-09-09",
+      "sector": "Auto Components",
+      "strategy": "swing"
+    },
+    "HINDCOPPER.NS": {
+      "quantity": 300,
+      "avg_cost": 539.0,
+      "buy_date": "2026-09-09",
+      "sector": "Metals & Mining",
       "strategy": "swing"
     }
   }

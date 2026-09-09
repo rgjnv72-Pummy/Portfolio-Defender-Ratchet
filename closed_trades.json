@@ -238,5 +238,25 @@
     "exit_date": "2026-09-07",
     "exit_price": 46575.0,
     "reason": "Ratchet broken / stop-loss floor hit"
+  },
+  {
+    "ticker": "SONACOMS.NS",
+    "company_name": "Sona BLW Precision Forgings Ltd.",
+    "entry_date": "2026-08-03",
+    "entry_price": 775.0,
+    "quantity": 231,
+    "exit_date": "2026-09-08",
+    "exit_price": 779.0,
+    "reason": "Broken ratchet and weak structure"
+  },
+  {
+    "ticker": "ANANDRATHI.NS",
+    "company_name": "Anand Rathi Wealth Ltd.",
+    "entry_date": "2026-08-18",
+    "entry_price": 2195.0,
+    "quantity": 75,
+    "exit_date": "2026-09-08",
+    "exit_price": 2216.0,
+    "reason": "Broken ratchet and weak structure"
   }
 ]
