@@ -258,5 +258,15 @@
     "exit_date": "2026-09-08",
     "exit_price": 2216.0,
     "reason": "Broken ratchet and weak structure"
+  },
+  {
+    "ticker": "OFSS.NS",
+    "company_name": "Oracle Financial Services Software Ltd.",
+    "entry_date": "2026-07-07",
+    "entry_price": 11260.0,
+    "quantity": 17,
+    "exit_date": "2026-09-08",
+    "exit_price": 11780.0,
+    "reason": "Broken ratchet and weak structure"
   }
 ]
