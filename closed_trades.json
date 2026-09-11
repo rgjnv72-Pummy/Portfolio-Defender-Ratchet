@@ -268,5 +268,45 @@
     "exit_date": "2026-09-08",
     "exit_price": 11780.0,
     "reason": "Broken ratchet and weak structure"
+  },
+  {
+    "ticker": "FEDERALBNK.NS",
+    "company_name": "Federal Bank Ltd",
+    "entry_date": "2026-09-03",
+    "entry_price": 356.0,
+    "quantity": 300,
+    "exit_date": "2026-09-11",
+    "exit_price": 342.0,
+    "reason": "Highly bearish regime exit / Risk reduction"
+  },
+  {
+    "ticker": "NEULANDLAB.NS",
+    "company_name": "Neuland Laboratories Ltd",
+    "entry_date": "2026-08-17",
+    "entry_price": 23180.57,
+    "quantity": 7,
+    "exit_date": "2026-09-11",
+    "exit_price": 23262.0,
+    "reason": "Highly bearish regime exit / Risk reduction"
+  },
+  {
+    "ticker": "WELCORP.NS",
+    "company_name": "Welspun Corp Ltd",
+    "entry_date": "2026-09-01",
+    "entry_price": 2420.0,
+    "quantity": 70,
+    "exit_date": "2026-09-11",
+    "exit_price": 2682.0,
+    "reason": "Highly bearish regime exit / Profit booked"
+  },
+  {
+    "ticker": "SAIL.NS",
+    "company_name": "Steel Authority of India Ltd",
+    "entry_date": "2026-09-04",
+    "entry_price": 196.0,
+    "quantity": 750,
+    "exit_date": "2026-09-11",
+    "exit_price": 179.0,
+    "reason": "Highly bearish regime exit / Risk reduction"
   }
 ]
