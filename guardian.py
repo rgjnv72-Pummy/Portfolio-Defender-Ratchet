@@ -30,17 +30,7 @@ def load_live_portfolio():
     
     # Ultimate Fallback Core if file isn't written yet
     # --- START FALLBACK ---
-    fallback_holdings = {
-        "DIVISLAB.NS": [20, 8818.00, "2026-08-26", "Pharma", 8818.00, "swing"],
-        "BHEL.NS": [352, 430.00, "2026-08-31", "Capital Goods", 430.00, "swing"],
-        "CPPLUS.NS": [45, 3555.00, "2026-09-01", "Electronics", 3555.00, "swing"],
-        "HONASA.NS": [350, 485.00, "2026-09-01", "Fast Moving Consumer Goods", 485.00, "swing"],
-        "LTFOODS.NS": [350, 444.71, "2026-09-03", "Fast Moving Consumer Goods", 444.71, "swing"],
-        "ZYDUSWELL.NS": [200, 540.00, "2026-09-04", "Fast Moving Consumer Goods", 540.00, "swing"],
-        "ATHERENERG.NS": [100, 1591.00, "2026-09-09", "Auto Components", 1591.00, "swing"],
-        "HINDCOPPER.NS": [300, 539.00, "2026-09-09", "Metals & Mining", 539.00, "swing"],
-        "RADICO.NS": [40, 4430.00, "2026-09-10", "Fast Moving Consumer Goods", 4430.00, "swing"]
-    }
+    fallback_holdings = {}
     # --- END FALLBACK ---
     
     if not portfolio_path:

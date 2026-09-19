@@ -308,5 +308,95 @@
     "exit_date": "2026-09-11",
     "exit_price": 179.0,
     "reason": "Highly bearish regime exit / Risk reduction"
+  },
+  {
+    "ticker": "RADICO.NS",
+    "company_name": "Radico Khaitan Ltd",
+    "entry_date": "2026-09-10",
+    "entry_price": 4430.0,
+    "quantity": 40,
+    "exit_date": "2026-09-16",
+    "exit_price": 4329.0,
+    "reason": "Highly bearish regime exit / Complete portfolio liquidation"
+  },
+  {
+    "ticker": "HONASA.NS",
+    "company_name": "Honasa Consumer Ltd",
+    "entry_date": "2026-09-01",
+    "entry_price": 485.0,
+    "quantity": 350,
+    "exit_date": "2026-09-16",
+    "exit_price": 453.0,
+    "reason": "Highly bearish regime exit / Complete portfolio liquidation"
+  },
+  {
+    "ticker": "ZYDUSWELL.NS",
+    "company_name": "Zydus Wellness Ltd",
+    "entry_date": "2026-09-04",
+    "entry_price": 540.0,
+    "quantity": 200,
+    "exit_date": "2026-09-16",
+    "exit_price": 540.0,
+    "reason": "Highly bearish regime exit / Complete portfolio liquidation"
+  },
+  {
+    "ticker": "DIVISLAB.NS",
+    "company_name": "Divi's Laboratories Ltd",
+    "entry_date": "2026-08-26",
+    "entry_price": 8818.0,
+    "quantity": 20,
+    "exit_date": "2026-09-16",
+    "exit_price": 9002.0,
+    "reason": "Highly bearish regime exit / Complete portfolio liquidation"
+  },
+  {
+    "ticker": "CPPLUS.NS",
+    "company_name": "CP Plus Ltd",
+    "entry_date": "2026-09-01",
+    "entry_price": 3555.0,
+    "quantity": 45,
+    "exit_date": "2026-09-16",
+    "exit_price": 3543.0,
+    "reason": "Highly bearish regime exit / Complete portfolio liquidation"
+  },
+  {
+    "ticker": "LTFOODS.NS",
+    "company_name": "LT Foods Ltd",
+    "entry_date": "2026-09-03",
+    "entry_price": 444.71,
+    "quantity": 350,
+    "exit_date": "2026-09-16",
+    "exit_price": 417.0,
+    "reason": "Highly bearish regime exit / Complete portfolio liquidation"
+  },
+  {
+    "ticker": "BHEL.NS",
+    "company_name": "Bharat Heavy Electricals Ltd",
+    "entry_date": "2026-08-31",
+    "entry_price": 430.0,
+    "quantity": 352,
+    "exit_date": "2026-09-16",
+    "exit_price": 409.0,
+    "reason": "Highly bearish regime exit / Complete portfolio liquidation"
+  },
+  {
+    "ticker": "ATHERENERG.NS",
+    "company_name": "Ather Energy Ltd",
+    "entry_date": "2026-09-09",
+    "entry_price": 1591.0,
+    "quantity": 100,
+    "exit_date": "2026-09-16",
+    "exit_price": 1548.0,
+    "reason": "Highly bearish regime exit / Complete portfolio liquidation"
+  },
+  {
+    "ticker": "HINDCOPPER.NS",
+    "company_name": "Hindustan Copper Ltd",
+    "entry_date": "2026-09-09",
+    "entry_price": 539.0,
+    "quantity": 300,
+    "exit_date": "2026-09-16",
+    "exit_price": 485.0,
+    "reason": "Highly bearish regime exit / Complete portfolio liquidation"
   }
 ]
