@@ -3,7 +3,7 @@
 - **Last Portfolio Audit**: [[2026-09-16]]
 - **Total Holdings Count**: 0 positions (100% Defensive Cash Buffer)
 - **Active Invested Exposure**: INR 0.00 (0.00%)
-- **Total Liquid Unencumbered Cash**: INR 23,62,216.00 (100.00% of liquid assets)
+- **Total Liquid Unencumbered Cash**: INR 23,51,075.00 (100.00% of liquid assets)
 ━━━━━━━━━━━━━━━━━━━━
 
 ## 📋 Active Positions & Selected Scanner Mappings
