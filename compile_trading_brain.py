@@ -56,24 +56,9 @@ load_custom_dotenv(os.path.join(BASE_DIR, ".env"))
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
-# --- FALLBACK HOLDINGS (15 ACTIVE POSITIONS AS OF 2026-09-04) ---
-FALLBACK_HOLDINGS = {
-    "OFSS.NS": {"quantity": 17, "avg_cost": 11260.00, "buy_date": "2026-07-07", "sector": "Information Technology", "strategy": "swing"},
-    "SONACOMS.NS": {"quantity": 231, "avg_cost": 775.00, "buy_date": "2026-08-03", "sector": "Auto Components", "strategy": "swing"},
-    "NEULANDLAB.NS": {"quantity": 7, "avg_cost": 23180.57, "buy_date": "2026-08-17", "sector": "Pharma", "strategy": "swing"},
-    "ANANDRATHI.NS": {"quantity": 75, "avg_cost": 2195.00, "buy_date": "2026-08-18", "sector": "Financial Services", "strategy": "swing"},
-    "BOSCHLTD.NS": {"quantity": 3, "avg_cost": 48606.67, "buy_date": "2026-08-20", "sector": "Auto Components", "strategy": "swing"},
-    "DIVISLAB.NS": {"quantity": 20, "avg_cost": 8818.00, "buy_date": "2026-08-26", "sector": "Pharma", "strategy": "swing"},
-    "AUBANK.NS": {"quantity": 150, "avg_cost": 1123.00, "buy_date": "2026-08-27", "sector": "Financial Services", "strategy": "swing"},
-    "BHEL.NS": {"quantity": 352, "avg_cost": 430.00, "buy_date": "2026-08-31", "sector": "Capital Goods", "strategy": "swing"},
-    "CPPLUS.NS": {"quantity": 45, "avg_cost": 3555.00, "buy_date": "2026-09-01", "sector": "Electronics", "strategy": "swing"},
-    "HONASA.NS": {"quantity": 350, "avg_cost": 485.00, "buy_date": "2026-09-01", "sector": "Fast Moving Consumer Goods", "strategy": "swing"},
-    "WELCORP.NS": {"quantity": 70, "avg_cost": 2420.00, "buy_date": "2026-09-01", "sector": "Metals & Mining", "strategy": "swing"},
-    "FEDERALBNK.NS": {"quantity": 300, "avg_cost": 356.00, "buy_date": "2026-09-03", "sector": "Financial Services", "strategy": "swing"},
-    "LTFOODS.NS": {"quantity": 250, "avg_cost": 445.00, "buy_date": "2026-09-03", "sector": "Fast Moving Consumer Goods", "strategy": "swing"},
-    "SAIL.NS": {"quantity": 500, "avg_cost": 197.00, "buy_date": "2026-09-04", "sector": "Metals & Mining", "strategy": "swing"},
-    "ZYDUSWELL.NS": {"quantity": 200, "avg_cost": 540.00, "buy_date": "2026-09-04", "sector": "Fast Moving Consumer Goods", "strategy": "swing"}
-}
+# --- FALLBACK HOLDINGS ---
+FALLBACK_HOLDINGS = {}
+
 
 def send_telegram_alert(text):
     if not TOKEN or not CHAT_ID:
@@ -103,7 +88,12 @@ def load_live_portfolio():
             try:
                 with open(p, "r", encoding="utf-8") as f:
                     data = json.load(f)
-                holdings_raw = data.get("holdings", {})
+                if "holdings" in data:
+                    holdings_raw = data.get("holdings", {})
+                    if not holdings_raw:
+                        return {}
+                else:
+                    holdings_raw = data
                 if holdings_raw:
                     formatted = {}
                     if isinstance(holdings_raw, dict):

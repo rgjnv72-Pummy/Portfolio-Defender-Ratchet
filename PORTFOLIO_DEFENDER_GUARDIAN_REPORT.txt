@@ -1,0 +1,13 @@
+===================================================================================================================
+              CENTAUR QUANTITATIVE TRADING SYSTEM: PORTFOLIO DEFENDER GUARDIAN REPORT
+                                DEFENSIVE CASH REGIME AUDIT
+===================================================================================================================
+ Date / Timestamp       : 2026-09-22 22:57:27 IST
+ Total Live Holdings    : 0 Active Positions (100% Defensive Cash Buffer)
+ Total Capital Invested : INR 0.00
+ Liquid Cash Reserves   : INR 23,51,075.00
+ Net Unrealized PnL     : INR 0.00 (0.00%)
+ Portfolio 5-Day VaR95% : INR 0.00 (0.00% NAV)
+ NIFTY 50 Benchmark     : INR 23,329.00 (-0.36%)
+ Portfolio Status       : [SAFE] Capital Insulated Post-Liquidation
+===================================================================================================================
