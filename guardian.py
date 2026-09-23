@@ -56,7 +56,22 @@ GREEN, RED, BLUE, CYAN, YELLOW, MAGENTA, BOLD, RESET = (
 )
 
 # --- FALLBACK ASSET REGISTRY ---
-FALLBACK_HOLDINGS = {}
+FALLBACK_HOLDINGS = {
+    "HFCL.NS": {
+        "quantity": 1000,
+        "avg_cost": 220.0,
+        "buy_date": "2026-09-22",
+        "sector": "Telecommunication",
+        "strategy": "swing"
+    },
+    "DIVISLAB.NS": {
+        "quantity": 20,
+        "avg_cost": 9444.0,
+        "buy_date": "2026-09-22",
+        "sector": "Healthcare",
+        "strategy": "swing"
+    }
+}
 
 
 def load_live_portfolio() -> Dict[str, Dict[str, Any]]:
@@ -370,9 +385,9 @@ def send_telegram_alert(holdings_df: pd.DataFrame, summary_stats: Dict[str, Any]
     lines.append("🛡️ <b>CENTAUR PORTFOLIO DEFENDER: DAILY GUARDIAN ALERT</b> 🛡️")
     lines.append(f"📅 <b>Date:</b> {datetime.now().strftime('%d %b %Y | %H:%M:%S IST')}")
     lines.append(f"📈 <b>NIFTY 50:</b> {nifty_chg:+.2f}% | <b>Session Alpha:</b> {alpha_metric:+.2f}% {alpha_icon}")
-    lines.append(f"💰 <b>Portfolio Value:</b> ₹{summary_stats['total_current_val']/100000:,.2f}L ({summary_stats['total_pnl_pct']:+.2f}%)")
-    lines.append(f"⚡ <b>Session Change:</b> ₹{summary_stats['daily_gain_sum']/100000:+,.2f}L ({port_daily_pct:+.2f}%)")
-    lines.append(f"⚠️ <b>5-Day VaR (95%):</b> ₹{summary_stats['portfolio_var_inr']:,.0f} ({summary_stats['portfolio_var_pct']:.2f}% NAV)")
+    lines.append(f"💰 <b>Portfolio Value:</b> INR {summary_stats['total_current_val']/100000:,.2f}L ({summary_stats['total_pnl_pct']:+.2f}%)")
+    lines.append(f"⚡ <b>Session Change:</b> INR {summary_stats['daily_gain_sum']/100000:+,.2f}L ({port_daily_pct:+.2f}%)")
+    lines.append(f"⚠️ <b>5-Day VaR (95%):</b> INR {summary_stats['portfolio_var_inr']:,.0f} ({summary_stats['portfolio_var_pct']:.2f}% NAV)")
     lines.append(f"📊 <b>Active Positions:</b> {len(holdings_df)} Positions\n")
     lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
@@ -381,7 +396,7 @@ def send_telegram_alert(holdings_df: pd.DataFrame, summary_stats: Dict[str, Any]
         lines.append("🚨 <b>CRITICAL DEFENSIVE BREACH EXITS:</b>")
         for _, row in breaches.iterrows():
             sym = row['Symbol'].replace('.NS', '')
-            lines.append(f"  • <b>{sym}</b>: CMP ₹{row['Close']:,.2f} &lt;= Stop ₹{row['Ratchet_Stop']:,.2f} | PnL: {row['PnL%']:+.1f}% | <b>ACTION: EXIT</b>")
+            lines.append(f"  • <b>{sym}</b>: CMP INR {row['Close']:,.2f} &lt;= Stop INR {row['Ratchet_Stop']:,.2f} | PnL: {row['PnL%']:+.1f}% | <b>ACTION: EXIT</b>")
         lines.append("")
     else:
         lines.append("✅ <b>Zero Ratchet Stop Breaches Detected.</b> All positions safely compounding.\n")
@@ -391,7 +406,7 @@ def send_telegram_alert(holdings_df: pd.DataFrame, summary_stats: Dict[str, Any]
         lines.append("⚠️ <b>PROXIMITY WARNINGS (&lt; 2.5% Cushion):</b>")
         for _, row in warnings_list.iterrows():
             sym = row['Symbol'].replace('.NS', '')
-            lines.append(f"  • <b>{sym}</b>: CMP ₹{row['Close']:,.2f} | Stop ₹{row['Ratchet_Stop']:,.2f} | Cushion: <b>{row['Stop_Dist%']:.2f}%</b>")
+            lines.append(f"  • <b>{sym}</b>: CMP INR {row['Close']:,.2f} | Stop INR {row['Ratchet_Stop']:,.2f} | Cushion: <b>{row['Stop_Dist%']:.2f}%</b>")
         lines.append("")
 
     # 3. Milestones
@@ -399,7 +414,7 @@ def send_telegram_alert(holdings_df: pd.DataFrame, summary_stats: Dict[str, Any]
         lines.append("🏆 <b>KRONOS +30% MILESTONES ACTIVE:</b>")
         for _, row in milestones.iterrows():
             sym = row['Symbol'].replace('.NS', '')
-            lines.append(f"  • <b>{sym}</b>: M{row['Milestone_k']} | Peak: {row['Peak_Gain%']:+.1f}% | Locked Stop Floor: ₹{row['Profit_Lock']:,.2f}")
+            lines.append(f"  • <b>{sym}</b>: M{row['Milestone_k']} | Peak: {row['Peak_Gain%']:+.1f}% | Locked Stop Floor: INR {row['Profit_Lock']:,.2f}")
         lines.append("")
 
     # 4. Top Performers
@@ -407,7 +422,7 @@ def send_telegram_alert(holdings_df: pd.DataFrame, summary_stats: Dict[str, Any]
     top_performers = holdings_df.sort_values(by="PnL%", ascending=False).head(3)
     for _, row in top_performers.iterrows():
         sym = row['Symbol'].replace('.NS', '')
-        lines.append(f"  • <b>{sym}</b>: CMP ₹{row['Close']:,.2f} ({row['PnL%']:+.2f}%) | 5D Up%: {row['GBM_Upside%']:.1f}% | 5D Target: ₹{row['Target_5D']:,.2f}")
+        lines.append(f"  • <b>{sym}</b>: CMP INR {row['Close']:,.2f} ({row['PnL%']:+.2f}%) | 5D Up%: {row['GBM_Upside%']:.1f}% | 5D Target: INR {row['Target_5D']:,.2f}")
     lines.append("")
 
     # 5. Sector Allocation Summary
@@ -680,11 +695,11 @@ def run_standalone_ratchet_guardian():
 
     print(f"\n{BOLD}{MAGENTA}{'-'*105}{RESET}")
     print(f"  PORTFOLIO FINANCIAL AUDIT SUMMARY:")
-    print(f"  Cost Basis Invested   : ₹{total_cost_basis:,.2f}")
-    print(f"  Current Market Value  : ₹{total_current_value:,.2f} (₹{total_current_value/100000:.2f} Lakhs)")
-    print(f"  Total Unrealized PnL  : ₹{total_unrealized_pnl:+,.2f} ({total_pnl_pct:+.2f}%)")
-    print(f"  Session Net Change    : ₹{daily_gain_sum:+,.2f} ({port_daily_pct:+.2f}%) | NIFTY: {nifty_chg:+.2f}%")
-    print(f"  Portfolio 5D VaR (95%): ₹{total_portfolio_var_inr:,.2f} ({portfolio_var_pct:.2f}% NAV)")
+    print(f"  Cost Basis Invested   : INR {total_cost_basis:,.2f}")
+    print(f"  Current Market Value  : INR {total_current_value:,.2f} (INR {total_current_value/100000:.2f} Lakhs)")
+    print(f"  Total Unrealized PnL  : INR {total_unrealized_pnl:+,.2f} ({total_pnl_pct:+.2f}%)")
+    print(f"  Session Net Change    : INR {daily_gain_sum:+,.2f} ({port_daily_pct:+.2f}%) | NIFTY: {nifty_chg:+.2f}%")
+    print(f"  Portfolio 5D VaR (95%): INR {total_portfolio_var_inr:,.2f} ({portfolio_var_pct:.2f}% NAV)")
     breaches_n = len(holdings_df[holdings_df['Verdict'] == "DEFENSIVE_BREACH_EXIT"])
     warn_n = len(holdings_df[holdings_df['Verdict'] == "WARNING_PROXIMITY"])
     safe_n = len(holdings_df[holdings_df['Verdict'] == "SAFE_COMPOUNDING"])

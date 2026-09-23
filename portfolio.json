@@ -1,5 +1,20 @@
 {
   "total_equity_value": 2351075.0,
-  "last_updated": "2026-09-16",
-  "holdings": {}
+  "last_updated": "2026-09-22",
+  "holdings": {
+    "HFCL.NS": {
+      "quantity": 1000,
+      "avg_cost": 220.0,
+      "buy_date": "2026-09-22",
+      "sector": "Telecommunication",
+      "strategy": "swing"
+    },
+    "DIVISLAB.NS": {
+      "quantity": 20,
+      "avg_cost": 9444.0,
+      "buy_date": "2026-09-22",
+      "sector": "Healthcare",
+      "strategy": "swing"
+    }
+  }
 }
