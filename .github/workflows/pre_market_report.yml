@@ -1,0 +1,29 @@
+name: Pre-Market Intelligence Report (7:30 AM IST)
+
+on:
+  schedule:
+    # 7:30 AM IST maps directly to 02:00 AM UTC (IST is UTC + 5:30)
+    # Runs Monday through Friday (trading sessions)
+    - cron: '0 2 * * 1-5'
+  workflow_dispatch: # Enables on-demand manual trigger via GitHub Actions UI
+
+jobs:
+  pre-market-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Initialize Runtime Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Active Dependencies
+        run: pip install yfinance pandas numpy
+
+      - name: Execute Pre-Market Intelligence Engine
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python pre_market_report.py
