@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+"""
 
 =========================================================================================================
       CENTAUR QUANTITATIVE TRADING SYSTEM: PRE-MARKET INTELLIGENCE & MOOD ENGINE
